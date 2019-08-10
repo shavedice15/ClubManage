@@ -6,6 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,9 +16,13 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import Button from '@material-ui/core/Button';
+
+import PersonIcon from '@material-ui/icons/Person';
+import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
+import CategoryIcon from '@material-ui/icons/Category';
+import YoutubeSearchedForIcon from '@material-ui/icons/YoutubeSearchedFor';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -95,6 +100,7 @@ export default function PersistentDrawerLeft() {
       <CssBaseline />
       <AppBar
         position="fixed"
+        style={{ background: '#17202A' }}
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
@@ -129,23 +135,45 @@ export default function PersistentDrawerLeft() {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+        
+        <ListItem button component={Link} to="/apply">
+          <ListItemIcon>
+            <PersonIcon />
+          </ListItemIcon>
+          <ListItemText primary="Profile" />
+        </ListItem>
+        
+        <ListItem button component={Link} to="/apply">
+          <ListItemIcon>
+            <CategoryIcon />
+          </ListItemIcon>
+          <ListItemText primary="ชมรมของฉัน" />
+        </ListItem>
+
         <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+
+        <ListItem button component={Link} to="/FindClub">
+          <ListItemIcon>
+            <YoutubeSearchedForIcon />
+          </ListItemIcon>
+          <ListItemText primary="ค้นหาชมรม" />
+        </ListItem>
+
+        <ListItem button component={Link} to="/apply">
+          <ListItemIcon>
+            <DirectionsBikeIcon />
+          </ListItemIcon>
+          <ListItemText primary="กิจกรรม" />
+        </ListItem>
+        
+        <Divider />
+
+        <ListItem button component={Link} to="/apply">
+          <ListItemIcon>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <ListItemText primary="Logout" />
+        </ListItem>
       </Drawer>
       <main
         className={clsx(classes.content, {

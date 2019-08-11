@@ -1,7 +1,7 @@
-[Club Management System](docs/CONTRIBUTING.md)
-- 523495 Computer Engineering Project I
+## Club Management System
+SUT 523495 Computer Engineering Project I
 
-[Getting started](docs/CONTRIBUTING.md)
+# Getting started
 - npm install @material-ui/core
 - npm install --save react-router-dom
 - npm install @material-ui/icons

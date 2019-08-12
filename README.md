@@ -7,3 +7,5 @@ SUT 523495 Computer Engineering Project I
 - npm install @material-ui/icons
 - npm install --save reactstrap react react-dom
 - npm install bootstrap
+- npm i @material-ui/pickers
+

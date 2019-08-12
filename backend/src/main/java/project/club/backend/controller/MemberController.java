@@ -1,14 +1,7 @@
 package project.club.backend.controller;
 
-import com.example.demo.Branch;
-import com.example.demo.Member;
-import com.example.demo.model.*;
-import com.example.demo.repository.AumphoeRepository;
-import com.example.demo.repository.BranchRepository;
-import com.example.demo.repository.ChangwatRepository;
-import com.example.demo.repository.MajorRepository;
-import com.example.demo.repository.MemberRepository;
-import com.example.demo.repository.RegisterClubRepository;
+import project.club.backend.entity.*;
+import project.club.backend.repository.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

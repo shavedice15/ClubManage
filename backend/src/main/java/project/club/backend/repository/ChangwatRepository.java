@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface ChangwatRepository extends JpaRepository<Changwat, Long> {
     Changwat findById(long id);
+Changwat findByChangwat(String id);
 }

@@ -25,7 +25,9 @@ public class Aumphoe {
     private @NonNull Long id;
 
     private @NonNull String aumphoe;
-
+   @ManyToOne(fetch = FetchType.EAGER, targetEntity = Changwat.class)
+    @JoinColumn(name = "Changwat_ID", insertable = true)
+    private Changwat changwatid;
 
     public void Aumphoe(){}
 
@@ -46,6 +48,13 @@ public class Aumphoe {
        return aumphoe;
    }
 
+public void setChangwatid(Changwat id) {
+        this.changwatid = id;
+    }
+
+    public Changwat getChangwatid() {
+        return changwatid;
+    }
 
    
 }

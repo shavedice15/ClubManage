@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import AppNavbar from '../../AppNavbar';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label, Table } from 'reactstrap';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FilledInput from '@material-ui/core/FilledInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -21,7 +14,22 @@ const useStyles = makeStyles(theme => ({
 }));
 
 class ClubInfo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      club: []
+    };
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:8080/findClub/'+this.props.match.params.clubId)
+      .then(response => response.json())
+      .then(data => this.setState({club: data}));
+  }
+
   render() {
+    const {club} = this.state;
+    console.log(club);
     return (
       <div>
         <AppNavbar/>
@@ -30,9 +38,9 @@ class ClubInfo extends Component {
             <div className="row">
               <FormGroup className="col-md-5 mb-3">
                 <TextField
-                    id="outlined-required"
                     label="ชื่อชมรม"
-                    defaultValue="ดนตรีสากล"
+                    defaultValue=" "
+                    value = {club.clubName}
                     className={useStyles.textField}
                     margin="normal"
                     InputProps={{
@@ -43,9 +51,9 @@ class ClubInfo extends Component {
               </FormGroup>
               <FormGroup className="col-md-3 mb-3">
                 <TextField
-                  id="outlined-required"
                   label="ประเภทชมรม"
-                  defaultValue="ดนตรี"
+                  defaultValue=" "
+                  value={club.clubName}
                   className={useStyles.textField}
                   margin="normal"
                   InputProps={{
@@ -58,11 +66,11 @@ class ClubInfo extends Component {
             <div className="row">
               <FormGroup className="col-md-5 mb-3">
                 <TextField
-                  id="outlined-required"
                   label="แนะนำชมรม"
                   multiline
                   rows="7"
-                  defaultValue="Hello World"
+                  defaultValue=" "
+                  value={club.invitation}
                   className={useStyles.textField}
                   margin="normal"
                   InputProps={{
@@ -74,9 +82,22 @@ class ClubInfo extends Component {
               </FormGroup>
               <FormGroup className="col-md-3 mb-3">
                 <TextField
-                  id="outlined-required"
                   label="เพจ"
-                  defaultValue="Musiccc"
+                  defaultValue=" "
+                  value={club.pageFB}
+                  className={useStyles.textField}
+                  margin="normal"
+                  InputProps={{
+                    readOnly: true,
+                  }}          
+                  variant="outlined"
+                />
+              </FormGroup>
+              <FormGroup className="col-md-3 mb-3">
+                <TextField
+                  label="กลุ่ม"
+                  defaultValue=" "
+                  value={club.groupFB}
                   className={useStyles.textField}
                   margin="normal"
                   InputProps={{
@@ -86,21 +107,8 @@ class ClubInfo extends Component {
                 />
                 <FormGroup></FormGroup>
                 <FormGroup>
-                  <Button style={{ background: '#000066' }} type="submit" tag={Link} to={"/RegisClub"}>สมัคร</Button>
+                  <Button style={{ background: '#000066' }} type="submit" tag={Link} to={"/RegisClub/" + club.clubId}>สมัคร</Button>
                 </FormGroup>
-              </FormGroup>
-              <FormGroup className="col-md-3 mb-3">
-                <TextField
-                  id="outlined-required"
-                  label="กลุ่ม"
-                  defaultValue="MusicccGroup"
-                  className={useStyles.textField}
-                  margin="normal"
-                  InputProps={{
-                    readOnly: true,
-                  }}          
-                  variant="outlined"
-                />
               </FormGroup>
             </div>
             <Table className="mt-4" >
@@ -132,4 +140,4 @@ class ClubInfo extends Component {
   }
 }
 
-export default ClubInfo;
+export default withRouter(ClubInfo);

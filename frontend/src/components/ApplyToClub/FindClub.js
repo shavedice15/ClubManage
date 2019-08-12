@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import AppNavbar from '../../AppNavbar';
-import { Link } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label, Table } from 'reactstrap';
+import { Link, withRouter } from 'react-router-dom';
+import { Button, Container, Form, FormGroup, Table } from 'reactstrap';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FilledInput from '@material-ui/core/FilledInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,80 +19,137 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-
 class FindClub extends Component {
+  emptyItem = {
+    nameClub: '',
+    typeId: ''
+  };
+
   constructor(props) {
     super(props);
-    this.state = {tag: ""};
+    this.state = {typeClub: [],
+                  club: [],
+                  setItem: this.emptyItem};
     this.handleChange = this.handleChange.bind(this);
+    
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:8080/typeClub')
+      .then(response => response.json())
+      .then(data => this.setState({typeClub: data}));
+
+    fetch('http://localhost:8080/club')
+      .then(response => response.json())
+      .then(data => this.setState({club: data}));
   }
 
   handleChange(event) {
-    this.setState({tag: event.target.value});
+    const value = event.target.value;
+    const name = event.target.name;
+    const item = {...this.state.setItem};
+    item[name] = value;
+    this.setState({setItem: item});
+    console.log(item);
   }
 
+  async find() {
+    const {setItem} = this.state;
+    if (setItem.nameClub !== '' & setItem.typeId == '') { //ดึงข้อมูล
+      const findClub = await (
+        await fetch(`http://localhost:8080/findClubByName/${setItem.nameClub}`)).json();
+      this.setState({club: findClub});
+    }
+    else if (setItem.nameClub == '' & setItem.typeId !== '') {
+      const findClub = await (
+        await fetch(`http://localhost:8080/findClubByType/${setItem.typeId}`)).json();
+      this.setState({club: findClub});
+    }
+    else if (setItem.nameClub !== '' & setItem.typeId !== '') {
+      const findClub = await (
+        await fetch(`http://localhost:8080/findClubByNameAndType/${setItem.nameClub}/${setItem.typeId}`)).json();
+      this.setState({club: findClub});
+    }
+    else if (setItem.nameClub == '' & setItem.typeId == '') {
+      const findClub = await (
+        await fetch(`http://localhost:8080/club`)).json();
+      this.setState({club: findClub});
+    }
+  }
+  
     render() {
+      const {typeClub} = this.state;
+      const {club} = this.state;
+      const typeList = typeClub.map(type => {
+        return (
+          <MenuItem value={type.id}>{type.typeClub}</MenuItem>
+        )
+      });
+      const clubList = club.map(club => {
+        return (
+          <tr>
+            <td>{club.clubName}</td>
+            <td align="center">{club.typeClub.typeClub}</td>
+            <td align="center">
+              <Button style={{ background: '#000066',width: '45%' }} tag={Link} to={"/ClubInfo/"+club.clubId}>
+                ดู
+              </Button>
+            </td>
+          </tr>
+        )
+      });
+      console.log(club);
+
       return <div>
           <AppNavbar/>
           <Container>
-          <Form onSubmit={this.handleSubmit}>
-            <div className="row">
-                <FormGroup className="col-md-6 mb-3">
-                <TextField
-                    id="outlined-required"
-                    label="ชื่อชมรม"
-                    defaultValue=" "
-                    className={useStyles.textField}
-                    margin="normal"     
-                    variant="outlined"
-                  />
-                </FormGroup>
+            <Form onSubmit={this.handleSubmit}>
+              <div className="row">
+                  <FormGroup className="col-md-6 mb-3">
+                  <TextField
+                      label="ชื่อชมรม"
+                      className={useStyles.textField}
+                      margin="normal"     
+                      variant="outlined"
+                      onChange={this.handleChange}
+                      name="nameClub"
+                    />
+                  </FormGroup>
 
-                <FormGroup className="col-md-4 mb-3" >
-                <InputLabel htmlFor="tag-helper">Tag</InputLabel>
-                  <Select 
-                    value={this.state.tag}
-                    onChange={this.handleChange}
-                    style={{ width: '45%',  textAlign: 'center'}}
-                    input={<OutlinedInput name="tag" id="outlined-tag-simple" />}
-                  >
-                    <MenuItem value="">
-                    <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>ดนตรี</MenuItem>
-                    <MenuItem value={20}>กีฬา</MenuItem>
-                    <MenuItem value={30}>ศาสนา</MenuItem>
-                  </Select>
-                </FormGroup>
-            </div>
-            <FormGroup>
-                <Button style={{ background: '#000066' }} type="submit">ค้นหา</Button>
-            </FormGroup>
-          </Form>
+                  <FormGroup className="col-md-4 mb-3" >
+                  <InputLabel htmlFor="tag-helper">ประเภทชมรม</InputLabel>
+                    <Select 
+                      value={this.state.setItem.typeId}
+                      onChange={this.handleChange}
+                      style={{ width: '45%',  textAlign: 'center'}}
+                      input={<OutlinedInput name="typeId"/>}
+                    >
+                      <MenuItem value=""><em>None</em></MenuItem>
+                      {typeList}
+                    </Select>
+                          
+                  </FormGroup>
+              </div>
+              <FormGroup>
+                  <Button style={{ background: '#000066' }} onClick={() => this.find()}>ค้นหา</Button>
+              </FormGroup>
+            </Form>
+
             <Table className="mt-4" >
-            <thead>
-            <tr align="center">
-              <th width="20%">ชื่อชมรม</th>
-              <th width="20%" >ประเภท</th>
-              <th width="10%">รายละเอียด</th>
-            </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>ดนตรีสากล</td>
-                <td align="center">ดนตรี</td>
-                <td align="center"><Button style={{ background: '#000066',width: '45%' }} tag={Link} to={"/ClubInfo"}>ดู</Button></td>
+              <thead>
+              <tr align="center">
+                <th width="20%">ชื่อชมรม</th>
+                <th width="20%" >ประเภท</th>
+                <th width="10%">รายละเอียด</th>
               </tr>
-              <tr>
-                <td>สมาธิ</td>
-                <td align="center">ศาสนา</td>
-                <td align="center"><Button style={{ background: '#000066' ,width: '45%' }} tag={Link} to={"/ClubInfo"}>ดู</Button></td>
-              </tr>
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {clubList}
+              </tbody>
+            </Table>
           </Container>
       </div>
     }
   }
   
-  export default FindClub;
+  export default withRouter(FindClub);

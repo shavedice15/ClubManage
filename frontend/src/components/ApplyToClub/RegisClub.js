@@ -21,7 +21,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 class RegisClub extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      club: []
+    };
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:8080/findClub/'+this.props.match.params.clubId)
+      .then(response => response.json())
+      .then(data => this.setState({club: data}));
+  }
+
   render() {
+    const {club} = this.state;
     return (
       <div>
         <AppNavbar/>
@@ -29,9 +43,9 @@ class RegisClub extends Component {
           <form>
             <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
                 <TextField
-                    id="outlined-required"
                     label="ชื่อชมรม"
-                    defaultValue="ดนตรีสากล"
+                    defaultValue=" "
+                    value = {club.clubName}
                     className={useStyles.textField}
                     margin="normal"
                     InputProps={{

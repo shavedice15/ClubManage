@@ -9,3 +9,4 @@ SUT 523495 Computer Engineering Project I
 - npm install bootstrap
 - npm i @material-ui/pickers
 - npm i react-select
+-npm install date-fns @types/date-fns

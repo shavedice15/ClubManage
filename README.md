@@ -8,4 +8,4 @@ SUT 523495 Computer Engineering Project I
 - npm install --save reactstrap react react-dom
 - npm install bootstrap
 - npm i @material-ui/pickers
-
+- npm i react-select

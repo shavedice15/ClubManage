@@ -1,4 +1,4 @@
-package com.example.demo.repository;
+package project.club.backend.repository;
 import project.club.backend.entity.*;
 
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -11,8 +11,8 @@ class App extends Component {
         <Switch>
           <Route path='/' exact={true} component={FindClub}/>
           <Route path='/FindClub' exact={true} component={FindClub}/>
-          <Route path='/ClubInfo' exact={true} component={ClubInfo}/>
-          <Route path='/RegisClub' exact={true} component={RegisClub}/>
+          <Route path='/ClubInfo/:clubId' exact={true} component={ClubInfo}/>
+          <Route path='/RegisClub/:clubId' exact={true} component={RegisClub}/>
         </Switch>
       </Router>
     )

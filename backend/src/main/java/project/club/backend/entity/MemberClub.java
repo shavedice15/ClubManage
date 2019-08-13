@@ -29,6 +29,7 @@ public class MemberClub {
     @JoinColumn(name = "MemberStatus_ID", insertable = true)
     private MemberStatus memberStatus;
 
+    public MemberClub(){}
     public MemberClub (String reason, Position position, Rank rank, MemberStatus memberStatus){
         this.reason = reason;
         this.position = position;

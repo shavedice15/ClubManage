@@ -1,22 +1,17 @@
 ﻿package project.club.backend;
-
+import project.club.backend.entity.*;
 import project.club.backend.repository.*;
-
-import project.club.backend.entity.*
 
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
-import java.util.Collections;
 import java.util.stream.Stream;
 
 @Component
 class Initializer implements CommandLineRunner {
 
-    private GroupRepository repository;
-    private EventRepository eventRepository;
+  
 
     private MemberRepository memberRepository;
     private MajorRepository majorRepository;
@@ -24,47 +19,22 @@ class Initializer implements CommandLineRunner {
     private ChangwatRepository changwatRepository;
     private AumphoeRepository aumphoeRepository;
 
-    private RegisterClubRepository registerClubRepository;
+    
 
     public Initializer(MemberRepository memberRepository, MajorRepository majorRepository,
             BranchRepository branchRepository, ChangwatRepository changwatRepository,
-            AumphoeRepository aumphoeRepository, RegisterClubRepository registerClubRepository,
-            GroupRepository repository, EventRepository eventRepository) {
+            AumphoeRepository aumphoeRepository) {
         this.memberRepository = memberRepository;
         this.majorRepository = majorRepository;
         this.branchRepository = branchRepository;
         this.changwatRepository = changwatRepository;
         this.aumphoeRepository = aumphoeRepository;
-        this.registerClubRepository = registerClubRepository;
-
-        this.repository = repository;
-        this.eventRepository = eventRepository;
 
     }
 
     @Override
     public void run(String... strings) {
 
-        /*
-         * Stream.of("Denver JUG", "Utah JUG", "Seattle JUG",
-         * "Richmond JUG").forEach(name -> { Group g = new Group();
-         * 
-         * g.setName(name); repository.save(g);
-         * 
-         * }
-         * 
-         * );
-         * 
-         * Group djug = repository.findByName("Denver JUG"); Event e = new Event();
-         * e.setTitle("Full Stack Reactive");
-         * e.setDescription("Reactive with Spring Boot + React");
-         * e.setDate(Instant.parse("2018-12-12T18:00:00.000Z"));
-         * eventRepository.save(e);
-         * 
-         * djug.setEvents(Collections.singleton(e)); repository.save(djug);
-         * 
-         * repository.findAll().forEach(System.out::println);
-         */
 
         changwat();
 

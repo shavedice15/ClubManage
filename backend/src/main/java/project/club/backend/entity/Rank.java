@@ -17,6 +17,7 @@ public class Rank {
 
     private @NonNull String rank;
 
+    public Rank(){}
     public Rank (String rank){
         this.rank = rank;
     }

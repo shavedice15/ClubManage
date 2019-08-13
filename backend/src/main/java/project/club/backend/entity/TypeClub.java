@@ -16,6 +16,9 @@ public class TypeClub {
 
     private @NonNull String typeClub;
 
+    public  TypeClub(){
+
+    }
     public TypeClub(String typeClub){
         this.typeClub = typeClub;
     }

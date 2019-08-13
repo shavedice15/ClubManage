@@ -64,6 +64,7 @@ public class Member {
     @Fetch(value=FetchMode.SUBSELECT)
     private Collection<MemberClub> memberClub;
 
+
     public void Member(){}
 
     public void setID(Long id){
@@ -212,7 +213,8 @@ public class Member {
         return aumphoeid;
     }
 
-    //--------------------------------------------------------------
+
+    
     public void setMemberClub(Collection<MemberClub> memberClub) {
         this.memberClub = memberClub;
     }
@@ -220,8 +222,6 @@ public class Member {
     public Collection<MemberClub> getMemberClub() {
         return memberClub;
     }
-    
-
 
 
 

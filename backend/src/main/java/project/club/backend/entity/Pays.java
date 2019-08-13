@@ -28,6 +28,7 @@ public class Pays {
 	private @NonNull Date datePay;
 	private @NonNull String detailPay;
 
+	public Pays (){}
 	public Pays (Club club){
         this.club = club;
     }

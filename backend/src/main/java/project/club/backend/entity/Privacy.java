@@ -19,6 +19,7 @@ public class Privacy {
 	private @NonNull Long privacyId;
 	private @NonNull String status;
 	
+	public Privacy (){}
 	public Long getPrivacyId(){
 		return privacyId ;
 	}

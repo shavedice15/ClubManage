@@ -11,6 +11,10 @@ import java.sql.Date;
 import java.time.Instant;
 import java.util.Set;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import java.util.Collection;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -56,7 +60,9 @@ public class Member {
     @JoinColumn(name = "Aumphoe_ID", insertable = true)
     private Aumphoe aumphoeid;
 
-
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @Fetch(value=FetchMode.SUBSELECT)
+    private Collection<MemberClub> memberClub;
 
     public void Member(){}
 
@@ -206,7 +212,14 @@ public class Member {
         return aumphoeid;
     }
 
+    //--------------------------------------------------------------
+    public void setMemberClub(Collection<MemberClub> memberClub) {
+        this.memberClub = memberClub;
+    }
 
+    public Collection<MemberClub> getMemberClub() {
+        return memberClub;
+    }
     
 
 

@@ -16,7 +16,7 @@ public class Position {
     private @NonNull long id;
 
     private @NonNull String position;
-
+    public Position(){}
     public Position (String position){
         this.position = position;
     }

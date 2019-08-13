@@ -27,6 +27,8 @@ public class Club {
     @JoinColumn(name = "TypeClub_ID", insertable = true)
 	private TypeClub typeClub;
 	
+	public Club (){}
+
 	public Club (String clubName, String groupFB, String pageFB, String invitation,Adviser adviser, 
 					TypeClub typeClub){
 		this.clubName = clubName;

@@ -29,6 +29,7 @@ public class Incomes {
 	private @NonNull Date dateIncome;
 	private @NonNull String detailIncome;
 
+	public Incomes(){}
 	public Incomes (Club club){
         this.club = club;
     }

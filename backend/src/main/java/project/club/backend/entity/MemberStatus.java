@@ -17,6 +17,7 @@ public class MemberStatus {
 
     private @NonNull String status;
 
+    public MemberStatus(){}
     public MemberStatus (String status){
         this.status = status;
     }

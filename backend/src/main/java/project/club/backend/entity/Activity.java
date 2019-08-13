@@ -39,6 +39,7 @@ public class Activity {
 	private @NonNull Time timeEnd;
 	private @NonNull String detail;
 
+	public Activity(){}
 	public Activity (Club club,Privacy privacy){
 		this.club = club;
 		this.privacy = privacy;

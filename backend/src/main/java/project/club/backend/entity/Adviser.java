@@ -18,6 +18,7 @@ public class Adviser {
     private @NonNull String tel;
     private @NonNull String email;
 
+    public Adviser(){}
     public Adviser (String name, String tel, String email){
         this.name = name;
         this.tel = tel;

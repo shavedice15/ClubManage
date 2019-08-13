@@ -27,17 +27,17 @@ class MemberController {
     private ChangwatRepository changwatRepository;
     private AumphoeRepository aumphoeRepository;
 
-    //private RegisterClubRepository registerClubRepository;
+   
 
     public MemberController(MemberRepository memberRepository,MajorRepository majorRepository,
                 BranchRepository branchRepository, ChangwatRepository changwatRepository,AumphoeRepository aumphoeRepository 
-                /*RegisterClubRepository registerClubRepository*/ ) {
+         ) {
         this.memberRepository  = memberRepository;
         this.majorRepository = majorRepository;
         this.branchRepository = branchRepository;
         this.changwatRepository = changwatRepository;
         this.aumphoeRepository = aumphoeRepository;
-        //this.registerClubRepository = registerClubRepository;
+      
         
     }
 

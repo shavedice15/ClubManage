@@ -6,6 +6,8 @@ import ClubInfo from './components/ApplyToClub/ClubInfo'
 import RegisClub from './components/ApplyToClub/RegisClub';
 import Member from './register/Member';
 import Club from './register/Club';
+import Login from './components/Login/Login';
+
 class App extends Component {
   render() {
     return(
@@ -17,6 +19,7 @@ class App extends Component {
           <Route path='/RegisClub/:clubId' exact={true} component={RegisClub}/>
           <Route path='/Members' exact={true} component={Member}/>
           <Route path='/Clubs' exact={true} component={Club}/>
+          <Route path='/login' exact={true} component={Login}/>
         </Switch>
       </Router>
     )

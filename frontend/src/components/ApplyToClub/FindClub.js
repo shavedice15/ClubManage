@@ -37,11 +37,17 @@ class FindClub extends Component {
   componentDidMount() {
     fetch('http://localhost:8080/typeClub')
       .then(response => response.json())
-      .then(data => this.setState({typeClub: data}));
+      .then(data => this.setState({typeClub: data}))
+      .catch((error) => {
+        console.log("Error"+ error);
+      });
 
-    fetch('http://localhost:8080/club')
+    fetch('http://localhost:8080/Clubs')
       .then(response => response.json())
-      .then(data => this.setState({club: data}));
+      .then(data => this.setState({club: data}))
+      .catch((error) => {
+        console.log("Error"+ error);
+      });
   }
 
   handleChange(event) {
@@ -50,29 +56,40 @@ class FindClub extends Component {
     const item = {...this.state.setItem};
     item[name] = value;
     this.setState({setItem: item});
-    console.log(item);
   }
 
   async find() {
     const {setItem} = this.state;
     if (setItem.nameClub !== '' & setItem.typeId == '') { //ดึงข้อมูล
       const findClub = await (
-        await fetch(`http://localhost:8080/findClubByName/${setItem.nameClub}`)).json();
+        await fetch(`http://localhost:8080/findClubByName/${setItem.nameClub}`)
+        .catch((error) => {
+          console.log("Error"+ error);
+        })).json();
       this.setState({club: findClub});
     }
     else if (setItem.nameClub == '' & setItem.typeId !== '') {
       const findClub = await (
-        await fetch(`http://localhost:8080/findClubByType/${setItem.typeId}`)).json();
+        await fetch(`http://localhost:8080/findClubByType/${setItem.typeId}`)
+        .catch((error) => {
+          console.log("Error"+ error);
+        })).json();
       this.setState({club: findClub});
     }
     else if (setItem.nameClub !== '' & setItem.typeId !== '') {
       const findClub = await (
-        await fetch(`http://localhost:8080/findClubByNameAndType/${setItem.nameClub}/${setItem.typeId}`)).json();
+        await fetch(`http://localhost:8080/findClubByNameAndType/${setItem.nameClub}/${setItem.typeId}`)
+        .catch((error) => {
+          console.log("Error"+ error);
+        })).json();
       this.setState({club: findClub});
     }
     else if (setItem.nameClub == '' & setItem.typeId == '') {
       const findClub = await (
-        await fetch(`http://localhost:8080/club`)).json();
+        await fetch(`http://localhost:8080/club`)
+        .catch((error) => {
+          console.log("Error"+ error);
+        })).json();
       this.setState({club: findClub});
     }
   }

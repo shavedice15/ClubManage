@@ -21,21 +21,58 @@ const useStyles = makeStyles(theme => ({
 }));
 
 class RegisClub extends Component {
+  emptyItem = {
+    clubId: '',
+    reason: ''
+  };
+
   constructor(props) {
     super(props);
-    this.state = {
-      club: []
-    };
+    this.state = {club: [],
+                  setItem: this.emptyItem};
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
     fetch('http://localhost:8080/findClub/'+this.props.match.params.clubId)
       .then(response => response.json())
-      .then(data => this.setState({club: data}));
+      .then(data => this.setState({club: data}))
+      .catch((error) => {
+        console.log("Error"+ error);
+      });
+  }
+
+  handleChange(event) {
+    const value = event.target.value;
+    const name = event.target.name;
+    const item = {...this.state.setItem};
+    item[name] = value;
+    this.setState({setItem: item});
+  }
+
+  async save() {
+    const {setItem} = this.state;
+    const club = await (
+      await fetch('http://localhost:8080/regisToClub/1/'+setItem.clubId+'/'+setItem.reason, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }})
+      .catch((error) => {
+        console.log("Error"+ error);
+        alert('เกิดข้อผิดพลาด กรุณาตรวจสอบข้อมูลอีกครั้ง');
+      })
+    );
+    if(club){
+      window.location = '/FindClub';
+      alert('สมัครเข้าชมรมสำเร็จ กรุณารอการตอบรับจากชมรมที่สมัคร');
+    }
   }
 
   render() {
     const {club} = this.state;
+    this.emptyItem.clubId = club.clubId;
     return (
       <div>
         <AppNavbar/>
@@ -56,7 +93,6 @@ class RegisClub extends Component {
             </div>
             <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
                 <TextField
-                    id="outlined-required"
                     label="เหตุผลที่อยากเข้าชมรม"
                     multiline
                     rows="10"
@@ -65,11 +101,13 @@ class RegisClub extends Component {
                     margin="normal"    
                     variant="outlined"
                     style={{ width: '80%'}}
+                    onChange={this.handleChange}
+                    name="reason"
                 />
             </div>
             <FormGroup></FormGroup>
             <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
-                <Button style={{ background: '#000066' ,width: '10%'}} type="submit" tag={Link} to={"/RegisClub"}>ส่ง</Button>
+                <Button style={{ background: '#000066' ,width: '10%'}} onClick={() => this.save()}>ส่ง</Button>
             </div>
           </form>
         </Container>

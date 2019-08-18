@@ -53,9 +53,11 @@ public class BackendApplication {
 			clubRepository.save(club1);
 			Club club2 = new Club("ชมรมสมาธิ","กลุ่มชมรมนั่งสมาธิ","ชมรมนั่งสมาธิ","มานั่งสมาธิกันเถอะ!",adviser2,typeClubRepository.findById(2));
 			clubRepository.save(club2);
+			Club club3 = new Club("ชมรมเทนนิส","กลุ่มตีเทนนิส","ชมรมเทนนิส","มาตีเทนนิสกันเถอะ!",adviser2,typeClubRepository.findById(3));
+			clubRepository.save(club3);
 
 			//------------------ Member --------------------
-			Member member1 = new Member(5912345L,"นางสาวมณี แก้วก้าว","แก้ว","sut","ฝันให้ไกล ไปให้ถึง",(Number)814587589,"แนางม่จ้า แก้วก้าว",(Number)97654321,"Mimi Mumu");
+			Member member1 = new Member("B5912345","นางสาวมณี แก้วก้าว","แก้ว","sut","ฝันให้ไกล ไปให้ถึง","0814587589","แนางม่จ้า แก้วก้าว","097654321","Mimi Mumu");
 			memberRepository.save(member1);
 			Username username1 = new Username("test","12345678",member1);
 			usernameRepository.save(username1);

@@ -38,7 +38,7 @@ class CheckBudget extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:8080/Clubs')
+    fetch('http://localhost:8080/api/clubs')
       .then(response => response.json())
       .then(data => this.setState({clubName: data}));
 

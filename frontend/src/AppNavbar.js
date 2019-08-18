@@ -14,13 +14,14 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import { Link } from "react-router-dom";
 
 import PersonIcon from '@material-ui/icons/Person';
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import CategoryIcon from '@material-ui/icons/Category';
 import YoutubeSearchedForIcon from '@material-ui/icons/YoutubeSearchedFor';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { Link } from "react-router-dom";
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 const drawerWidth = 240;
 
@@ -163,10 +164,17 @@ export default function PersistentDrawerLeft() {
           </ListItemIcon>
           <ListItemText primary="กิจกรรม" />
         </ListItem>
+
+        <ListItem button component={Link} to="/Clubs">
+          <ListItemIcon>
+            <AddCircleOutlineIcon />
+          </ListItemIcon>
+          <ListItemText primary="จัดตั้งชมรมใหม่" />
+        </ListItem>
         
         <Divider />
 
-        <ListItem button component={Link} to="/apply">
+        <ListItem button component={Link} to="/login">
           <ListItemIcon>
             <ExitToAppIcon />
           </ListItemIcon>

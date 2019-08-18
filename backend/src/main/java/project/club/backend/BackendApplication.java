@@ -18,7 +18,8 @@ public class BackendApplication {
 	@Bean
 	ApplicationRunner init(MemberStatusRepository memberStatusRepository, RankRepository rankRepository,
 							PositionRepository positionRepository, ClubRepository clubRepository,
-							TypeClubRepository typeClubRepository, AdviserRepository adviserRepository) {
+							TypeClubRepository typeClubRepository, AdviserRepository adviserRepository,
+							MemberRepository memberRepository, UsernameRepository usernameRepository) {
 		return args -> {
 			Stream.of("admin","member").forEach(rank -> {
 				Rank newRank = new Rank(rank);
@@ -53,6 +54,11 @@ public class BackendApplication {
 			Club club2 = new Club("ชมรมสมาธิ","กลุ่มชมรมนั่งสมาธิ","ชมรมนั่งสมาธิ","มานั่งสมาธิกันเถอะ!",adviser2,typeClubRepository.findById(2));
 			clubRepository.save(club2);
 
+			//------------------ Member --------------------
+			Member member1 = new Member(5912345L,"นางสาวมณี แก้วก้าว","แก้ว","sut","ฝันให้ไกล ไปให้ถึง",(Number)814587589,"แนางม่จ้า แก้วก้าว",(Number)97654321,"Mimi Mumu");
+			memberRepository.save(member1);
+			Username username1 = new Username("test","12345678",member1);
+			usernameRepository.save(username1);
 		};
 	}
 }

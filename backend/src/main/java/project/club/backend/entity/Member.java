@@ -53,7 +53,7 @@ public class Member {
 
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Changwat.class)
-    @JoinColumn(name = "Position_ID", insertable = true)
+    @JoinColumn(name = "Changwat_ID", insertable = true)
     private Changwat changwatid;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Aumphoe.class)
@@ -65,7 +65,21 @@ public class Member {
     private Collection<MemberClub> memberClub;
 
 
-    public void Member(){}
+    public Member(){}
+
+    public Member(long studentid, String name, String nickname, String address, String motto,
+                         Number tell, String nameparent, Number tellparent,
+                        String facebook) {
+        this.studentid = studentid;
+        this.name = name;
+        this.nickname = nickname;
+        this.address = address;
+        this.motto = motto;
+        this.tell = tell;
+        this.nameparent = nameparent;
+        this.tellparent = tellparent;
+        this.facebook = facebook;
+    }
 
     public void setID(Long id){
         this.id = id;

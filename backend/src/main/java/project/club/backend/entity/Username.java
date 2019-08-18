@@ -38,4 +38,11 @@ public class Username {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Member getMember() {
+        return this.member;
+    }
+    public void setMember(Member member) {
+        this.member = member;
+    }
 }

@@ -29,12 +29,17 @@ public class MemberClub {
     @JoinColumn(name = "MemberStatus_ID", insertable = true)
     private MemberStatus memberStatus;
 
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Club.class)
+    @JoinColumn(name = "Club_ID", insertable = true)
+    private Club club;
+
     public MemberClub(){}
-    public MemberClub (String reason, Position position, Rank rank, MemberStatus memberStatus){
+    public MemberClub (String reason, Position position, Rank rank, MemberStatus memberStatus, Club club){
         this.reason = reason;
         this.position = position;
         this.rank = rank;
         this.memberStatus = memberStatus;
+        this.club = club;
     }
     public long getId(){
         return id;
@@ -66,5 +71,12 @@ public class MemberClub {
     }
     public MemberStatus getMemberStatus(){
         return memberStatus;
+    }
+
+    public Club getClub() {
+        return this.club;
+    }
+    public void setClub(Club club) {
+        this.club = club;
     }
 }

@@ -15,6 +15,7 @@ class RegisterToClubController {
     @Autowired private RankRepository rankRepository;
     @Autowired private ClubRepository clubRepository;
     @Autowired private TypeClubRepository typeClubRepository;
+    @Autowired private MemberRepository memberRepository;
     
     @Autowired
     RegisterToClubController(MemberClubRepository memberClubRepository) {
@@ -45,12 +46,6 @@ class RegisterToClubController {
                     .collect(Collectors.toList());
     }
 
-    @GetMapping("/club")
-    Collection<Club> getClubs() {
-        return clubRepository.findAll().stream()
-                    .collect(Collectors.toList());
-    }
-
     @GetMapping("/findClub/{clubId}")
     public Club getClub(@PathVariable long clubId) {
         Club club = clubRepository.findById(clubId);
@@ -72,5 +67,21 @@ class RegisterToClubController {
     Collection<Club> getFindClubByNameAndType(@PathVariable String clubName,@PathVariable long typeId) {
         TypeClub type = typeClubRepository.findById(typeId);
         return clubRepository.findByClubNameAndTypeClub(clubName, type);
+    }
+
+    @PostMapping("/regisToClub/{memberId}/{clubId}/{reason}")
+    public Member regisToClub(@PathVariable long memberId,@PathVariable long clubId,
+                                    @PathVariable String reason) {
+        Rank rank = rankRepository.findById(2);
+        Position position = positionRepository.findById(8);
+        MemberStatus status = memberStatusRepository.findById(1);
+        Member member = memberRepository.findById(memberId);
+        Club club = clubRepository.findById(clubId);
+
+        MemberClub memberClub = new MemberClub(reason,position,rank,status,club);
+        memberClubRepository.save(memberClub);
+        member.getMemberClub().add(memberClub);
+        
+        return memberRepository.save(member);
     }
 }

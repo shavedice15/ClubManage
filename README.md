@@ -2,6 +2,8 @@
 SUT 523495 Computer Engineering Project I
 
 ## Getting started
+- npm install<br>
+or
 - npm install @material-ui/core
 - npm install --save react-router-dom
 - npm install @material-ui/icons

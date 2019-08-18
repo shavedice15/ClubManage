@@ -24,7 +24,10 @@ class ClubInfo extends Component {
   componentDidMount() {
     fetch('http://localhost:8080/findClub/'+this.props.match.params.clubId)
       .then(response => response.json())
-      .then(data => this.setState({club: data}));
+      .then(data => this.setState({club: data}))
+      .catch((error) => {
+        console.log("Error"+ error);
+      });
   }
 
   render() {

@@ -23,14 +23,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default class Member extends Component {
+
+export default class MemberEdit extends Component {
 
     emptyItem = {
-        changwatId: '',
-        aumphoeId: '',
-        majorId: '',
-        branchId: '',
+        changwatId:'',
+        aumphoeId:'',
+        majorId:'',
+        branchId:'',
 
+        aumphoeid:'',
+        branchid:'',
+        majorid:'',
+        changwatid:'',
 
 
         studentid: '',
@@ -43,23 +48,27 @@ export default class Member extends Component {
         nameparent: '',
         tellparent: '',
         facebook: '',
-        changwatname: '',
-        branch: '',
-        major: '',
-        aumphoename: ''
+
+
+
+        aumphoename:'',
+        branch:'',
+        changwatname:'',
+        major:'',
+        id:'',
+
+
     };
 
 
     constructor(props) {
         super(props);
         this.state = {
+            setItem: this.emptyItem,
             changwat: [],
             aumphoe: [],
             major: [],
             branch: [],
-            setItem: this.emptyItem,
-
-
         };
         this.handleSubmit = this.handleSubmit.bind(this);
 
@@ -68,25 +77,21 @@ export default class Member extends Component {
 
 
 
-    componentDidMount() {
-        fetch('http://localhost:8080/api/changwats')
+    async componentDidMount() {
+        if (this.props.match.params.id !== 'new') {
+            const member = await(await fetch(`http://localhost:8080/api/findMember/${this.props.match.params.id}`)).json();
+            this.setState({setItem: member});
+          }
+
+          fetch('http://localhost:8080/api/changwats')
             .then(response => response.json())
             .then(data => this.setState({ changwat: data }));
 
-        // fetch('http://localhost:8080/api/aumphoes')
-        //     .then(response => response.json())
-        //     .then(data => this.setState({ aumphoe: data }));
-
-        fetch('http://localhost:8080/api/majors')
+            fetch('http://localhost:8080/api/majors')
             .then(response => response.json())
             .then(data => this.setState({ major: data }));
-
-        // fetch('http://localhost:8080/api/branchs')
-        //     .then(response => response.json())
-        //     .then(data => this.setState({ branch: data }));
-
-
     }
+
     handleChange(event) {
         const value = event.target.value;
         console.log(value)
@@ -96,16 +101,13 @@ export default class Member extends Component {
         item[name] = value;
         this.setState({ setItem: item });
 
-        console.log(item.changwatId);
-        console.log(item.majorId);
-
-        if (item.changwatId != '') {
+        if (item.changwatId != null) {
             fetch(`http://localhost:8080/api/findAumphoe/${item.changwatId}`)
                 .then(response => response.json())
                 .then(data => this.setState({ aumphoe: data }));
         }
 
-        if (item.majorId != '') {
+        if (item.majorId != null) {
             fetch(`http://localhost:8080/api/findBranch/${item.majorId}`)
                 .then(response => response.json())
                 .then(data => this.setState({ branch: data }));
@@ -118,15 +120,16 @@ export default class Member extends Component {
         event.preventDefault();
         const { setItem } = this.state;
         console.log(setItem)
-        await fetch(`http://localhost:8080/api/memberx/${setItem.changwatId}/${setItem.aumphoeId}/${setItem.majorId}/${setItem.branchId}`, {
-            method: 'POST',
+        await fetch(`http://localhost:8080/api/memberx/${setItem.changwatId}/${setItem.aumphoeId}/${setItem.majorId}/${setItem.branchId}`,{
+            method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(setItem),
+            
         });
-        this.props.history.push('/shows');
+        // this.props.history.push('/shows');
     }
 
 
@@ -158,7 +161,7 @@ export default class Member extends Component {
             )
         });
 
-        console.log(majorlist)
+
 
         return (
             <div>
@@ -202,7 +205,7 @@ export default class Member extends Component {
                                     style={{ width: '50%', textAlign: 'center' }}
                                     input={<OutlinedInput name="changwatId" />}
                                     onAnimationEnd={this.x}
-
+                                   
                                 >
                                     <MenuItem value="" ><em>None</em></MenuItem>
                                     {changwatlist}

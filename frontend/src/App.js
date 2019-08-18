@@ -9,6 +9,8 @@ import Club from './register/Club';
 import Login from './components/Login/Login';
 import ShowDetail from './components/BudgetClub/ShowDetail';
 import CheckBudget from './components/BudgetClub/CheckBudget';
+import Manage from './components/ManageClub/Manage';
+import MyClub from './components/ManageClub/MyClub';
 
 class App extends Component {
   render() {
@@ -24,6 +26,8 @@ class App extends Component {
           <Route path='/login' exact={true} component={Login}/>
           <Route path='/CheckBudget' exact={true} component={CheckBudget}/>
           <Route path='/ShowDetail/:clubId' exact={true} component={ShowDetail}/>
+          <Route path='/manage/:clubId' exact={true} component={Manage}/>
+          <Route path='/myClub' exact={true} component={MyClub}/>
 
         </Switch>
       </Router>

@@ -17,7 +17,7 @@ class App extends Component {
     return(
       <Router>Club
         <Switch>
-          <Route path='/' exact={true} component={FindClub}/>
+          <Route path='/' exact={true} component={Login}/>
           <Route path='/FindClub' exact={true} component={FindClub}/>
           <Route path='/ClubInfo/:clubId' exact={true} component={ClubInfo}/>
           <Route path='/RegisClub/:clubId' exact={true} component={RegisClub}/>

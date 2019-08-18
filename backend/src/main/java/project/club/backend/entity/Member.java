@@ -67,7 +67,21 @@ public class Member {
     private Collection<MemberClub> memberClub;
 
 
-    public void Member(){}
+    public Member(){}
+
+    public Member(String studentid, String name, String nickname, String address, String motto,
+                    String tell, String nameparent, String tellparent,
+                        String facebook) {
+        this.studentid = studentid;
+        this.name = name;
+        this.nickname = nickname;
+        this.address = address;
+        this.motto = motto;
+        this.tell = tell;
+        this.nameparent = nameparent;
+        this.tellparent = tellparent;
+        this.facebook = facebook;
+    }
 
     public void setID(Long id){
         this.id = id;

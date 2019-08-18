@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import '../App.css';
-import AppNavbar from '../AppNavbar';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import Select from '@material-ui/core/Select';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,6 +8,9 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -162,9 +164,17 @@ export default class Member extends Component {
 
         return (
             <div>
-
-                <AppNavbar />
-                <Container>
+                <AppBar
+                    position="fixed"
+                    style={{ background: '#000066'}}
+                >
+                    <Toolbar>
+                        <Typography variant="h6" noWrap>
+                            Club Management System
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <Container style={{paddingTop:'50px'}}>
                     <Form onSubmit={this.handleSubmit}>
                         <div className="row">
                             <FormGroup className="col-md-3 mb-3">

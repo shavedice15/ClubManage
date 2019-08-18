@@ -141,7 +141,7 @@ export default function PersistentDrawerLeft() {
           <ListItemText primary="Profile" />
         </ListItem>
         
-        <ListItem button component={Link} to="/apply">
+        <ListItem button component={Link} to="/myClub">
           <ListItemIcon>
             <CategoryIcon />
           </ListItemIcon>

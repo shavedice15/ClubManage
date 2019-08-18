@@ -2,23 +2,16 @@ import React, { Component } from 'react';
 import '../../App.css';
 import { Link } from 'react-router-dom';
 import { Container, Form, FormGroup, Label, Table, Button } from 'reactstrap';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FilledInput from '@material-ui/core/FilledInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+
+import { authenticationService } from './AuthenticationService';
 
 class Login extends Component {
     emptyItem = {
@@ -29,10 +22,31 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {  user: this.emptyItem,
+                        getUser: [],
                         showPassword: false };
         this.handleChange = this.handleChange.bind(this);
         this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
         this.handleMouseDownPassword = this.handleMouseDownPassword.bind(this);
+    }
+
+    login(){
+      const {user} = this.state;
+      const {getUser} = this.state;
+      authenticationService.login(user.username, user.password)
+      .then(
+        user => {
+          const { from } = this.props.location.state || { from: { pathname: "/" } };
+          this.props.history.push(from);
+          this.setState({getUser: user});
+        }/*,
+        error => {
+          setSubmitting(false);
+          setStatus(error);
+        }*/
+      );
+      if(getUser){
+        window.location = '/FindClub';
+      }
     }
 
     handleChange(event) {
@@ -108,11 +122,11 @@ class Login extends Component {
               </form>
               <form style={{display: 'flex',  justifyContent:'center', alignItems:'center', paddingTop:'15px'}}>
               <FormGroup>
-                  <Button style={{ background: '#000066' }} onClick={() => this.find()}>Login</Button>
+                  <Button style={{ background: '#000066' }} onClick={() => this.login()}>Login</Button>
               </FormGroup>
               <FormGroup style={{width: '10px'}} ></FormGroup>
               <FormGroup>
-                  <Button style={{ background: '#000066' }} onClick={() => this.find()}>Signup</Button>
+                  <Button style={{ background: '#000066' }} tag={Link} to={"/Members"}>Signup</Button>
               </FormGroup>
               </form>
             </Container>

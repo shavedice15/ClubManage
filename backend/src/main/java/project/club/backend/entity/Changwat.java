@@ -21,11 +21,10 @@ public class Changwat {
 
     @Id
     @SequenceGenerator(name="changwat_seq",sequenceName="changwat_seq")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "changwat_seq")
     private @NonNull Long id;
-
     private @NonNull String changwat;
-
+    private @NonNull Date varx;
     public void Changwat(){
         
     }
@@ -34,7 +33,7 @@ public class Changwat {
         this.id = id;
     }
  
-    public Long getID(){
+    public Long getId(){
         return id;
     }
      
@@ -46,7 +45,11 @@ public class Changwat {
         return changwat;
     }
  
+    public void setVarx(Date varx){
+        this.varx=varx;
+    }
 
+    public Date getVarx(){return varx;}
 
 
 	

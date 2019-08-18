@@ -27,17 +27,17 @@ class MemberController {
     private ChangwatRepository changwatRepository;
     private AumphoeRepository aumphoeRepository;
 
-   
+    //private RegisterClubRepository registerClubRepository;
 
     public MemberController(MemberRepository memberRepository,MajorRepository majorRepository,
                 BranchRepository branchRepository, ChangwatRepository changwatRepository,AumphoeRepository aumphoeRepository 
-         ) {
+                /*RegisterClubRepository registerClubRepository*/ ) {
         this.memberRepository  = memberRepository;
         this.majorRepository = majorRepository;
         this.branchRepository = branchRepository;
         this.changwatRepository = changwatRepository;
         this.aumphoeRepository = aumphoeRepository;
-      
+        //this.registerClubRepository = registerClubRepository;
         
     }
 
@@ -45,4 +45,105 @@ class MemberController {
     Collection<Member> members() {
         return memberRepository.findAll();
     }
+
+    @GetMapping("/majors")
+    Collection<Major> majors() {
+        return majorRepository.findAll();
+    }
+
+    @GetMapping("/branchs")
+    Collection<Branch> branchs() {
+        return branchRepository.findAll();
+    }
+
+    @GetMapping("/aumphoes")
+    Collection<Aumphoe> aumphoes() {
+        return aumphoeRepository.findAll();
+    }
+
+    @GetMapping("/changwats")
+    Collection<Changwat> changwats() {
+        return changwatRepository.findAll();
+    }
+
+    //-------------------------------------------------------------------------
+
+    @GetMapping("/findAumphoe/{changwatId}")
+    Collection<Aumphoe> getAumphoe(@PathVariable long changwatId) {
+          Changwat ch = changwatRepository.findById(changwatId);
+         
+ 
+        return aumphoeRepository.findByChangwatid(ch);
+    }
+
+
+    @GetMapping("/findBranch/{majorId}")
+    Collection<Branch> getBranch(@PathVariable long majorId) {
+          Major m = majorRepository.findById(majorId);
+         
+ 
+        return branchRepository.findByMajorid(m);
+    }
+
+    @GetMapping("/findMember/{memberid}")
+    Member getMember(@PathVariable long memberid) {
+          Member m = memberRepository.findById(memberid);
+        return m;
+    }
+    
+
+    @PostMapping("/memberx/{changwatId}/{aumphoeId}/{majorId}/{branchId}")
+    Member createMember(@Valid @RequestBody Member member,@PathVariable int changwatId,
+    @PathVariable int aumphoeId,@PathVariable int majorId,@PathVariable int branchId) throws URISyntaxException {
+        Changwat ch = changwatRepository.findById(changwatId);
+        Aumphoe am = aumphoeRepository.findById(aumphoeId);
+        Major ma = majorRepository.findById(majorId);
+        Branch br =branchRepository.findById(branchId);
+
+        member.setChangwatid(ch);
+        member.setAumphoeid(am);
+        member.setMajorid(ma);
+        member.setBranchid(br);
+        member.setChangwatname(ch.getChangwat());
+        member.setAumphoename(am.getAumphoe());
+        member.setMajor(ma.getMajor());
+        member.setBranch(br.getBranch());
+        log.info("Request to create member: {}", member);
+        Member result = memberRepository.save(member);
+        return result;
+    }
+
+
+    @PostMapping("/changwatx")
+    Changwat createChangwat(@Valid @RequestBody Changwat changwat) throws URISyntaxException {
+        log.info("Request to create changwat: {}", changwat);
+        Changwat result = changwatRepository.save(changwat);
+        return result;
+    }
+    
+
+    @DeleteMapping("/member/{id}")
+    public ResponseEntity<?> deleteMember(@PathVariable Long id) {
+        log.info("Request to delete member: {}", id);
+        memberRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/memberx/{changwatId}/{aumphoeId}/{majorId}/{branchId}")
+    Member updateMember(@Valid @RequestBody Member member,@PathVariable int changwatId,
+    @PathVariable int aumphoeId,@PathVariable int majorId,@PathVariable int branchId) {
+        Changwat ch = changwatRepository.findById(changwatId);
+        Aumphoe am = aumphoeRepository.findById(aumphoeId);
+        Major ma = majorRepository.findById(majorId);
+        Branch br =branchRepository.findById(branchId);
+
+        member.setChangwatname(ch.getChangwat());
+        member.setAumphoename(am.getAumphoe());
+        member.setMajor(ma.getMajor());
+        member.setBranch(br.getBranch());
+        log.info("Request to update member: {}", member);
+        Member result = memberRepository.save(member);
+        return result;
+    }
+
 }

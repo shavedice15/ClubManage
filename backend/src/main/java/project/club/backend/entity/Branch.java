@@ -21,14 +21,25 @@ public class Branch {
 
     @Id
     @SequenceGenerator(name="branch_seq",sequenceName="branch_seq")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "branch_seq")
     private @NonNull Long id;
 
     private @NonNull String branch;
 
+
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Major.class)
+    @JoinColumn(name = "Major_ID", insertable = true)
+    private Major majorid;
+
+
+
+
+
     public void Branch(){
         
     }
+
+
    
     public void setId(long id){
         this.id = id;
@@ -46,7 +57,13 @@ public class Branch {
         return branch;
     }
  
+    public void setMajorid(Major id){
+        this.majorid = id;
+    }
 
+    public Major getMajorid(){
+        return majorid;
+    }
 
 	
 }

@@ -21,7 +21,7 @@ public class Major {
 
     @Id
     @SequenceGenerator(name="major_seq",sequenceName="major_seq")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "major_seq")
     private @NonNull Long id;
 
 

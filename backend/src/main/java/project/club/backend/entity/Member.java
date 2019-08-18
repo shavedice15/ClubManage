@@ -25,19 +25,19 @@ public class Member {
 
     @Id
     @SequenceGenerator(name="member_seq",sequenceName="member_seq")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq")
     private @NonNull Long id;
 
 
-    private @NonNull  long studentid;
+    private @NonNull String studentid;
     private @NonNull String name;
     private @NonNull String nickname;
     private @NonNull String address;
     private @NonNull String motto;
-    private @NonNull Date birthday;
-    private @NonNull Number tell;
+    private  Date birthday;
+    private @NonNull String tell;
     private @NonNull String nameparent;
-    private @NonNull Number tellparent;
+    private @NonNull String tellparent;
     private @NonNull String facebook;
 
 
@@ -53,33 +53,21 @@ public class Member {
 
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Changwat.class)
-    @JoinColumn(name = "Changwat_ID", insertable = true)
+    @JoinColumn(name = "Position_ID", insertable = true)
     private Changwat changwatid;
+    private String changwat;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Aumphoe.class)
     @JoinColumn(name = "Aumphoe_ID", insertable = true)
     private Aumphoe aumphoeid;
+    private String aumphoe;
 
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @Fetch(value=FetchMode.SUBSELECT)
     private Collection<MemberClub> memberClub;
 
 
-    public Member(){}
-
-    public Member(long studentid, String name, String nickname, String address, String motto,
-                         Number tell, String nameparent, Number tellparent,
-                        String facebook) {
-        this.studentid = studentid;
-        this.name = name;
-        this.nickname = nickname;
-        this.address = address;
-        this.motto = motto;
-        this.tell = tell;
-        this.nameparent = nameparent;
-        this.tellparent = tellparent;
-        this.facebook = facebook;
-    }
+    public void Member(){}
 
     public void setID(Long id){
         this.id = id;
@@ -88,11 +76,11 @@ public class Member {
     public Long getId(){return id;}
 
 
-    public void setStudentid(Long  studentid){
+    public void setStudentid(String  studentid){
         this.studentid = studentid;
     }
  
-    public Long getStudentid(){
+    public String getStudentid(){
         return studentid;
     }
 
@@ -136,11 +124,11 @@ public class Member {
         return birthday;
     }
 
-    public void setTell(Number tell){
+    public void setTell(String tell){
         this.tell = tell;
     }
  
-    public Number getTell(){
+    public String getTell(){
         return tell;
     }
 
@@ -152,11 +140,11 @@ public class Member {
         return nameparent;
     }
 
-    public void setTellparent(Number tellparent){
+    public void setTellparent(String tellparent){
         this.tellparent = tellparent;
     }
  
-    public Number getTellparent(){
+    public String getTellparent(){
         return tellparent;
     }
 
@@ -205,11 +193,6 @@ public class Member {
         return branch;
     }
     //---------------------------------------------------------------------------------------------------
-
- 
-    
-
-
     public void setChangwatid(Changwat changwatid){
         this.changwatid = changwatid;
     }
@@ -217,6 +200,11 @@ public class Member {
     public Changwat getChangwatid(){
         return changwatid;
     }
+
+    public void setChangwatname(String changwat){
+        this.changwat =changwat;
+    }
+    public String getChangwatname(){return changwat;}
 
 
     public void setAumphoeid(Aumphoe aumphoeid){
@@ -227,6 +215,11 @@ public class Member {
         return aumphoeid;
     }
 
+    public void setAumphoename(String aumphoe){
+        this.aumphoe = aumphoe;
+    }
+
+    public String getAumphoename(){return aumphoe;}
 
     
     public void setMemberClub(Collection<MemberClub> memberClub) {

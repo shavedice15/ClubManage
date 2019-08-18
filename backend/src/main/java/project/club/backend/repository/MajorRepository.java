@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface MajorRepository extends JpaRepository<Major, Long> {
     Major findById(long id);
+    Major findByMajor(String id);
 }

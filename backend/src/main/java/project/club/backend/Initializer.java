@@ -1,7 +1,7 @@
 ﻿package project.club.backend;
+
 import project.club.backend.entity.*;
 import project.club.backend.repository.*;
-
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -11,15 +11,11 @@ import java.util.stream.Stream;
 @Component
 class Initializer implements CommandLineRunner {
 
-  
-
     private MemberRepository memberRepository;
     private MajorRepository majorRepository;
     private BranchRepository branchRepository;
     private ChangwatRepository changwatRepository;
     private AumphoeRepository aumphoeRepository;
-
-    
 
     public Initializer(MemberRepository memberRepository, MajorRepository majorRepository,
             BranchRepository branchRepository, ChangwatRepository changwatRepository,
@@ -35,8 +31,9 @@ class Initializer implements CommandLineRunner {
     @Override
     public void run(String... strings) {
 
-
         changwat();
+        major();
+        System.out.print(aumphoeRepository.findById(79).getAumphoe());
 
     }
 
@@ -635,6 +632,88 @@ class Initializer implements CommandLineRunner {
         a.setAumphoe(string);
         a.setChangwatid(findby);
         aumphoeRepository.save(a);
+
+    }
+
+    public void major(String... strings) {
+        Stream.of("สำนักวิชาวิทยาศาสตร์", "สำนักวิชาเทคโนโลยีสังคม", "สำนักวิชาเทคโนโลยีการเกษตร",
+                "สำนักวิชาวิศวกรรมศาสตร์", "สำนักวิชาแพทยศาสตร์", "สำนักวิชาพยาบาลศาสตร์", "สำนักวิชาทันตแพทยศาสตร์",
+                "สำนักวิชาสาธารณสุขศาสตร์").forEach(major -> {
+                    Major m = new Major();
+
+                    m.setMajor(major);
+                    majorRepository.save(m);
+
+                    switch (major) {
+                    case "สำนักวิชาวิทยาศาสตร์":
+                        Stream.of("เคมี", "คณิตศาสตร์", "ฟิสิกส์", "ชีววิทยา", " วิทยาศาสตร์การกีฬา")
+                                .forEach(branch -> {
+                                    branch(branch, major);
+                                });
+                        break;
+
+                    case "สำนักวิชาเทคโนโลยีสังคม":
+                        Stream.of("นิเทศศาสตร์ดิจิทัล", "เทคโนโลยีสารสนเทศ", "หลักสูตรการจัดการบัณฑิต")
+                                .forEach(branch -> {
+                                    branch(branch, major);
+                                });
+                        break;
+
+                    case "สำนักวิชาเทคโนโลยีการเกษตร":
+                        Stream.of("เทคโนโลยีการผลิตพืช", "เทคโนโลยีการผลิตสัตว์", "เทคโนโลยีอาหาร",
+                                "บูรณาการเทคโนโลยีการเกษตรและการจัดการความปลอดภัยด้านอาหาร").forEach(branch -> {
+                                    branch(branch, major);
+                                });
+                        break;
+                    case "สำนักวิชาวิศวกรรมศาสตร์":
+                        Stream.of("วิศวกรรมการผลิตอัตโนมัติและหุ่นยนต์", "วิศวกรรมเกษตรและอาหาร",
+                                "วิศวกรรมขนส่งและโลจิสติกส์", "วิศวกรรมคอมพิวเตอร์", "วิศวกรรมเคมี",
+                                "วิศวกรรมเครื่องกล", "วิศวกรรมเซรามิก", "วิศวกรรมโทรคมนาคม", "วิศวกรรมธรณี",
+                                "วิศวกรรมปิโตรเลียมและเทคโนโลยีธรณี", "วิศวกรรมพอลิเมอร์", "วิศวกรรมอุตสาหการ",
+                                "วิศวกรรมเมคคาทรอนิกส์", "วิศวกรรมยานยนต์", "วิศวกรรมโยธา", "วิศวกรรมโลหการ",
+                                "วิศวกรรมสิ่งแวดล้อม", "วิศวกรรมอากาศยาน", "วิศวกรรมอิเล็กทรอนิกส์",
+                                "วิศวกรรมเครื่องกล หลักสูตรนานาชาติ",
+                                "วิศวกรรมนวัตกรรมและการออกแบบวัสดุ หลักสูตรนานาชาติ",
+                                "วิศวกรรมปิโตรเคมีและพอลิเมอร์ หลักสูตรนานาชาติ", "วิศวกรรมโยธา หลักสูตรนานาชาติ")
+                                .forEach(branch -> {
+                                    branch(branch, major);
+                                });
+                        break;
+                    case "สำนักวิชาแพทยศาสตร์":
+                        Stream.of("หลักสูตรแพทยศาสตรบัณฑิต").forEach(branch -> {
+                            branch(branch, major);
+                        });
+                        break;
+                    case "สำนักวิชาพยาบาลศาสตร์":
+                        Stream.of("หลักสูตรพยาบาลศาสตรบัณฑิต").forEach(branch -> {
+                            branch(branch, major);
+                        });
+                        break;
+                    case "สำนักวิชาทันตแพทยศาสตร์":
+                        Stream.of("หลักสูตรทันตแพทยศาสตรบัณฑิต").forEach(branch -> {
+                            branch(branch, major);
+                        });
+                        break;
+                    case "สำนักวิชาสาธารณสุขศาสตร์":
+                        Stream.of("อนามัยสิ่งแวดล้อม", "อาชีวอนามัยและความปลอดภัย").forEach(branch -> {
+                            branch(branch, major);
+                        });
+                        break;
+                    default:
+                        // Stream.of().forEach(branch -> { branch(branch, major); }); break;
+                        break;
+                    }
+
+                });
+    }
+
+    public void branch(String branch, String major) {
+        Branch b = new Branch();
+        Major findby = majorRepository.findByMajor(major);
+
+        b.setBranch(branch);
+        b.setMajorid(findby);
+        branchRepository.save(b);
 
     }
 

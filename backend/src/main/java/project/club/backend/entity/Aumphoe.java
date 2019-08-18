@@ -21,11 +21,12 @@ public class Aumphoe {
 
     @Id
     @SequenceGenerator(name="aumphoe_seq",sequenceName="aumphoe_seq")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "aumphoe_seq")
     private @NonNull Long id;
 
     private @NonNull String aumphoe;
-   @ManyToOne(fetch = FetchType.EAGER, targetEntity = Changwat.class)
+    
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Changwat.class)
     @JoinColumn(name = "Changwat_ID", insertable = true)
     private Changwat changwatid;
 

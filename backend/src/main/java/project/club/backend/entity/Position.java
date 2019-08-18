@@ -27,7 +27,7 @@ public class Position {
     public void setPosition(String position){
         this.position = position;
     }
-    public String getPorition(){
+    public String getPosition(){
         return position;
     }
     

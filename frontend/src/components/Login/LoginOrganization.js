@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { authenticationService } from './AuthenticationService';
 
-class Login extends Component {
+class LoginOrganization extends Component {
     emptyItem = {
         username: '',
         password: ''
@@ -45,7 +45,7 @@ class Login extends Component {
         }*/
       );
       if(getUser){
-        window.location = '/FindClub';
+        window.location = '/CheckBudget';
       }
     }
 
@@ -75,14 +75,14 @@ class Login extends Component {
           <div>
             <AppBar
                 position="fixed"
-                style={{ background: '#000066' }}
+                style={{ background: '#FFB6C1' }}
             >
                 <Toolbar>
-                    <Typography variant="h6" style={{ width: '90%'}} noWrap>
+                    <Typography variant="h6" style={{ color: '#000066', width: '90%' }} noWrap>
                         Club Management System
                     </Typography>
                     <div>
-                      <Button style={{ background: '#FFB6C1', color:'#000066', width: '150px' }} tag={Link} to={"/loginOrganization"}>สำหรับองค์การ</Button>
+                      <Button style={{ background: '#000066', width: '150px' }} tag={Link} to={"/login"}>สำหรับนักศึกษา</Button>
                     </div>
                 </Toolbar>
             </AppBar>
@@ -125,12 +125,9 @@ class Login extends Component {
               </form>
               <form style={{display: 'flex',  justifyContent:'center', alignItems:'center', paddingTop:'15px'}}>
               <FormGroup>
-                  <Button style={{ background: '#000066' }} onClick={() => this.login()}>Login</Button>
+                  <Button style={{ background: '#FFB6C1', color:'#000066' }} onClick={() => this.login()}>Login</Button>
               </FormGroup>
               <FormGroup style={{width: '10px'}} ></FormGroup>
-              <FormGroup>
-                  <Button style={{ background: '#000066' }} tag={Link} to={"/Members"}>Signup</Button>
-              </FormGroup>
               </form>
             </Container>
             
@@ -138,4 +135,4 @@ class Login extends Component {
         );
       }
 }
-export default Login;
+export default LoginOrganization;

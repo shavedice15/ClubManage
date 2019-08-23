@@ -65,18 +65,15 @@ class RegisterToClubController {
     }
 
     @PostMapping("/regisToClub/{memberId}/{clubId}/{reason}")
-    public Member regisToClub(@PathVariable long memberId,@PathVariable long clubId,
+    public MemberClub regisToClub(@PathVariable long memberId,@PathVariable long clubId,
                                     @PathVariable String reason) {
-        Rank rank = rankRepository.findById(2);
         Position position = positionRepository.findById(8);
         MemberStatus status = memberStatusRepository.findById(1);
         Member member = memberRepository.findById(memberId);
         Club club = clubRepository.findById(clubId);
 
-        MemberClub memberClub = new MemberClub(reason,position,rank,status,club);
-        memberClubRepository.save(memberClub);
-        member.getMemberClub().add(memberClub);
+        MemberClub memberClub = new MemberClub(reason,position,status,club,member);
         
-        return memberRepository.save(member);
+        return memberClubRepository.save(memberClub);
     }
 }

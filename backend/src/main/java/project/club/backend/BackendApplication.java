@@ -8,6 +8,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
 @SpringBootApplication
 public class BackendApplication {
 
@@ -19,7 +22,8 @@ public class BackendApplication {
 	ApplicationRunner init(MemberStatusRepository memberStatusRepository, RankRepository rankRepository,
 							PositionRepository positionRepository, ClubRepository clubRepository,
 							TypeClubRepository typeClubRepository, AdviserRepository adviserRepository,
-							MemberRepository memberRepository, UsernameRepository usernameRepository) {
+							MemberRepository memberRepository, UsernameRepository usernameRepository,
+							BudgetRepository budgetRepository, MemberClubRepository memberClubRepository){
 		return args -> {
 			Stream.of("admin","member").forEach(rank -> {
 				Rank newRank = new Rank(rank);
@@ -29,7 +33,14 @@ public class BackendApplication {
 			Stream.of("ประธานชมรม","รองประธานชมรม","เลขานุการ","เหรัญญิก","นายทะเบียน","ประชาสัมพันธ์",
 						"พัสดุ","สมาชิก").forEach(position -> {
 				Position newPosition = new Position(position);
-				positionRepository.save(newPosition);
+				if(position == "สมาชิก") {
+					newPosition.setRank(rankRepository.findById(2));
+					positionRepository.save(newPosition);
+				}
+				else {
+					newPosition.setRank(rankRepository.findById(1));
+					positionRepository.save(newPosition);
+				}
 			});
 
 			Stream.of("รอการตอบรับ","เป็นสมาชิก").forEach(memberStatus -> {
@@ -61,6 +72,27 @@ public class BackendApplication {
 			memberRepository.save(member1);
 			Username username1 = new Username("test","12345678",member1);
 			usernameRepository.save(username1);
+
+			//----------------------- Budget ----------------------
+			Club club = clubRepository.findById(1);
+			Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse("2540-08-12");
+			Budget  budget1 = new Budget(club,10000,0,date1,"งบประจำภาคการศึกษา");
+			budgetRepository.save(budget1);
+
+			Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse("2540-08-14");
+			Budget  budget2 = new Budget(club,0,200,date2,"ซื้อขนมกิจกรรม");
+			budgetRepository.save(budget2);
+
+			//-------------------- MemberClub -------------------
+        	Position position1 = positionRepository.findById(8);
+        	MemberStatus status1 = memberStatusRepository.findById(1);
+			MemberClub memberClub1 = new MemberClub("อยากเล่นดนตรี",position1,status1,club1,member1);
+			memberClubRepository.save(memberClub1);
+
+        	Position position2 = positionRepository.findById(1);
+        	MemberStatus status2 = memberStatusRepository.findById(2);
+			MemberClub memberClub2 = new MemberClub("อยากจิตใจสงบ",position2,status2,club2,member1);
+			memberClubRepository.save(memberClub2);
 		};
 	}
 }

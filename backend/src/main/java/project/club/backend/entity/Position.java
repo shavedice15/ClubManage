@@ -16,6 +16,11 @@ public class Position {
     private @NonNull long id;
 
     private @NonNull String position;
+
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Rank.class)
+    @JoinColumn(name = "Rank_ID", insertable = true)
+    private Rank rank;
+    
     public Position(){}
     public Position (String position){
         this.position = position;
@@ -29,6 +34,13 @@ public class Position {
     }
     public String getPosition(){
         return position;
+    }
+
+    public void setRank(Rank rank){
+        this.rank = rank;
+    }
+    public Rank getRank(){
+        return rank;
     }
     
 }

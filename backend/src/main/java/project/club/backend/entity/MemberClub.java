@@ -21,9 +21,7 @@ public class MemberClub {
     @JoinColumn(name = "Position_ID", insertable = true)
     private Position position;
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Rank.class)
-    @JoinColumn(name = "Rank_ID", insertable = true)
-    private Rank rank;
+    
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = MemberStatus.class)
     @JoinColumn(name = "MemberStatus_ID", insertable = true)
@@ -33,13 +31,18 @@ public class MemberClub {
     @JoinColumn(name = "Club_ID", insertable = true)
     private Club club;
 
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Member.class)
+    @JoinColumn(name = "Member_ID", insertable = true)
+    private Member member;
+
     public MemberClub(){}
-    public MemberClub (String reason, Position position, Rank rank, MemberStatus memberStatus, Club club){
+    public MemberClub (String reason, Position position, MemberStatus memberStatus, Club club,
+                        Member member){
         this.reason = reason;
         this.position = position;
-        this.rank = rank;
         this.memberStatus = memberStatus;
         this.club = club;
+        this.member = member;
     }
     public long getId(){
         return id;
@@ -59,13 +62,6 @@ public class MemberClub {
         return position;
     }
 
-    public void setRank(Rank rank){
-        this.rank = rank;
-    }
-    public Rank getRank(){
-        return rank;
-    }
-
     public void setMemberStatus(MemberStatus memberStatus){
         this.memberStatus = memberStatus;
     }
@@ -78,5 +74,12 @@ public class MemberClub {
     }
     public void setClub(Club club) {
         this.club = club;
+    }
+
+    public Member getMember() {
+        return this.member;
+    }
+    public void setMember(Member member) {
+        this.member = member;
     }
 }

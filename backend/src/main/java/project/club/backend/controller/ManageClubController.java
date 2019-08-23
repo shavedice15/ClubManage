@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 class ManageClubController {
     @Autowired private MemberClubRepository memberClubRepository;
     @Autowired private UsernameRepository usernameRepository;
+    @Autowired private ClubRepository clubRepository;
+    @Autowired private MemberStatusRepository memberStatusRepository;
 
     @GetMapping("/username/{username}")
     public Username getUsername(@PathVariable String username) {
@@ -18,15 +20,32 @@ class ManageClubController {
         return user;
     }
 
-    @GetMapping("/usernameClub/{username}")
+    @GetMapping("/myClub/{username}")
     Collection<MemberClub> getUsernameClub(@PathVariable String username) {
         Username user = usernameRepository.findByUsername(username);
-        return user.getMember().getMemberClub();
+        Collection<MemberClub> memberClub = memberClubRepository.findByMember(user.getMember());
+        return memberClub;
     }
 
     @GetMapping("/username/{username}/{password}")
     public Username getUser(@PathVariable String username, @PathVariable String password) {
         Username user = usernameRepository.findByUsernameAndPassword(username,password);
         return user;
+    }
+
+    @GetMapping("/memberClub/{clubId}")
+    Collection<MemberClub> getMemberClub(@PathVariable long clubId) {
+        Club club = clubRepository.findById(clubId);
+        MemberStatus status = memberStatusRepository.findById(2);
+        Collection<MemberClub> memberClub = memberClubRepository.findByClubAndMemberStatus(club,status);
+        return memberClub;
+    }
+
+    @GetMapping("/acceptMemberClub/{clubId}")
+    Collection<MemberClub> getMemberClubForAccept(@PathVariable long clubId) {
+        Club club = clubRepository.findById(clubId);
+        MemberStatus status = memberStatusRepository.findById(1);
+        Collection<MemberClub> memberClub = memberClubRepository.findByClubAndMemberStatus(club,status);
+        return memberClub;
     }
 }

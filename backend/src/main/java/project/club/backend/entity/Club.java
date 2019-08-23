@@ -23,9 +23,6 @@ public class Club {
 	private String objective;
 	private String activites;
 
-
-
-
 	private @NonNull String pageFB;
 
 	private @NonNull String invitation;

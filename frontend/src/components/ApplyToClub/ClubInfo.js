@@ -17,7 +17,8 @@ class ClubInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      club: []
+      club: [],
+      isDisabled: false
     };
   }
 
@@ -27,7 +28,14 @@ class ClubInfo extends Component {
       .then(data => this.setState({club: data}))
       .catch((error) => {
         console.log("Error"+ error);
-      });
+    });
+    
+    fetch('http://localhost:8080/findMyClub/'+this.props.match.params.clubId+'/test')
+      .then(response => response.json())
+      .then(data => this.setState({isDisabled: true}))
+      .catch((error) => {
+        console.log("Error"+ error);
+    });
   }
 
   render() {
@@ -110,7 +118,8 @@ class ClubInfo extends Component {
                 />
                 <FormGroup></FormGroup>
                 <FormGroup>
-                  <Button style={{ background: '#000066' }} type="submit" tag={Link} to={"/RegisClub/" + club.clubId}>สมัคร</Button>
+                  <Button style={{ background: '#000066' }} type="submit" disabled = {this.state.isDisabled} 
+                        tag={Link} to={"/RegisClub/" + club.clubId}>สมัคร</Button>
                 </FormGroup>
               </FormGroup>
             </div>

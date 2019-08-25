@@ -11,19 +11,12 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles(theme => ({
-    textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-    }
-}));
 
 class Manage extends Component {
   constructor(props) {
     super(props);
-    this.state = {club: []};
+    this.state = {club: [],
+                  position: []};
   }
 
   componentDidMount() {
@@ -33,22 +26,61 @@ class Manage extends Component {
       .catch((error) => {
         console.log("Error"+ error);
       });
+    
+      fetch('http://localhost:8080/findMyClub/'+this.props.match.params.clubId+'/test')
+      .then(response => response.json())
+      .then(data => this.setState({position: data.position}))
+      .catch((error) => {
+        console.log("Error"+ error);
+    });
+    
+  }
+
+  checkPosition() {
+    const {position} = this.state;
+    if(position.position == 'สมาชิก') {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   render() {
+    const bottonStyle = {
+      background: '#000066' ,
+      maxWidth: '200px',
+      height:'50px',
+      marginRight: '10px',
+      frontSize:'5px'
+    };
+
     const {club} = this.state;
+    const {memberDetail} = this.state;
+    console.log(club);
+    console.log(memberDetail);
     return (
       <div>
         <AppNavbar/>
         <Container>
           <form>
-            <div style={{float: 'left', width:'45%', paddingBottom:'50px'}} >
+            <div style={{float: 'left', width:'50%', paddingBottom:'50px'}} >
               <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
                   <TextField
                       label="ชื่อชมรม"
                       defaultValue=" "
                       value = {club.clubName}
-                      className={useStyles.textField}
+                      margin="normal"
+                      style={{marginRight:'10px'}}
+                      InputProps={{
+                        readOnly: true,
+                      }}          
+                      variant="outlined"
+                  />
+                  <TextField
+                      label="อาจารย์ที่ปรึกษาชมรม"
+                      defaultValue=" "
+                      value = {club.advisername}
                       margin="normal"
                       InputProps={{
                         readOnly: true,
@@ -61,20 +93,17 @@ class Manage extends Component {
                       label="Page Facebook"
                       defaultValue=" "
                       value = {club.pageFB}
-                      className={useStyles.textField}
                       margin="normal"
+                      style={{marginRight:'10px'}}
                       InputProps={{
                         readOnly: true,
                       }}          
                       variant="outlined"
                   />
-              </div>
-              <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
                   <TextField
                       label="Group Facebook"
                       defaultValue=" "
                       value = {club.groupFB}
-                      className={useStyles.textField}
                       margin="normal"
                       InputProps={{
                         readOnly: true,
@@ -82,23 +111,28 @@ class Manage extends Component {
                       variant="outlined"
                   />
               </div>
-              <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', paddingTop:'30px'}}>
-                  <Button style={{ background: '#000066' ,width: '200px', height:'50px'}} onClick={() => this.save()}>สร้างกิจกรรมใหม่</Button>
+              
+                <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', paddingTop:'30px'}}>
+                    <Button style={bottonStyle} tag={Link} to={"/clubMember/"+club.clubId}>รายชื่อสมาชิก</Button>
+                </div>
               </div>
-            </div>
-            <div style={{float:'left', width:'45%', paddingBottom:'50px'}}>
+
+            <div style={{float:'left', width:'50%', paddingBottom:'50px'}}>
               <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', paddingTop:'30px'}}>
-                  <Button style={{ background: '#000066' ,width: '200px', height:'50px'}} onClick={() => this.save()}>รับสมาชิก</Button>
+                  <Button style={bottonStyle} disabled = {this.checkPosition()}
+                          tag={Link} to={"/acceptMember/"+club.clubId}>รับสมาชิก</Button>
+
+                  <Button style={bottonStyle} disabled = {this.checkPosition()}
+                          tag={Link} to={"/editClub/"+club.clubId}>แก้ไขข้อมูล</Button>
               </div>
+              
               <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', paddingTop:'30px'}}>
-                  <Button style={{ background: '#000066' ,width: '200px', height:'50px'}} onClick={() => this.save()}>แก้ไขข้อมูล</Button>
+                  <Button style={bottonStyle} disabled = {this.checkPosition()}
+                          tag={Link} to={"/clubMember/"+club.clubId}>งบการเงิน</Button>
+                  <Button style={bottonStyle} disabled = {this.checkPosition()}
+                          onClick={() => this.save()}>สร้างกิจกรรมใหม่</Button>
               </div>
-              <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', paddingTop:'30px'}}>
-                  <Button style={{ background: '#000066' ,width: '200px', height:'50px'}} onClick={() => this.save()}>รายชื่อสมาชิก</Button>
-              </div>
-              <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', paddingTop:'30px'}}>
-                  <Button style={{ background: '#000066' ,width: '200px', height:'50px'}} onClick={() => this.save()}>งบการเงิน</Button>
-              </div>
+              
             </div>
           </form>
 

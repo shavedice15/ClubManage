@@ -1,4 +1,4 @@
-﻿package project.club.backend;
+package project.club.backend;
 import project.club.backend.entity.*;
 import project.club.backend.repository.*;
 import java.util.stream.Stream;
@@ -73,6 +73,11 @@ public class BackendApplication {
 			Username username1 = new Username("test","12345678",member1);
 			usernameRepository.save(username1);
 
+			Member member2 = new Member("B599765","นางสาวตะวัน ยามเช้า","พลอย","sut","อิอิ","0865412306","นางมิมิ ยามเช้า","0985632140","tawan fgh" );
+			memberRepository.save(member2);
+			Username username2 = new Username("test2","12345678",member2);
+			usernameRepository.save(username2);
+
 			//----------------------- Budget ----------------------
 			Club club = clubRepository.findById(1);
 			Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse("2019-08-12");
@@ -82,11 +87,17 @@ public class BackendApplication {
 			Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse("2019-08-14");
 			Budget  budget2 = new Budget(club,0,200,date2,"ซื้อขนมกิจกรรม");
 			budgetRepository.save(budget2);
-		//-------------------- MemberClub -------------------
+
+			//-------------------- MemberClub -------------------
         	Position position1 = positionRepository.findById(8);
-        	MemberStatus status1 = memberStatusRepository.findById(1);
+        	MemberStatus status1 = memberStatusRepository.findById(2);
 			MemberClub memberClub1 = new MemberClub("อยากเล่นดนตรี",position1,status1,club1,member1);
 			memberClubRepository.save(memberClub1);
+
+			Position position3 = positionRepository.findById(8);
+        	MemberStatus status3 = memberStatusRepository.findById(1);
+			MemberClub memberClub3 = new MemberClub("อยากนั่งสมาธิ",position3,status3,club2,member2);
+			memberClubRepository.save(memberClub3);
 
         	Position position2 = positionRepository.findById(1);
         	MemberStatus status2 = memberStatusRepository.findById(2);

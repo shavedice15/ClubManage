@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 public interface ClubRepository extends JpaRepository <Club,Long> {
     @Query(value = "SELECT c FROM Club c WHERE c.clubName LIKE %:clubName%")
     Collection<Club> findByClubName(@Param("clubName") String clubName);
-
+    
     Collection<Club> findByTypeClub(TypeClub type);
 
     @Query(value = "SELECT c FROM Club c WHERE c.clubName LIKE %:clubName% AND c.typeClub = :type")

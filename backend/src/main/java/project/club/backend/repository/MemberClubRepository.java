@@ -9,5 +9,7 @@ import java.util.Collection;
 public interface MemberClubRepository extends JpaRepository <MemberClub,Long> {
     MemberClub findById(long id);
     Collection<MemberClub> findByClubAndMemberStatus(Club club, MemberStatus status);
+    Collection<MemberClub> findByClubAndMemberStatusOrderByPositionAsc(Club club, MemberStatus status);
     Collection<MemberClub> findByMember(Member member);
+    MemberClub findByClubAndMember(Club club, Member member);
 }

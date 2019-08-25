@@ -28,7 +28,7 @@ class MyClub extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:8080/usernameClub/test'/*+this.props.match.params.clubId*/)
+    fetch('http://localhost:8080/myClub/test'/*+this.props.match.params.clubId*/)
       .then(response => response.json())
       .then(data => this.setState({club: data}))
       .catch((error) => {
@@ -36,11 +36,18 @@ class MyClub extends Component {
       });
   }
 
+  async detail(status,clubId) {
+    if(status == 'รอการตอบรับ'){
+      window.location = '/ClubInfo/'+clubId;
+    }
+    else if(status == 'เป็นสมาชิก') {
+      window.location = '/manage/'+clubId;
+    }
+  }
+
   render() {
     const {club} = this.state;
-    //const {memberClub} = this.state;
     console.log(club);
-    //console.log(memberClub);
     
     const clubList = club.map(club => {
         return (
@@ -49,7 +56,8 @@ class MyClub extends Component {
             <td align="center">{club.position.position}</td>
             <td align="center">{club.memberStatus.status}</td>
             <td align="center">
-              <Button style={{ background: '#000066',width: '40px' }} tag={Link} to={"/manage/"+club.club.clubId}>
+              <Button style={{ background: '#000066',width: '40px' }} 
+                  onClick={() => this.detail(club.memberStatus.status,club.club.clubId)}>
                 ดู
               </Button>
             </td>

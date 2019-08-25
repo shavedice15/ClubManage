@@ -115,7 +115,7 @@ export default function PersistentDrawerLeft() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Club Management System
+            Club Management System (นักศึกษาทั่วไป)
           </Typography>
         </Toolbar>
       </AppBar>

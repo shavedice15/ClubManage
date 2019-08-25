@@ -11,6 +11,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -63,8 +66,27 @@ class CheckBudget extends Component {
     console.log(clubName);
 
       return <div>
-          <AppNavbar/>
+       {/*  <AppNavbar/>*/}
+       <AppBar
+                position="fixed"
+                style={{ background: '#FFB6C1' }}
+            >
+                <Toolbar>
+                    <Typography variant="h6" style={{ color: '#000066', width: '90%' }} noWrap>
+                        Club Management System
+                    </Typography>
+                  
+                </Toolbar>
+            </AppBar>
           <Container>
+          <div className="row">
+            <FormGroup className="col-md-5 mb-3">
+              </FormGroup>
+            </div>
+            <div className="row">
+            <FormGroup className="col-md-5 mb-3">
+              </FormGroup>
+            </div> 
           <Form onSubmit={this.handleSubmit}>
             <div className="row">
             <FormGroup className="col-md-4 mb-3" >
@@ -83,7 +105,7 @@ class CheckBudget extends Component {
 
             </div>
             <FormGroup>
-                <Button style={{ background: '#000066',width: '15%' }} tag={Link} to={"/ShowDetail/"+setItem.nameId}>ค้นหา</Button>
+                <Button style={{ background: '#FFB6C1',color: '#000066',width: '15%' }} tag={Link} to={"/ShowDetail/"+setItem.nameId}>ค้นหา</Button>
             </FormGroup>
             </Form>
           </Container>

@@ -12,7 +12,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Table from '@material-ui/core/Table';
-
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 
 const useStyles = makeStyles(theme => ({
@@ -30,25 +32,22 @@ const useStyles = makeStyles(theme => ({
 class ShowDetail extends Component {
 
   emptyItem = {
-   date: ''
+   startDate: '',
+   endDate: ''
   };
   
   constructor(props) {
     super(props);
-    this.state = {pay: [],
+    this.state = {budget: [],
                   club: [],
                   setItem: this.emptyItem};
     this.handleChange = this.handleChange.bind(this);
     
   }
   componentDidMount() {//ดึงข้อมูล
-    fetch('http://localhost:8080/findClub/'+this.props.match.params.clubId)
+    fetch('http://localhost:8080/findBudgetsByClub/'+this.props.match.params.clubId)
       .then(response => response.json())
-      .then(data => this.setState({club: data}));
-
-    fetch('http://localhost:8080/Pays/'+this.props.match.params.clubId)
-      .then(response => response.json())
-      .then(data => this.setState({pay: data}));
+      .then(data => this.setState({budget: data}));
 
   }
   handleChange(event) {//เวลาพิมพ์ข้อมูลให้ข้อมูลมันเข้าไปอยู่ในตัวแปร
@@ -62,34 +61,62 @@ class ShowDetail extends Component {
 
   async find() {
     const {setItem} = this.state;
-    //ดึงข้อมูล
-    const findPays = await (
-      await fetch(`http://localhost:8080/Budgets/${setItem.clubId}/${setItem.date}`)).json();//สร้างตัวแปรที่เก็บวันที่  ส่งคลับไอดีวันที่เริ่ม วันที่สิ้นสุดไปค้นหา
-      this.setState({pay: findPays});
+    const findBudget = await (
+      await fetch(`http://localhost:8080/findByClubAndDate/${this.props.match.params.clubId}/${setItem.startDate}/${setItem.endDate}`)
+      .catch((error) => {
+        console.log("Error"+ error);
+      })).json();
+    this.setState({budget: findBudget});
   }
   
     render() {
-      const {pay} = this.state;
+      const {budget} = this.state;
       const {club} = this.state;
     
    
 
-    /*const PayList = pay.map(pay => {
+    const PayList = budget.map(budget => {
         return (
           <tr>
-            <td>{pay.clubNameดูตามชื่อตัวแปรหลังบ้าน}</td>
-            <td align="center">{club.typeClubเอนติตี้.typeClubข้างใน}</td>
-            <td align="center">
-              
-            </td>
+            <td align="center">{budget.date}</td>{/*.ดูตามชื่อตัวแปรหลังบ้าน */}
+            <td align="center">{budget.income}</td>
+            <td align="center">{budget.pay}</td>
+            <td align="center">{budget.detail}</td>
           </tr>
         )
       });
-      console.log(club);*/
+      {/*<td align="center">{club.typeClubเอนติตี้.typeClubข้างใน}</td> */}
+      console.log(budget);
 
       return <div>
-          <AppNavbar/>
+      
+         <AppBar
+                position="fixed"
+                style={{ background: '#FFB6C1' }}
+            >
+                <Toolbar>
+                    <Typography variant="h6" style={{ color: '#000066', width: '90%' }} noWrap>
+                        Club Management System
+                    </Typography>
+                  
+                </Toolbar>
+            </AppBar>
+            
           <Container>
+            <div className="row">
+            <FormGroup className="col-md-5 mb-3">
+              </FormGroup>
+            </div>
+            <div className="row">
+            <FormGroup className="col-md-5 mb-3">
+              </FormGroup>
+            </div> <div className="row">
+            <FormGroup className="col-md-5 mb-3">
+              </FormGroup>
+            </div> <div className="row">
+            <FormGroup className="col-md-5 mb-3">
+              </FormGroup>
+            </div>
           <Form onSubmit={this.handleSubmit}>
             <div className="row">
             
@@ -98,6 +125,8 @@ class ShowDetail extends Component {
                   id="date"
                   label="วันที่"
                   type="date"
+                  onChange={this.handleChange}
+                  name="startDate"
                   InputLabelProps={{
                   shrink: true,
                  }}
@@ -106,25 +135,27 @@ class ShowDetail extends Component {
                   id="date"
                   label="ถึงวันที่"
                   type="date"
+                  onChange={this.handleChange}
+                  name="endDate"
                   InputLabelProps={{
                   shrink: true,
                  }}
                 />
-                <Button style={{ background: '#000066',width: '15%' }} onClick={() => this.find()}>ค้นหา</Button>{' '}
+                <Button style={{ background: '#FFB6C1',color: '#000066',width: '15%' }} onClick={() => this.find()}>ค้นหา</Button>{' '}
               </FormGroup>
             </div>
             </Form>
             <Table className="mt-4" >
               <thead>
-              <tr align="center">
+              <tr style={{ background: '#FFB6C1' }} align="center">
                 <th width="20%">วันที่</th>
                 <th width="20%" >รายรับ</th>
                 <th width="10%">รายจ่าย</th>
-                <th width="10%">ใบเสร็จ</th>
+                <th width="10%">รายละเอียด</th>
               </tr>
               </thead>
               <tbody>
-                {/*{PayList}*/}
+                {PayList}
               </tbody>
             </Table>
           </Container>

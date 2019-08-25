@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -30,8 +32,11 @@ class BudgetController {
     }
 
     @GetMapping("/findByClubAndDate/{clubId}/{startDate}/{endDate}")
-    public Collection<Budget> findByClubAndDate(@PathVariable long clubId,@PathVariable Date startDate,@PathVariable Date endDate) {
+    public Collection<Budget> findByClubAndDate(@PathVariable long clubId,@PathVariable String startDate,
+                                                    @PathVariable String endDate) throws ParseException{
+        Date dateStart = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
+        Date dateEnd = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
         Club club = clubRepository.findById(clubId);
-        return budgetRepository.findByClubAndDate(club, startDate, endDate);
+        return budgetRepository.findByClubAndDate(club, dateStart, dateEnd);
     }
 }

@@ -1,3 +1,39 @@
 .container, .container-fluid {
   margin-top: 20px;
 }
+.my-fieldset{
+  border: 2px solid;
+  margin: 30px;
+  color: #000066;
+}
+.login-legend{
+  margin: 30px;
+  width: 115px;
+  color: black;
+}
+
+.legend{
+  margin: 30px;
+  width: 115px;
+  color: black;
+}
+
+.a{
+  margin: 30px;
+  
+}
+
+.b{
+  width: 300px;
+  
+}
+
+.d{
+  width: 300px;
+  margin: 30px;
+}
+
+.c{
+  color: black;
+}
+

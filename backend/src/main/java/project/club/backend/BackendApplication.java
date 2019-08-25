@@ -1,4 +1,4 @@
-package project.club.backend;
+﻿package project.club.backend;
 import project.club.backend.entity.*;
 import project.club.backend.repository.*;
 import java.util.stream.Stream;
@@ -75,15 +75,14 @@ public class BackendApplication {
 
 			//----------------------- Budget ----------------------
 			Club club = clubRepository.findById(1);
-			Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse("2540-08-12");
+			Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse("2019-08-12");
 			Budget  budget1 = new Budget(club,10000,0,date1,"งบประจำภาคการศึกษา");
 			budgetRepository.save(budget1);
 
-			Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse("2540-08-14");
+			Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse("2019-08-14");
 			Budget  budget2 = new Budget(club,0,200,date2,"ซื้อขนมกิจกรรม");
 			budgetRepository.save(budget2);
-
-			//-------------------- MemberClub -------------------
+		//-------------------- MemberClub -------------------
         	Position position1 = positionRepository.findById(8);
         	MemberStatus status1 = memberStatusRepository.findById(1);
 			MemberClub memberClub1 = new MemberClub("อยากเล่นดนตรี",position1,status1,club1,member1);

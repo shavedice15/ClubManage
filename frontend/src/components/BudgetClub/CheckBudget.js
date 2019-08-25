@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import AppNavbar from '../../AppNavbar';
+import AppNavBarOrganization from '../../AppNavBarOrganization';
 import { Link } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
@@ -66,18 +67,7 @@ class CheckBudget extends Component {
     console.log(clubName);
 
       return <div>
-       {/*  <AppNavbar/>*/}
-       <AppBar
-                position="fixed"
-                style={{ background: '#FFB6C1' }}
-            >
-                <Toolbar>
-                    <Typography variant="h6" style={{ color: '#000066', width: '90%' }} noWrap>
-                        Club Management System
-                    </Typography>
-                  
-                </Toolbar>
-            </AppBar>
+      <AppNavBarOrganization/>
           <Container>
           <div className="row">
             <FormGroup className="col-md-5 mb-3">

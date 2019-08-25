@@ -15,6 +15,9 @@ import LoginOrganization from './components/Login/LoginOrganization';
 import Show from './register/Show';
 import MemberEdit from './register/MemberEdit';
 import Showclub from './register/Showclub';
+import ClubMember from './components/ManageClub/ClubMember';
+import EditClubInfo from './components/ManageClub/EditClubInfo';
+import AcceptMember from './components/ManageClub/AcceptMember';
 
 class App extends Component {
   render() {
@@ -36,6 +39,9 @@ class App extends Component {
           <Route path='/shows' exact={true} component={Show}/>
           <Route path='/members/:id' exact={true} component={MemberEdit}/>
           <Route path='/showsclub' exact={true} component={Showclub}/>
+          <Route path='/clubMember/:clubId' exact={true} component={ClubMember}/>
+          <Route path='/editClub/:clubId' exact={true} component={EditClubInfo}/>
+          <Route path='/acceptMember/:clubId' exact={true} component={AcceptMember}/>
         </Switch>
       </Router>
     )

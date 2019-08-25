@@ -24,9 +24,9 @@ const techCompanies = [
 export default class Club extends Component {
 
     emptyItem = {
-        majorId:'',
-        typeId:'',
-        adviserId:'',
+        majorId: '',
+        typeId: '',
+        adviserId: '',
 
 
         clubName: '',
@@ -96,7 +96,7 @@ export default class Club extends Component {
             },
             body: JSON.stringify(setItem),
         });
-        this.props.history.push('/clubs');
+        this.props.history.push('/showsclub');
     }
 
 
@@ -126,107 +126,121 @@ export default class Club extends Component {
             )
         });
 
-        
+
         return (
             <div>
                 <AppNavbar />
                 <Container>
                     <Form onSubmit={this.handleSubmit}>
-                        <div className="row">
-                            <FormGroup className="col-md-3 mb-3">
-                                <Label for="studentid">รหัสนักศึกษา</Label>
-                                <Input type="text" name="studentid" id="studentid" value={setItem.studentid || ''}
-                                    onChange={this.handleChange}
-                                    autoComplete="studentid" placeholder="รหัสนักศึกษา" />
-                            </FormGroup>
-                            <FormGroup className="col-md-6 mb-3">
-                                <Label for="studentname">ชื่อ-สกุล</Label>
-                                <Input type="text" name="studentname" id="studentname" value={setItem.studentname || ''}
-                                    onChange={this.handleChange}
-                                    autoComplete="studentname" placeholder="ชื่อ-สกุล" />
-                            </FormGroup>
-                            <FormGroup className="col-md-3 mb-3" >
-                                <Label for="grad">เกรด</Label>
-                                <Input type="text" name="grad" id="grad" value={setItem.grad || ''}
-                                    onChange={this.handleChange}
-                                    autoComplete="grad" placeholder="ชื่อเล่น" />
-                            </FormGroup>
-                        </div>
-                        <div className="row">
-                            <FormGroup className="col-md-4 mb-3">
-                                <Label for="tell">เบอร์ติดต่อ</Label>
-                                <Input type="text" name="tell" id="tell" value={setItem.tell || ''}
-                                    onChange={this.handleChange}
-                                    autoComplete="tell" placeholder="เบอร์ติดต่อ" />
-                            </FormGroup>
-                            <FormGroup className="col-md-8 mb-3">
-                            <InputLabel htmlFor="tag-helper">สำนักวิชา</InputLabel>
-                                <Select placeholder="สำนักวิชา"
-                                    value={this.state.setItem.majorId}
-                                    onChange={this.handleChange}
-                                    style={{ width: '50%', textAlign: 'center' }}
-                                    input={<OutlinedInput name="majorId" />}
+                        <from>
+                            <fieldset className='my-fieldset'>
+                                <legend className='login-legend' >Personalia:</legend>
 
-                                >
-                                    <MenuItem value=""><em>None</em></MenuItem>
-                                    {majorlist}
-                                </Select>
-                            </FormGroup>
 
-                            <FormGroup className="col-md-8 mb-3">
-                            <InputLabel htmlFor="tag-helper">ชมรมด้าน</InputLabel>
-                                <Select placeholder="ชมรมด้าน"
-                                    value={this.state.setItem.typeId}
-                                    onChange={this.handleChange}
-                                    style={{ width: '50%', textAlign: 'center' }}
-                                    input={<OutlinedInput name="typeId" />}
+                                <div className="row">
+                                    <FormGroup className="col-md-3 mb-3" className='a'>
+                                        <Label for="studentid">รหัสนักศึกษา</Label>
+                                        <Input type="text" name="studentid" id="studentid" value={setItem.studentid || ''}
+                                            onChange={this.handleChange}
+                                            autoComplete="studentid" placeholder="รหัสนักศึกษา" />
+                                    </FormGroup>
+                                    <FormGroup className="col-md-6 mb-3" className='a'>
+                                        <Label for="studentname">ชื่อ-สกุล</Label>
+                                        <Input type="text" name="studentname" id="studentname" value={setItem.studentname || ''}
+                                            onChange={this.handleChange}
+                                            autoComplete="studentname" placeholder="ชื่อ-สกุล" />
+                                    </FormGroup>
+                                    <FormGroup className="col-md-3 mb-3" className='a'>
+                                        <Label for="grad">เกรด</Label>
+                                        <Input type="text" name="grad" id="grad" value={setItem.grad || ''}
+                                            onChange={this.handleChange}
+                                            autoComplete="grad" placeholder="ชื่อเล่น" />
+                                    </FormGroup>
+                                </div>
+                                <div className="row">
+                                    <FormGroup className="col-md-4 mb-3" className='a'>
+                                        <Label for="tell">เบอร์ติดต่อ</Label>
+                                        <Input type="text" name="tell" id="tell" value={setItem.tell || ''}
+                                            onChange={this.handleChange}
+                                            autoComplete="tell" placeholder="เบอร์ติดต่อ" />
+                                    </FormGroup>
+                                    <FormGroup className="col-md-8 mb-3" className='d'>
+                                        <InputLabel htmlFor="tag-helper">สำนักวิชา</InputLabel>
+                                        <Select placeholder="สำนักวิชา"
+                                            value={this.state.setItem.majorId}
+                                            onChange={this.handleChange}
+                                            style={{ width: '50%', textAlign: 'center' }}
+                                            input={<OutlinedInput name="majorId" />}
 
-                                >
-                                    <MenuItem value=""><em>None</em></MenuItem>
-                                    {typeclublist}
-                                </Select>
-                            </FormGroup>
-                        </div>
+                                        >
+                                            <MenuItem value=""><em>None</em></MenuItem>
+                                            {majorlist}
+                                        </Select>
+                                    </FormGroup>
 
-                        <div className="row">
-                            <FormGroup className="col-md-5 mb-3">
-                                <Label for="clubName">ชื่อชมรม</Label>
-                                <Input type="text" name="clubName" id="clubName" value={setItem.clubName || ''}
-                                    onChange={this.handleChange}
-                                    autoComplete="clubName" placeholder="ชื่อชมรม" />
-                            </FormGroup>
-                        </div>
-                        <FormGroup>
-                            
-                                <InputLabel htmlFor="tag-helper">อาจารย์ที่ปรึกษาชมรม</InputLabel>
-                                <Select placeholder="อาจารย์ที่ปรึกษาชมรม"
-                                    value={this.state.setItem.adviserId}
-                                    onChange={this.handleChange} 
-                                    style={{ width: '50%', textAlign: 'center' }}
-                                    input={<OutlinedInput name="adviserId" />}
+                                </div>
+                            </fieldset>
+                        </from>
 
-                                >
-                                    <MenuItem value=""><em>None</em></MenuItem>
-                                    {adviserlist}
-                                </Select>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="objective">วัตถุประสงค์</Label>
-                            <Input type="text" name="objective" id="objective" alue={setItem.objective || ''}
-                                    onChange={this.handleChange}
-                                autoComplete="objective" placeholder="วัตถุประสงค์" />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="activities">กิจกรรมที่ว่าจะทำ</Label>
-                            <Input type="text" name="activities" id="activities" alue={setItem.activities || ''}
-                                    onChange={this.handleChange}
-                                autoComplete="activities" placeholder="กิจกรรมที่ว่าจะทำ" />
-                        </FormGroup>
+
+
+                        <from>
+                            <fieldset className='my-fieldset'>
+                                <legend className='login-legend' >Club:</legend>
+                                <div className="row">
+                                    <FormGroup className='a'>
+                                        <Label for="clubName">ชื่อชมรม</Label>
+                                        <Input type="text" name="clubName" id="clubName" value={setItem.clubName || ''}
+                                            onChange={this.handleChange}
+                                            autoComplete="clubName" placeholder="ชื่อชมรม" />
+                                    </FormGroup>
+                                    <FormGroup className="col-md-8 mb-3" className='d'>
+                                        <InputLabel htmlFor="tag-helper">ชมรมด้าน</InputLabel>
+                                        <Select placeholder="ชมรมด้าน"
+                                            value={this.state.setItem.typeId}
+                                            onChange={this.handleChange}
+                                            style={{ width: '50%', textAlign: 'center' }}
+                                            input={<OutlinedInput name="typeId" />}
+
+                                        >
+                                            <MenuItem value=""><em>None</em></MenuItem>
+                                            {typeclublist}
+                                        </Select>
+                                    </FormGroup>
+                                </div>
+                                <FormGroup className="col-md-8 mb-3" className='a'>
+                                    <InputLabel htmlFor="tag-helper">อาจารย์ที่ปรึกษาชมรม</InputLabel>
+                                    <Select placeholder="อาจารย์ที่ปรึกษาชมรม"
+                                        value={this.state.setItem.adviserId}
+                                        onChange={this.handleChange}
+                                        style={{ width: '50%', textAlign: 'center' }}
+                                        input={<OutlinedInput name="adviserId" />}
+
+                                    >
+                                        <MenuItem value=""><em>None</em></MenuItem>
+                                        {adviserlist}
+                                    </Select>
+                                </FormGroup>
+                                <FormGroup className='a'>
+                                    <Label for="objective">วัตถุประสงค์</Label>
+                                    <Input type="text" name="objective" id="objective" alue={setItem.objective || ''}
+                                        onChange={this.handleChange}
+                                        autoComplete="objective" placeholder="วัตถุประสงค์"
+                                    />
+                                </FormGroup>
+                                <FormGroup className='a'>
+                                    <Label for="activities">กิจกรรมที่ว่าจะทำ</Label>
+                                    <Input type="text" name="activities" id="activities" alue={setItem.activities || ''}
+                                        onChange={this.handleChange}
+                                        autoComplete="activities" placeholder="กิจกรรมที่ว่าจะทำ" />
+                                </FormGroup>
+                            </fieldset>
+                        </from>
                         <div className="float-right">
-                        <Button style={{ background: '#000066' }}  type="submit" >Add Club</Button>
-                    </div>
+                            <Button style={{ background: '#000066' }} type="submit" >Add Club</Button>
+                        </div>
                     </Form>
-                    
+
                 </Container>
             </div>
         )

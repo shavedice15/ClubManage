@@ -121,14 +121,63 @@ export default class Member extends Component {
         event.preventDefault();
         const { setItem } = this.state;
         console.log(setItem)
-        await fetch(`http://localhost:8080/api/memberx/${setItem.changwatId}/${setItem.aumphoeId}/${setItem.majorId}/${setItem.branchId}`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(setItem),
-        });
+
+        const Studentid = setItem.studentid
+        const Name = setItem.name
+        const Nickname = setItem.nickname
+        const Address = setItem.address
+        const Tell = setItem.tell
+        const Nameparent = setItem.nameparent
+        const Tellparent = setItem.tellparent
+        const Motto = setItem.motto
+        const Facebook = setItem.facebook
+
+
+        console.log(Motto.match(/^[A-Za-z]{1,20}$/))
+        console.log(Facebook.match(/^[A-Za-z]{1,20}$/))
+        console.log(Name.match(/\w*\s\w*/))
+        console.log(Tell.match(/^[0-9]{10}$/))
+        console.log(Tellparent.match(/^[0-9]{10}$/))
+        console.log(Nameparent.match(/\w*\s\w*/))
+        console.log(Nickname.match(/^[A-Za-z]{1,20}$/))
+        console.log(Studentid.match(/^B[0-9]{7}$/))
+        console.log(Address.match(/^\w*\s\w*\.\w*/))
+
+
+
+
+        if (Tell.match(/^[0-9]{10}$/) != null 
+            &&
+            Motto.match(/^[A-Za-z]{1,20}$/) != null 
+            &&
+            Facebook.match(/^[A-Za-z]{1,20}$/) != null 
+            &&
+            Name.match(/\w*\s\w*/) != null 
+            &&
+            Tellparent.match(/^[0-9]{10}$/) != null
+            &&
+            Nameparent.match(/\w*\s\w*/) != null 
+            &&
+            Nickname.match(/^[A-Za-z]{1,20}$/) != null 
+            &&
+            Studentid.match(/^B[0-9]{7}$/) != null 
+            &&
+            Address.match(/^\w*\s\w*\.\w*/) != null
+        ) {
+                console.log('yes')
+            await fetch(`http://localhost:8080/api/memberx/${setItem.changwatId}/${setItem.aumphoeId}/${setItem.majorId}/${setItem.branchId}`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(setItem),
+            });
+        }
+        else {
+            alert('กรอกข้อมูลให้ครบ และถูกต้อง')
+        }
+
         this.props.history.push('/shows');
     }
 

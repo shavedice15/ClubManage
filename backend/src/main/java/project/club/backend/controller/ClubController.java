@@ -61,6 +61,9 @@ class ClubController {
         Major ma = majorRepository.findById(majorId);
         TypeClub ty = typeClubRepository.findById(typeId);
         Adviser ad = adviserRepository.findById(adviserId);
+        club.setMajorid(ma);
+        club.setTypeClub(ty);
+        club.setAdviser(ad);
 
         club.setMajor(ma.getMajor());
         club.setTypeClubname(ty.getTypeClub());
@@ -77,5 +80,34 @@ class ClubController {
         clubRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/findClub/{clubid}")
+    Club getClub(@PathVariable long clubid) {
+          Club club = clubRepository.findById(clubid);
+        return club;
+    }
+
+    @PutMapping("/clubx/{majorId}/{typeId}/{adviserId}")
+    Club updateClub(@Valid @RequestBody Club club,@PathVariable int majorId,
+    @PathVariable int typeId,@PathVariable int adviserId) throws URISyntaxException {
+        
+        Major ma = majorRepository.findById(majorId);
+        TypeClub ty = typeClubRepository.findById(typeId);
+        Adviser ad = adviserRepository.findById(adviserId);
+
+        club.setMajorid(ma);
+        club.setTypeClub(ty);
+        club.setAdviser(ad);
+        club.setMajor(ma.getMajor());
+        club.setTypeClubname(ty.getTypeClub());
+        club.setAdvisername(ad.getName());
+        
+        log.info("Request to create member: {}", club);
+        Club result = clubRepository.save(club);
+        return result;
+    }
+
+
+
 
 }

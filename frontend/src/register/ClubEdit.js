@@ -36,6 +36,12 @@ export default class Club extends Component {
         tell: '',
         objective: '',
         activities: '',
+
+
+        adviser: '',
+        typeClub: '',
+        majorid: ''
+
     };
 
     constructor(props) {
@@ -52,7 +58,14 @@ export default class Club extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+
+        if (this.props.match.params.id !== 'new') {
+            const club = await (await fetch(`http://localhost:8080/api/findClub/${this.props.match.params.id}`)).json();
+            this.setState({ setItem: club });
+        }
+
+
         fetch('http://localhost:8080/api/majors')
             .then(response => response.json())
             .then(data => this.setState({ major: data }));
@@ -105,7 +118,6 @@ export default class Club extends Component {
         console.log(Studentname.match(/\w*\s\w*/))
         console.log(Studentid.match(/^B[0-9]{7}$/))
 
-
         if (Studentid.match(/^B[0-9]{7}$/) != null && Studentname.match(/\w*\s\w*/) != null &&
             Grad.match(/^[0-9]+\.[0-9]{2}$/) != null && Tell.match(/^[0-9]{10}$/)
             && Clubname.match(/^[A-Za-z]{1,20}$/) != null && Objective.match(/^[ก-ฮ]{1,20}$/) &&
@@ -125,6 +137,13 @@ export default class Club extends Component {
         else {
             alert('กรอกข้อมูลให้ครบ และถูกต้อง')
         }
+
+
+
+
+
+
+
          this.props.history.push('/showsclub');
     }
 
@@ -252,14 +271,14 @@ export default class Club extends Component {
                                 </FormGroup>
                                 <FormGroup className='a'>
                                     <Label for="objective">วัตถุประสงค์</Label>
-                                    <Input type="text" name="objective" id="objective" alue={setItem.objective || ''}
+                                    <Input type="text" name="objective" id="objective" value={setItem.objective || ''}
                                         onChange={this.handleChange}
                                         autoComplete="objective" placeholder="วัตถุประสงค์"
                                     />
                                 </FormGroup>
                                 <FormGroup className='a'>
                                     <Label for="activities">กิจกรรมที่ว่าจะทำ</Label>
-                                    <Input type="text" name="activities" id="activities" alue={setItem.activities || ''}
+                                    <Input type="text" name="activities" id="activities" value={setItem.activities || ''}
                                         onChange={this.handleChange}
                                         autoComplete="activities" placeholder="กิจกรรมที่ว่าจะทำ" />
                                 </FormGroup>

@@ -27,15 +27,15 @@ const useStyles = makeStyles(theme => ({
 export default class MemberEdit extends Component {
 
     emptyItem = {
-        changwatId:'',
-        aumphoeId:'',
-        majorId:'',
-        branchId:'',
+        changwatId: '',
+        aumphoeId: '',
+        majorId: '',
+        branchId: '',
 
-        aumphoeid:'',
-        branchid:'',
-        majorid:'',
-        changwatid:'',
+        aumphoeid: '',
+        branchid: '',
+        majorid: '',
+        changwatid: '',
 
 
         studentid: '',
@@ -51,11 +51,11 @@ export default class MemberEdit extends Component {
 
 
 
-        aumphoename:'',
-        branch:'',
-        changwatname:'',
-        major:'',
-        id:'',
+        aumphoename: '',
+        branch: '',
+        changwatname: '',
+        major: '',
+        id: '',
 
 
     };
@@ -79,15 +79,15 @@ export default class MemberEdit extends Component {
 
     async componentDidMount() {
         if (this.props.match.params.id !== 'new') {
-            const member = await(await fetch(`http://localhost:8080/api/findMember/${this.props.match.params.id}`)).json();
-            this.setState({setItem: member});
-          }
+            const member = await (await fetch(`http://localhost:8080/api/findMember/${this.props.match.params.id}`)).json();
+            this.setState({ setItem: member });
+        }
 
-          fetch('http://localhost:8080/api/changwats')
+        fetch('http://localhost:8080/api/changwats')
             .then(response => response.json())
             .then(data => this.setState({ changwat: data }));
 
-            fetch('http://localhost:8080/api/majors')
+        fetch('http://localhost:8080/api/majors')
             .then(response => response.json())
             .then(data => this.setState({ major: data }));
     }
@@ -120,16 +120,54 @@ export default class MemberEdit extends Component {
         event.preventDefault();
         const { setItem } = this.state;
         console.log(setItem)
-        await fetch(`http://localhost:8080/api/memberx/${setItem.changwatId}/${setItem.aumphoeId}/${setItem.majorId}/${setItem.branchId}`,{
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(setItem),
-            
-        });
-        // this.props.history.push('/shows');
+        const Studentid = setItem.studentid
+        const Name = setItem.name
+        const Nickname = setItem.nickname
+        const Address = setItem.address
+        const Tell = setItem.tell
+        const Nameparent = setItem.nameparent
+        const Tellparent = setItem.tellparent
+        const Motto = setItem.motto
+        const Facebook = setItem.facebook
+
+        console.log(Motto.match(/^[A-Za-z]{1,20}$/))
+        console.log(Facebook.match(/^[A-Za-z]{1,20}$/))
+        console.log(Name.match(/\w*\s\w*/))
+        console.log(Tell.match(/^[0-9]{10}$/))
+        console.log(Tellparent.match(/^[0-9]{10}$/))
+        console.log(Nameparent.match(/\w*\s\w*/))
+        console.log(Nickname.match(/^[A-Za-z]{1,20}$/))
+        console.log(Studentid.match(/^B[0-9]{7}$/))
+        console.log(Address.match(/^\w*\s\w*\.\w*/))
+
+
+
+
+        if (Tell.match(/^[0-9]{10}$/) != null &&
+            Motto.match(/^[A-Za-z]{1,20}$/) != null &&
+            Facebook.match(/^[A-Za-z]{1,20}$/) != null &&
+            Name.match(/\w*\s\w*/) != null &&
+            Tellparent.match(/^[0-9]{10}$/) != null &&
+            Nameparent.match(/\w*\s\w*/) != null &&
+            Nickname.match(/^[A-Za-z]{1,20}$/) != null &&
+            Studentid.match(/^B[0-9]{7}$/) != null &&
+            Address.match(/^\w*\s\w*\.\w*/) != null) {
+
+                console.log('yes')
+            await fetch(`http://localhost:8080/api/memberx/${setItem.changwatId}/${setItem.aumphoeId}/${setItem.majorId}/${setItem.branchId}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(setItem),
+            });
+        }
+        else {
+            alert('กรอกข้อมูลให้ครบ และถูกต้อง')
+        }
+
+        this.props.history.push('/shows');
     }
 
 
@@ -169,151 +207,168 @@ export default class MemberEdit extends Component {
                 <AppNavbar />
                 <Container>
                     <Form onSubmit={this.handleSubmit}>
-                        <div className="row">
-                            <FormGroup className="col-md-3 mb-3">
-                                <Label for="student">รหัสนักศึกษา</Label>
-                                <Input type="text" name="studentid" id="studentid" value={setItem.studentid || ''}
-                                    onChange={this.handleChange}
-                                    autoComplete="studentid" placeholder="รหัสนักศึกษา" />
-                            </FormGroup>
-                            <FormGroup className="col-md-6 mb-3">
-                                <Label for="name">ชื่อ-สกุล</Label>
-                                <Input type="text" name="name" id="name" value={setItem.name || ''}
-                                    onChange={this.handleChange}
-                                    autoComplete="name" placeholder="ชื่อ-สกุล" />
-                            </FormGroup>
-                            <FormGroup className="col-md-3 mb-3" >
-                                <Label for="nickname">ชื่อเล่น</Label>
-                                <Input type="text" name="nickname" id="nickname" value={setItem.nickname || ''}
-                                    onChange={this.handleChange}
-                                    autoComplete="nickname" placeholder="ชื่อเล่น" />
-                            </FormGroup>
-                        </div>
-                        <div className="row">
-                            <FormGroup className="col-md-4 mb-3">
-                                <Label for="address">ที่อยู่</Label>
-                                <Input type="text" name="address" id="address" value={setItem.address || ''}
-                                    onChange={this.handleChange}
-                                    autoComplete="address" placeholder="ที่อยู่" />
-                            </FormGroup>
+                        <from>
+                            <fieldset className='my-fieldset'>
+                                <legend className='login-legend' >Personalia:</legend>
+                                <div className="row">
+                                <FormGroup className="col-md-3 mb-3" className='a'>
+                                        <Label for="student">รหัสนักศึกษา</Label>
+                                        <Input type="text" name="studentid" id="studentid" value={setItem.studentid || ''}
+                                            onChange={this.handleChange}
+                                            autoComplete="studentid" placeholder="รหัสนักศึกษา" />
+                                    </FormGroup>
+                                    <FormGroup className='a , b'>
+                                        <Label for="name">ชื่อ-สกุล</Label>
+                                        <Input type="text" name="name" id="name" value={setItem.name || ''}
+                                            onChange={this.handleChange}
+                                            autoComplete="name" placeholder="ชื่อ-สกุล" />
+                                    </FormGroup>
+                                    <FormGroup className="col-md-3 mb-3" className='a'>
+                                        <Label for="nickname">ชื่อเล่น</Label>
+                                        <Input type="text" name="nickname" id="nickname" value={setItem.nickname || ''}
+                                            onChange={this.handleChange}
+                                            autoComplete="nickname" placeholder="ชื่อเล่น" />
+                                    </FormGroup>
+                                </div>
+                                <div className="row">
+                                <FormGroup className='a , b' >
+                                        <Label for="address">ที่อยู่</Label>
+                                        <Input type="text" name="address" id="address" value={setItem.address || ''}
+                                            onChange={this.handleChange}
+                                            autoComplete="address" placeholder="ที่อยู่" />
+                                    </FormGroup>
+                                    <FormGroup className="col-md-4 mb-3" className='a'>
+                                        <Label for="tell">เบอร์ติดต่อ</Label>
+                                        <Input type="text" name="tell" id="tell" value={setItem.tell || ''}
+                                            onChange={this.handleChange}
+                                            autoComplete="tell" placeholder="เบอร์ติดต่อ" />
+                                    </FormGroup>
+                                    <FormGroup className="col-md-8 mb-3" className='a'>
+                                        <Label for="birthday">วดป เกิด</Label>
+                                        <form className={useStyles.container} noValidate>
+                                            <TextField
+                                                id="date"
+                                                label="Birthday"
+                                                type="date"
+                                                defaultValue="2017-05-24"
+                                                className={useStyles.textField}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                    readOnly: true,
+                                                }}
+                                                name="birthday"
+                                                onChange={this.handleChange}
 
-                            <FormGroup className="col-md-6 mb-3">
-                                <InputLabel htmlFor="tag-helper">จังหวัด</InputLabel>
-                                <Select
-                                    value={this.state.setItem.changwatId}
-                                    onChange={this.handleChange}
-                                    style={{ width: '50%', textAlign: 'center' }}
-                                    input={<OutlinedInput name="changwatId" />}
-                                    onAnimationEnd={this.x}
-                                   
-                                >
-                                    <MenuItem value="" ><em>None</em></MenuItem>
-                                    {changwatlist}
-                                </Select>
-                            </FormGroup>
-
-                            <FormGroup className="col-md-8 mb-3">
-                                <InputLabel htmlFor="tag-helper">อำเภอ</InputLabel>
-                                <Select placeholder="อำเภอ"
-                                    value={this.state.setItem.aumphoeId}
-                                    onChange={this.handleChange}
-                                    style={{ width: '50%', textAlign: 'center' }}
-                                    input={<OutlinedInput name="aumphoeId" />}
-
-
-                                >
-                                    <MenuItem value=""><em>None</em></MenuItem>
-                                    {aumphoelist}
-                                </Select>
-                            </FormGroup>
-                            <FormGroup className="col-md-4 mb-3">
-                                <Label for="birthday">วดป เกิด</Label>
-                                <form className={useStyles.container} noValidate>
-                                    <TextField
-                                        id="date"
-                                        label="Birthday"
-                                        type="date"
-                                        defaultValue="2017-05-24"
-                                        className={useStyles.textField}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                            readOnly: true,
-                                        }}
-                                        name="birthday"
-                                        onChange={this.handleChange}
-
-                                    />
+                                            />
 
 
-                                </form>
-                            </FormGroup>
+                                        </form>
+                                    </FormGroup>
+                                </div>
+                            </fieldset>
+                        </from>
+                        <form>
+                            <fieldset className='my-fieldset'>
+                                <legend className='legend' >Address:</legend>
+                                <div className='a'>
 
-                        </div>
+                                    <FormGroup className="col-md-8 mb-3">
+                                        <InputLabel htmlFor="tag-helper">จังหวัด</InputLabel>
+                                        <Select
+                                            value={this.state.setItem.changwatId}
+                                            onChange={this.handleChange}
+                                            style={{ width: '50%', textAlign: 'center' }}
+                                            input={<OutlinedInput name="changwatId" />}
+                                            onAnimationEnd={this.x}
 
-                        <div className="row">
+                                        >
+                                            <MenuItem value="" ><em>None</em></MenuItem>
+                                            {changwatlist}
+                                        </Select>
+                                    </FormGroup>
 
-                            <FormGroup className="col-md-4 mb-3">
-                                <Label for="tell">เบอร์ติดต่อ</Label>
-                                <Input type="text" name="tell" id="tell" value={setItem.tell || ''}
-                                    onChange={this.handleChange}
-                                    autoComplete="tell" placeholder="เบอร์ติดต่อ" />
-                            </FormGroup>
-
-                            <FormGroup className="col-md-8 mb-3">
-                                <InputLabel htmlFor="tag-helper">สำนักวิชา</InputLabel>
-                                <Select placeholder="สำนักวิชา"
-                                    value={this.state.setItem.majorId}
-                                    onChange={this.handleChange}
-                                    style={{ width: '50%', textAlign: 'center' }}
-                                    input={<OutlinedInput name="majorId" />}
-
-                                >
-                                    <MenuItem value=""><em>None</em></MenuItem>
-                                    {majorlist}
-                                </Select>
-                            </FormGroup>
+                                    <FormGroup className="col-md-8 mb-3">
+                                        <InputLabel htmlFor="tag-helper">อำเภอ</InputLabel>
+                                        <Select placeholder="อำเภอ"
+                                            value={this.state.setItem.aumphoeId}
+                                            onChange={this.handleChange}
+                                            style={{ width: '50%', textAlign: 'center' }}
+                                            input={<OutlinedInput name="aumphoeId" />}
 
 
-                        </div>
-                        <FormGroup>
-                            <InputLabel htmlFor="tag-helper">สาขาวิชา</InputLabel>
-                            <Select placeholder="สาชาวิชา"
-                                value={this.state.setItem.branchId}
-                                onChange={this.handleChange}
-                                style={{ width: '50%', textAlign: 'center' }}
-                                input={<OutlinedInput name="branchId" />}
-                            >
-                                <MenuItem value=""><em>None</em></MenuItem>
-                                {branchlist}
-                            </Select>
-                        </FormGroup>
-                        <div className="row">
-                            <FormGroup className="col-md-8 mb-3">
-                                <Label for="nameparent">ชื่อผู้ปกครอง</Label>
-                                <Input type="text" name="nameparent" id="nameparent" value={setItem.nameparent || ''}
-                                    onChange={this.handleChange}
-                                    autoComplete="nameparent" placeholder="ชื่อผู้ปกครอง" />
-                            </FormGroup>
-                            <FormGroup className="col-md-4 mb-3">
-                                <Label for="tellparent">เบอร์ผู้ปกครอง</Label>
-                                <Input type="text" name="tellparent" id="tellparent" value={setItem.tellparent || ''}
-                                    onChange={this.handleChange}
-                                    autoComplete="tellparent" placeholder="เบอร์ผู้ปกครอง" />
-                            </FormGroup>
-                        </div>
-                        <FormGroup>
-                            <Label for="motto">คติประจำใจ</Label>
-                            <Input type="text" name="motto" id="motto" value={setItem.motto || ''}
-                                onChange={this.handleChange}
-                                autoComplete="motto" placeholder="คิตประจำใจ" />
-                        </FormGroup>
+                                        >
+                                            <MenuItem value=""><em>None</em></MenuItem>
+                                            {aumphoelist}
+                                        </Select>
+                                    </FormGroup>
 
-                        <FormGroup>
-                            <Label for="facebook">Facebook</Label>
-                            <Input type="text" name="facebook" id="facebook" value={setItem.facebook || ''}
-                                onChange={this.handleChange}
-                                autoComplete="facebook1" placeholder="facebook" />
-                        </FormGroup>
+
+                                </div>
+
+                                <div className='a'>
+
+
+                                    <FormGroup className="col-md-8 mb-3">
+                                        <InputLabel htmlFor="tag-helper">สำนักวิชา</InputLabel>
+                                        <Select placeholder="สำนักวิชา"
+                                            value={this.state.setItem.majorId}
+                                            onChange={this.handleChange}
+                                            style={{ width: '50%', textAlign: 'center' }}
+                                            input={<OutlinedInput name="majorId" />}
+
+                                        >
+                                            <MenuItem value=""><em>None</em></MenuItem>
+                                            {majorlist}
+                                        </Select>
+                                    </FormGroup>
+                                    <FormGroup className="col-md-8 mb-3">
+                                        <InputLabel htmlFor="tag-helper">สาขาวิชา</InputLabel>
+                                        <Select placeholder="สาชาวิชา"
+                                            value={this.state.setItem.branchId}
+                                            onChange={this.handleChange}
+                                            style={{ width: '50%', textAlign: 'center' }}
+                                            input={<OutlinedInput name="branchId" />}
+                                        >
+                                            <MenuItem value=""><em>None</em></MenuItem>
+                                            {branchlist}
+                                        </Select>
+                                    </FormGroup>
+
+                                </div>
+                            </fieldset>
+                        </form>
+                        <form>
+                            <fieldset className='my-fieldset'>
+                                <legend className='legend' >Parent:</legend>
+                                <div className="row" className='a'>
+                                    <FormGroup className="col-md-8 mb-3">
+                                        <Label for="nameparent">ชื่อผู้ปกครอง</Label>
+                                        <Input type="text" name="nameparent" id="nameparent" value={setItem.nameparent || ''}
+                                            onChange={this.handleChange}
+                                            autoComplete="nameparent" placeholder="ชื่อผู้ปกครอง" />
+                                    </FormGroup>
+                                    <FormGroup className="col-md-4 mb-3">
+                                        <Label for="tellparent">เบอร์ผู้ปกครอง</Label>
+                                        <Input type="text" name="tellparent" id="tellparent" value={setItem.tellparent || ''}
+                                            onChange={this.handleChange}
+                                            autoComplete="tellparent" placeholder="เบอร์ผู้ปกครอง" />
+                                    </FormGroup>
+                                    <FormGroup className="col-md-8 mb-3">
+                                        <Label for="motto">คติประจำใจ</Label>
+                                        <Input type="text" name="motto" id="motto" value={setItem.motto || ''}
+                                            onChange={this.handleChange}
+                                            autoComplete="motto" placeholder="คิตประจำใจ" />
+                                    </FormGroup>
+
+                                    <FormGroup className="col-md-8 mb-3">
+                                        <Label for="facebook">Facebook</Label>
+                                        <Input type="text" name="facebook" id="facebook" value={setItem.facebook || ''}
+                                            onChange={this.handleChange}
+                                            autoComplete="facebook1" placeholder="facebook" />
+                                    </FormGroup>
+                                </div>
+                            </fieldset>
+                        </form>
                         <FormGroup>
 
                             <Button color="primary" type="submit">Save</Button>

@@ -54,9 +54,9 @@ public class BackendApplication {
 				typeClubRepository.save(newTypeClub);
 			});
 			//------------ Adviser -------------------------
-			Adviser adviser1 = new Adviser("","","");
+			Adviser adviser1 = new Adviser("sdfs sfsdf","0879658412","sdf@dda.com");
 			adviserRepository.save(adviser1);
-			Adviser adviser2 = new Adviser("","","");
+			Adviser adviser2 = new Adviser("qwewq ouiou","0985415260","pvvv@hhhjm.com");
 			adviserRepository.save(adviser2);
 
 			//------------- Club ----------------------------

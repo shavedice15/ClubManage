@@ -16,6 +16,7 @@ class Manage extends Component {
   constructor(props) {
     super(props);
     this.state = {club: [],
+                  adviser: [],
                   position: []};
   }
 
@@ -33,6 +34,13 @@ class Manage extends Component {
       .catch((error) => {
         console.log("Error"+ error);
     });
+
+    fetch('http://localhost:8080/findClub/'+this.props.match.params.clubId)
+      .then(response => response.json())
+      .then(data => this.setState({adviser: data.adviser}))
+      .catch((error) => {
+        console.log("Error"+ error);
+      });
     
   }
 
@@ -56,6 +64,7 @@ class Manage extends Component {
     };
 
     const {club} = this.state;
+    const {adviser} = this.state;
     const {memberDetail} = this.state;
     console.log(club);
     console.log(memberDetail);
@@ -80,7 +89,7 @@ class Manage extends Component {
                   <TextField
                       label="อาจารย์ที่ปรึกษาชมรม"
                       defaultValue=" "
-                      value = {club.advisername}
+                      value = {adviser.name}
                       margin="normal"
                       InputProps={{
                         readOnly: true,

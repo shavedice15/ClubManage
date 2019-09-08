@@ -16,6 +16,8 @@ class ManageClubController {
     @Autowired private MemberStatusRepository memberStatusRepository;
     @Autowired private MemberRepository memberRepository;
     @Autowired private PositionRepository positionRepository;
+    @Autowired private TypeClubRepository typeClubRepository;
+    @Autowired private AdviserRepository adviserRepository;
 
     @GetMapping("/username/{username}")
     public Username getUsername(@PathVariable String username) {
@@ -84,9 +86,20 @@ class ManageClubController {
         return memberClubRepository.save(result);
     }
 
-    @PutMapping("/updateClub/{clubId}")
-    ResponseEntity<Club> updateClub(@PathVariable long clubId, @Valid @RequestBody Club club) {
-        Club result = clubRepository.save(club);
-        return ResponseEntity.ok().body(result);
+    @PutMapping("/updateClub/{clubId}/{clubName}/{pageFB}/{groupFB}/{invitation}/{typeId}/{adviserId}")
+    public Club updateClub(@PathVariable long clubId,@PathVariable String clubName,
+                    @PathVariable String pageFB,@PathVariable String groupFB,
+                    @PathVariable String invitation,@PathVariable long typeId,
+                    @PathVariable long adviserId) {
+        TypeClub type = typeClubRepository.findById(typeId);
+        Adviser adviser = adviserRepository.findById(adviserId);
+        Club findClub = clubRepository.findById(clubId);
+        findClub.setClubName(clubName);
+        findClub.setPageFB(pageFB);
+        findClub.setGroupFB(groupFB);
+        findClub.setInvitation(invitation);
+        findClub.setTypeClub(type);
+        findClub.setAdviser(adviser);
+        return clubRepository.save(findClub);
     }
 }

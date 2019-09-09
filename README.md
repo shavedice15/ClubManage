@@ -12,3 +12,4 @@ or
 - npm i @material-ui/pickers
 - npm i react-select
 - npm install date-fns @types/date-fns
+- npm install --save availity-reactstrap-validation react react-dom

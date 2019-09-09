@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import '../App.css';
 import AppNavbar from '../AppNavbar';
-import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Button, Container, Form, FormGroup, Input, Label, FormText, FormFeedback } from 'reactstrap';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 import Select from '@material-ui/core/Select';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -146,25 +147,25 @@ export default class Member extends Component {
 
 
 
-        if (Tell.match(/^[0-9]{10}$/) != null 
+        if (Tell.match(/^[0-9]{10}$/) != null
             &&
-            Motto.match(/^[A-Za-z]{1,20}$/) != null 
+            Motto.match(/^[A-Za-z]{1,20}$/) != null
             &&
-            Facebook.match(/^[A-Za-z]{1,20}$/) != null 
+            Facebook.match(/^[A-Za-z]{1,20}$/) != null
             &&
-            Name.match(/\w*\s\w*/) != null 
+            Name.match(/\w*\s\w*/) != null
             &&
             Tellparent.match(/^[0-9]{10}$/) != null
             &&
-            Nameparent.match(/\w*\s\w*/) != null 
+            Nameparent.match(/\w*\s\w*/) != null
             &&
-            Nickname.match(/^[A-Za-z]{1,20}$/) != null 
+            Nickname.match(/^[A-Za-z]{1,20}$/) != null
             &&
-            Studentid.match(/^B[0-9]{7}$/) != null 
+            Studentid.match(/^B[0-9]{7}$/) != null
             &&
             Address.match(/^\w*\s\w*\.\w*/) != null
         ) {
-                console.log('yes')
+            console.log('yes')
             await fetch(`http://localhost:8080/api/memberx/${setItem.changwatId}/${setItem.aumphoeId}/${setItem.majorId}/${setItem.branchId}`, {
                 method: 'POST',
                 headers: {
@@ -216,45 +217,101 @@ export default class Member extends Component {
             <div>
                 <AppNavbar />
                 <Container style={{ paddingTop: '0px' }}>
+
                     <Form onSubmit={this.handleSubmit}>
                         <from>
                             <fieldset className='my-fieldset'>
                                 <legend className='login-legend' >Personalia:</legend>
                                 <div className="row" >
-                                    <FormGroup className="col-md-3 mb-3" className='a'>
+                                    <AvForm className="col-md-3 mb-3" className="a">
+                                        <AvField name="studentid" label="รหัสนักศึกษา" type="text" errorMessage="Invalid name" validate={{
+                                            required: { value: true },
+                                            pattern: { value: '^B[0-9]{7}$' },
+                                        }}
+                                            value={setItem.studentid || ''}
+                                            onChange={this.handleChange}
+                                        />
+                                    </AvForm>
+
+                                    <AvForm className="col-md-3 mb-3" className="a">
+                                        <AvField name="name" label="ชื่อ-สกุล" type="text" errorMessage="Invalid name" 
+                                         validate={{
+                                             required: { value: true },
+                                             pattern: { value: /\w*\s\w*/ }
+                                         }}
+                                        value={setItem.name || ''}
+                                            onChange={this.handleChange}
+                                        />
+                                    </AvForm>
+
+                                     <AvForm className="col-md-3 mb-3" className="a">
+                                        <AvField name="nickname" label="ชื่อเล่น" type="text" errorMessage="Invalid name" 
+                                        validate={{
+                                            required: { value: true },
+                                            pattern: { value: /^[A-Za-z]{1,20}$/ }
+                                        }}
+                                        value={setItem.nickname || ''}
+                                        onChange={this.handleChange}
+                                        />
+                                    </AvForm>
+
+
+                                    
+                                    {/* <FormGroup className="col-md-3 mb-3" className='a'>
                                         <Label for="student" className='c'>รหัสนักศึกษา</Label>
                                         <Input type="text" name="studentid" id="studentid" value={setItem.studentid || ''}
                                             onChange={this.handleChange}
                                             autoComplete="studentid" placeholder="รหัสนักศึกษา" />
-                                    </FormGroup>
-                                    <FormGroup className='a , b'>
+                                    </FormGroup> */}
+                                    {/* <FormGroup className='a , b'>
                                         <Label for="name" >ชื่อ-สกุล</Label>
                                         <Input type="text" name="name" id="name" value={setItem.name || ''}
                                             onChange={this.handleChange}
                                             autoComplete="name" placeholder="ชื่อ-สกุล"
-                                            className='b' />
-                                    </FormGroup>
-                                    <FormGroup className="col-md-3 mb-3" className='a'>
+                                        />
+                                    </FormGroup> */}
+                                    {/* <FormGroup className="col-md-3 mb-3" className='a'>
                                         <Label for="nickname">ชื่อเล่น</Label>
                                         <Input type="text" name="nickname" id="nickname" value={setItem.nickname || ''}
                                             onChange={this.handleChange}
                                             autoComplete="nickname" placeholder="ชื่อเล่น" />
-                                    </FormGroup>
+                                    </FormGroup> */}
                                 </div>
                                 <div className="row" >
-                                    <FormGroup className='a , b' >
+                                <AvForm className='a , b'>
+                                        <AvField name="address" label="ที่อยู่" type="text" errorMessage="Invalid name" 
+                                        validate={{
+                                            required: { value: true },
+                                            pattern: { value: /^\w*\s\w*\.\w*/ }
+                                        }}
+                                        value={setItem.address || ''}
+                                        onChange={this.handleChange}
+                                        />
+                                    </AvForm>
+                                    {/* <FormGroup className='a , b' >
                                         <Label for="address">ที่อยู่</Label>
                                         <Input type="text" name="address" id="address" value={setItem.address || ''}
                                             onChange={this.handleChange}
                                             autoComplete="address" placeholder="ที่อยู่" />
-                                    </FormGroup>
+                                    </FormGroup> */}
 
-                                    <FormGroup className="col-md-4 mb-3" className='a'>
+                                         <AvForm className='a , b'>
+                                        <AvField name="tell" label="เบอร์ติดต่อ" type="text" errorMessage="Invalid number" 
+                                        validate={{
+                                             required: { value: true },
+                                             pattern: { value: '^[0-9]{10}$' }
+                                      }}
+                                        value={setItem.tell || ''}
+                                        onChange={this.handleChange}
+                                        />
+                                    </AvForm>
+
+                                    {/* <FormGroup className="col-md-4 mb-3" className='a'>
                                         <Label for="tell">เบอร์ติดต่อ</Label>
                                         <Input type="text" name="tell" id="tell" value={setItem.tell || ''}
                                             onChange={this.handleChange}
                                             autoComplete="tell" placeholder="เบอร์ติดต่อ" />
-                                    </FormGroup>
+                                    </FormGroup> */}
                                     <FormGroup className="col-md-8 mb-3" className='a'>
                                         <Label for="birthday">วดป เกิด</Label>
                                         <form className={useStyles.container} noValidate>
@@ -340,39 +397,77 @@ export default class Member extends Component {
                             <fieldset className='my-fieldset'>
                                 <legend className='legend' >Parent:</legend>
                                 <div className="row" className='a'>
-                                    <FormGroup className="col-md-8 mb-3">
+                                <AvForm className="col-md-8 mb-3" >
+                                        <AvField name="nameparent" label="ชื่อผู้ปกครอง" type="text" errorMessage="Invalid name" 
+                                        validate={{
+                                            required: { value: true },
+                                            pattern: { value: /\w*\s\w*/ }
+                                        }}
+                                        value={setItem.nameparent || ''}
+                                        onChange={this.handleChange}
+                                        />
+                                    </AvForm>
+                                    {/* <FormGroup className="col-md-8 mb-3">
                                         <Label for="nameparent">ชื่อผู้ปกครอง</Label>
                                         <Input type="text" name="nameparent" id="nameparent" value={setItem.nameparent || ''}
                                             onChange={this.handleChange}
                                             autoComplete="nameparent" placeholder="ชื่อผู้ปกครอง" />
-                                    </FormGroup>
-                                    <FormGroup className="col-md-4 mb-3">
+                                    </FormGroup> */}
+                                     <AvForm className="col-md-8 mb-3" >
+                                        <AvField name="tellparent" label="เบอร์ผู้ปกครอง" type="text" errorMessage="Invalid name" 
+                                     validate={{
+                                             required: { value: true },
+                                         pattern: { value: '^[0-9]{10}$' }
+                                     }}
+                                        value={setItem.tellparent || ''}
+                                        onChange={this.handleChange}
+                                        />
+                                    </AvForm>
+                                    {/* <FormGroup className="col-md-4 mb-3">
                                         <Label for="tellparent">เบอร์ผู้ปกครอง</Label>
                                         <Input type="text" name="tellparent" id="tellparent" value={setItem.tellparent || ''}
                                             onChange={this.handleChange}
                                             autoComplete="tellparent" placeholder="เบอร์ผู้ปกครอง" />
-                                    </FormGroup>
-                                    <FormGroup className="col-md-8 mb-3">
+                                    </FormGroup> */}
+                                    <AvForm className="col-md-8 mb-3" >
+                                        <AvField name="motto" label="คติประจำใจ" type="text" errorMessage="Invalid name" 
+                                        validate={{
+                                            required: { value: true },
+                                            pattern: { value: /^[A-Za-z]{1,20}$/ }
+                                        }}
+                                        value={setItem.motto || ''}
+                                        onChange={this.handleChange}
+                                        />
+                                    </AvForm>
+                                    {/* <FormGroup className="col-md-8 mb-3">
                                         <Label for="motto">คติประจำใจ</Label>
                                         <Input type="text" name="motto" id="motto" value={setItem.motto || ''}
                                             onChange={this.handleChange}
                                             autoComplete="motto" placeholder="คิตประจำใจ" />
-                                    </FormGroup>
-                                    <FormGroup className="col-md-8 mb-3">
+                                    </FormGroup> */}
+                                      <AvForm className="col-md-8 mb-3" >
+                                        <AvField name="facebook" label="Facebook" type="text" errorMessage="Invalid name" 
+                                        validate={{
+                                            required: { value: true },
+                                            pattern: { value: /^[A-Za-z]{1,20}$/ }
+                                        }}
+                                        value={setItem.facebook || ''}
+                                        onChange={this.handleChange}
+                                        />
+                                    </AvForm>
+                                    {/* <FormGroup className="col-md-8 mb-3">
                                         <Label for="facebook">Facebook</Label>
                                         <Input type="text" name="facebook" id="facebook" value={setItem.facebook || ''}
                                             onChange={this.handleChange}
                                             autoComplete="facebook1" placeholder="facebook" />
-                                    </FormGroup>
+                                    </FormGroup> */}
                                 </div>
                             </fieldset>
                         </form>
-
                         <FormGroup>
-
                             <Button color="primary" type="submit">Save</Button>
-
                         </FormGroup>
+                        
                     </Form>
 
                 </Container>

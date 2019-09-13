@@ -69,18 +69,14 @@ class ShareBudget extends Component {
       
           <Container>
          
-            <div className="row">
-            <FormGroup className="col-md-5 mb-3">
-              </FormGroup>
-            </div> 
-          <Form onSubmit={this.handleSubmit} style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
+          <Form style={{display: 'flex',  justifyContent:'center', alignItems:'center', paddingTop: '5%'}}>
             <div className="row">
             <FormGroup className="col-md-4 mb-3" >
                   <InputLabel htmlFor="tag-helper">ชมรม</InputLabel>
                     <Select 
                       value={this.state.setItem.nameId}
                       onChange={this.handleChange}
-                      style={{ width: '400%',  textAlign: 'center'}}
+                      style={{ width: '250px' }}
                       input={<OutlinedInput name="nameId"/>}
                     >
                       <MenuItem value=""><em>None</em></MenuItem>
@@ -92,7 +88,7 @@ class ShareBudget extends Component {
               <FormGroup className="col-md-5 mb-3">
               </FormGroup>
             </div> 
-                  <TextField style={{ width: '400%'}}
+                  <TextField style={{ width: '250px',paddingTop: '1%' }}
                   id="date"
                   label="วันที่"
                   type="date"
@@ -100,10 +96,11 @@ class ShareBudget extends Component {
                   name="startDate"
                   InputLabelProps={{
                   shrink: true,
+                  
                  }}
                 /> 
                 <form >
-                <TextField  style={{ width: '400%' }}
+                <TextField  style={{ width: '250px',paddingTop: '2%' }}
                     label="งบประมาณ(บาท)"
                     margin="normal"     
                     variant="outlined"

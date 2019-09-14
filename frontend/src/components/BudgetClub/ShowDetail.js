@@ -74,8 +74,6 @@ class ShowDetail extends Component {
       const {budget} = this.state;
       const {club} = this.state;
     
-   
-
     const PayList = budget.map(budget => {
         return (
           <tr>
@@ -90,7 +88,7 @@ class ShowDetail extends Component {
       console.log(budget);
 
       return <div>
-          <AppNavBarOrganization/>
+          <AppNavbar/>
           <Container>
             <div className="row">
             <FormGroup className="col-md-5 mb-3">
@@ -110,7 +108,7 @@ class ShowDetail extends Component {
             <div className="row">
             
             <FormGroup className="col-md-5 mb-3">
-              <TextField
+              <TextField 
                   id="date"
                   label="วันที่"
                   type="date"
@@ -120,7 +118,7 @@ class ShowDetail extends Component {
                   shrink: true,
                  }}
                 />
-              <TextField
+              <TextField 
                   id="date"
                   label="ถึงวันที่"
                   type="date"
@@ -130,17 +128,18 @@ class ShowDetail extends Component {
                   shrink: true,
                  }}
                 />
-                <Button style={{ background: '#FFB6C1',color: '#000066',width: '15%' }} onClick={() => this.find()}>ค้นหา</Button>{' '}
+                <Button style={{ background: '#000066',color: '#FFFFFF',width: '15%' }} onClick={() => this.find()}>ค้นหา</Button>{' '}
               </FormGroup>
             </div>
             </Form>
             <Table className="mt-4" >
               <thead>
-              <tr style={{ background: '#FFB6C1' }} align="center">
+              <tr style={{ background: '#000066',color: '#FFFFFF' }} align="center">
                 <th width="20%">วันที่</th>
                 <th width="20%" >รายรับ</th>
                 <th width="10%">รายจ่าย</th>
                 <th width="10%">รายละเอียด</th>
+                <th width="10%">หลักฐาน</th>
               </tr>
               </thead>
               <tbody>

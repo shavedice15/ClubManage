@@ -70,7 +70,7 @@ class SaveBudget extends Component {
           <Container>
          
           <Form style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
-            <div className="row">
+            <div className="row" style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
             <FormGroup className="col-md-4 mb-3">
                   <TextField style={{ width: '250px',paddingTop: '1%'}}
                   id="date"
@@ -97,11 +97,10 @@ class SaveBudget extends Component {
                     margin="normal"     
                     variant="outlined"
                     onChange={this.handleChange}
-                    name="budget"
-                />
-                <FormGroup  className="col-md-5 mb-3" >
-                     <Button style={{background: '#000066',color: '#FFFFFF',justifyContent:'center',alignItems:'center'}}onClick={() => this.save()}>บันทึก</Button>
-               </FormGroup> 
+                    name="budget"  
+                /> <Button style={{width: '100px',background: '#000066',color: '#FFFFFF',justifyContent:'center',alignItems:'center'}}onClick={() => this.save()}>บันทึก</Button>
+                   <Button style={{width: '110px',background: '#000066',color: '#FFFFFF',justifyContent:'center',alignItems:'center'}}>รายละเอียด</Button>
+                
              </form>
             </FormGroup>
             </div>

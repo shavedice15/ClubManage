@@ -105,10 +105,10 @@ class ShowDetail extends Component {
               </FormGroup>
             </div>
           <Form onSubmit={this.handleSubmit}>
-            <div className="row">
+            <div className="row" style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
             
-            <FormGroup className="col-md-5 mb-3">
-              <TextField 
+            <FormGroup className="col-md-5 mb-3" style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
+              <TextField style={{margin:'2%'}}
                   id="date"
                   label="วันที่"
                   type="date"
@@ -127,8 +127,9 @@ class ShowDetail extends Component {
                   InputLabelProps={{
                   shrink: true,
                  }}
-                />
-                <Button style={{ background: '#000066',color: '#FFFFFF',width: '15%' }} onClick={() => this.find()}>ค้นหา</Button>{' '}
+                /><Button style={{ background: '#000066',color: '#FFFFFF',width: '15%',margin:'1%' }} onClick={() => this.find()}>ค้นหา</Button>{' '}
+                  <Button style={{ background: '#000066',color: '#FFFFFF',width: '15%' }} >เพิ่ม</Button>{' '}
+               
               </FormGroup>
             </div>
             </Form>

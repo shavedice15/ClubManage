@@ -1,21 +1,14 @@
 package project.club.backend.entity;
 import lombok.*;
-
-import java.sql.Time;
-import java.util.Date;
-
+import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
-import javax.validation.constraints.*;
-//import org.hibernate.AnnotationException;
 
 @Data
 @Entity
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-//@Table(name="Activity")
-
-
 public class Activity {
 
 	@Id
@@ -33,16 +26,24 @@ public class Activity {
 	private Privacy privacy;
 
 	private @NonNull String activityName;
-	private @NonNull Date dateAc;
-	private @NonNull Date dateEnd;
-	private @NonNull Time time;
-	private @NonNull Time timeEnd;
+
+	@JsonFormat(pattern="dd-MM-yyyy")
+	private @NonNull LocalDate dateStart;
+
+	@JsonFormat(pattern="dd-MM-yyyy")
+	private @NonNull LocalDate dateEnd;
+
 	private @NonNull String detail;
 
 	public Activity(){}
-	public Activity (Club club,Privacy privacy){
+	public Activity (Club club,Privacy privacy, String activityName, LocalDate dateStart,
+					 LocalDate dateEnd, String detail){
 		this.club = club;
 		this.privacy = privacy;
+		this.activityName = activityName;
+		this.dateStart = dateStart;
+		this.dateEnd = dateEnd;
+		this.detail = detail;
     }
 
 	
@@ -62,22 +63,43 @@ public class Activity {
         this.activityName = activityName;
 	}
 	
-	public  Date getDateAc(){
-		return dateAc ;
+	public  LocalDate getDateStart(){
+		return dateStart ;
 	}
 
-	public void setDateAc(Date dateAc) {
-        this.dateAc = dateAc;
+	public void setDateStart(LocalDate dateStart) {
+        this.dateStart = dateStart;
 	}
 	
-	public  Date getDateEnd(){
+	public  LocalDate getDateEnd(){
 		return dateEnd ;
 	}
 
-	public void setDateEnd(Date dateEnd) {
+	public void setDateEnd(LocalDate dateEnd) {
         this.dateEnd = dateEnd;
     }
 
+	public  String getDetail(){
+		return detail ;
+	}
 
+	public void setDetail(String detail) {
+        this.detail = detail;
+	}
+
+	public void setPrivacy(Privacy privacy){
+		this.privacy = privacy;
+	}
+
+	public Privacy getPrivacy(){
+		return privacy;
+	}
 	
+	public void setClub(Club club){
+		this.club = club;
+	}
+
+	public Club getClub(){
+		return club;
+	}
 }

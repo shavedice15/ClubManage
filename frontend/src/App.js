@@ -51,9 +51,9 @@ class App extends Component {
           <Route path='/clubs/:id' exact={true} component={ClubEdit}/>
           <Route path='/ShareBudget' exact={true} component={ShareBudget}/>
           <Route path='/SaveBudget/:clubId' exact={true} component={SaveBudget}/>
-          <Route path='/ActivityPost' exact={true} component={ActivityPost}/>
+          <Route path='/ActivityPost/:clubId' exact={true} component={ActivityPost}/>
           <Route path='/ShowActivity' exact={true} component={ShowActivity}/>
-          <Route path='/DetailActivity' exact={true} component={DetailActivity}/>
+          <Route path='/DetailActivity/:activityId' exact={true} component={DetailActivity}/>
         </Switch>
       </Router>
     )

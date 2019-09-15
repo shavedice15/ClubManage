@@ -23,7 +23,8 @@ public class BackendApplication {
 							PositionRepository positionRepository, ClubRepository clubRepository,
 							TypeClubRepository typeClubRepository, AdviserRepository adviserRepository,
 							MemberRepository memberRepository, UsernameRepository usernameRepository,
-							BudgetRepository budgetRepository, MemberClubRepository memberClubRepository){
+							BudgetRepository budgetRepository, MemberClubRepository memberClubRepository,
+							PrivacyRepository privacyRepository, ActivityRepository activityRepository){
 		return args -> {
 			Stream.of("admin","member").forEach(rank -> {
 				Rank newRank = new Rank(rank);
@@ -104,6 +105,25 @@ public class BackendApplication {
         	MemberStatus status2 = memberStatusRepository.findById(2);
 			MemberClub memberClub2 = new MemberClub("อยากจิตใจสงบ",position2,status2,club2,member1);
 			memberClubRepository.save(memberClub2);
+
+			//---------------------- Privacy -------------------
+			Stream.of("ทุกคน","เฉพาะคนในชมรม").forEach(status -> {
+				Privacy privacy = new Privacy(status);
+				privacyRepository.save(privacy);
+			});
+
+			//-------------------- Activity -------------------
+			Privacy privacy = privacyRepository.findById(1);
+			LocalDate dateStart = LocalDate.parse("2018-12-11");
+			LocalDate dateEnd = LocalDate.parse("2018-12-11");
+			Activity activity = new Activity(club1,privacy,"name",dateStart,dateEnd,"detail");
+			activityRepository.save(activity);
+
+			Privacy privacy2 = privacyRepository.findById(2);
+			LocalDate dateStart2 = LocalDate.parse("2018-12-11");
+			LocalDate dateEnd2 = LocalDate.parse("2018-12-11");
+			Activity activity2 = new Activity(club1,privacy2,"name2",dateStart2,dateEnd2,"detail2");
+			activityRepository.save(activity2);
 		};
 	}
 }

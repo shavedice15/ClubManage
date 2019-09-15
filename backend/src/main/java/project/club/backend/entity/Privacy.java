@@ -8,18 +8,20 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-//@Table(name="Privacy")
-
-
 public class Privacy {
 	@Id
-    @SequenceGenerator(name = "incomes_seq", sequenceName = "incomes_seq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "incomes_seq")
-    @Column(name="Incomes_ID")
+    @SequenceGenerator(name = "privacy_seq", sequenceName = "privacy_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "privacy_seq")
+    @Column(name="privacy_ID")
 	private @NonNull Long privacyId;
 	private @NonNull String status;
 	
 	public Privacy (){}
+
+	public Privacy (String status){
+		this.status = status;
+	}
+
 	public Long getPrivacyId(){
 		return privacyId ;
 	}
@@ -29,7 +31,7 @@ public class Privacy {
 	}
 	
 	public String getStatus(){
-		return status ;
+		return status;
 	}
 
 	public void setStatus(String status) {

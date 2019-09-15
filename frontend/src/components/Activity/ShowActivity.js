@@ -18,27 +18,19 @@ import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 
 class ShowActivity extends Component {
-  emptyItem = {
-    
-  };
-  
   constructor(props) {
     super(props);
-    this.state = {clubName: [],
-                  budget: [],
-                  setItem: this.emptyItem};
+    this.state = {activity: []};
     this.handleChange = this.handleChange.bind(this);
-    
   }
 
   componentDidMount() {
-    fetch('http://localhost:8080/api/clubs')
+    fetch('http://localhost:8080/activityAllUserAllClub')
       .then(response => response.json())
-      .then(data => this.setState({clubName: data}));
-
-    fetch('http://localhost:8080/Budgets')
-      .then(response => response.json())
-      .then(data => this.setState({budget: data}));
+      .then(data => this.setState({activity: data}))
+      .catch((error) => {
+        console.log("Error"+ error);
+    });
 
   }
 
@@ -54,10 +46,24 @@ class ShowActivity extends Component {
   
 
     render() {
-    
-
-   
-
+      const {activity} = this.state;
+      const activityList = activity.map(activity => {
+        return (
+          <tr>
+            <td align="center">{activity.club.clubName}</td>
+            <td align="center">{activity.dateStart}</td>
+            <td align="center">{activity.dateEnd}</td>
+            <td align="center">{activity.activityName}</td>
+            <td align="center">
+              <Button style={{ background: '#000066',width: '40px' }} 
+                  tag={Link} to={"/DetailActivity/"+activity.activityId}>
+                ดู
+              </Button>
+            </td>
+          </tr>
+        )
+      });
+  
       return <div>
       <AppNavbar/>
           <Container>
@@ -66,14 +72,15 @@ class ShowActivity extends Component {
            <Table className="mt-4" >
               <thead>
               <tr style={{ background: '#000066',color: '#FFFFFF' }} align="center">
-                <th width="20%">กิจกรรม</th>
-                <th width="20%">วันที่</th>
-                <th width="20%" >ถึงวันที่</th>
+                <th width="20%">ชมรม</th>
+                <th width="20%">วันที่เริ่ม</th>
+                <th width="20%">วันที่สิ้นสุด</th>
+                <th width="20%" >กิจกรรม</th>
                 <th width="10%"> รายละเอียด</th>
               </tr>
               </thead>
               <tbody>
-               
+                {activityList}
               </tbody>
             </Table>
            </div>

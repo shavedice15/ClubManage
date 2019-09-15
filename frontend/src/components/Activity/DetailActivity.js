@@ -18,27 +18,21 @@ import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 
 class DetailActivity extends Component {
-  emptyItem = {
-    
-  };
-  
   constructor(props) {
     super(props);
-    this.state = {clubName: [],
-                  budget: [],
-                  setItem: this.emptyItem};
+    this.state = {activity: []};
     this.handleChange = this.handleChange.bind(this);
     
   }
 
   componentDidMount() {
-    fetch('http://localhost:8080/api/clubs')
+    
+    fetch('http://localhost:8080/getActivity/'+this.props.match.params.activityId)
       .then(response => response.json())
-      .then(data => this.setState({clubName: data}));
-
-    fetch('http://localhost:8080/Budgets')
-      .then(response => response.json())
-      .then(data => this.setState({budget: data}));
+      .then(data => this.setState({activity: data}))
+      .catch((error) => {
+        console.log("Error"+ error);
+    });
 
   }
 
@@ -51,7 +45,7 @@ class DetailActivity extends Component {
     console.log(item);
   }
     render() {
-    
+      const {activity} = this.state;
       return <div>
       <AppNavbar/>
           <Container>
@@ -60,39 +54,47 @@ class DetailActivity extends Component {
            <FormGroup className="col-md-4 mb-3" style={{width: '1000px'}} >
            <InputLabel htmlFor="tag-helper">ชื่อกิจกรรม:</InputLabel>
            <TextField  style={{ width: '250px' }}
-                    value={this.state.setItem.money}
+                    defaultValue=" "
+                    value={activity.activityName}
                     margin="normal"     
                     variant="outlined"
-                    onChange={this.handleChange}
-                    name="money"
+                    InputProps={{
+                      readOnly: true,
+                    }}
                 />
             <InputLabel htmlFor="tag-helper">วันที่:</InputLabel>
            <TextField  style={{ width: '250px' }}
-                    value={this.state.setItem.money}
+                    defaultValue=" "
+                    value={activity.dateStart}
                     margin="normal"     
                     variant="outlined"
-                    onChange={this.handleChange}
-                    name="money"
+                    InputProps={{
+                      readOnly: true,
+                    }}
                 />
 
          <InputLabel htmlFor="tag-helper">ถึงวันที่:</InputLabel>
            <TextField  style={{ width: '250px' }}
-                    value={this.state.setItem.money}
+                    defaultValue=" "
+                    value={activity.dateEnd}
                     margin="normal"     
                     variant="outlined"
-                    onChange={this.handleChange}
-                    name="money"
+                    InputProps={{
+                      readOnly: true,
+                    }}
                 />
 
 <InputLabel htmlFor="tag-helper">รายละเอียด:</InputLabel>
            <TextField  style={{ width: '250px'}}
-                    value={this.state.setItem.money}
+                    defaultValue=" "
+                    value={activity.detail}
                     margin="normal"   
                     multiline
                     rows="5" 
                     variant="outlined"
-                    onChange={this.handleChange}
-                    name="money"
+                    InputProps={{
+                      readOnly: true,
+                    }}
                    
                 />
 

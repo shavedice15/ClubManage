@@ -158,7 +158,7 @@ export default function PersistentDrawerLeft() {
           <ListItemText primary="ค้นหาชมรม" />
         </ListItem>
 
-        <ListItem button component={Link} to="/apply">
+        <ListItem button component={Link} to="/ShowActivity">
           <ListItemIcon>
             <DirectionsBikeIcon />
           </ListItemIcon>

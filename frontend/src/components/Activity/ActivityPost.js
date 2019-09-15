@@ -5,25 +5,25 @@ import { Link } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
 import 'date-fns';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-
 
 class ActivityPost extends Component {
   emptyItem = {
-    
+    name: '',
+    startDate: '',
+    endDate: '',
+    privacyId: '',
+    detail: '',
   };
   
   constructor(props) {
     super(props);
     this.state = {club: [],
+                  privacy: [],
+                  activity: [],
                   setItem: this.emptyItem};
     this.handleChange = this.handleChange.bind(this);
     
@@ -36,6 +36,13 @@ class ActivityPost extends Component {
       .catch((error) => {
         console.log("Error"+ error);
       });
+
+    fetch('http://localhost:8080/Privacys')
+      .then(response => response.json())
+      .then(data => this.setState({privacy: data}))
+      .catch((error) => {
+        console.log("Error"+ error);
+    });
   }
 
   handleChange(event) {
@@ -47,13 +54,37 @@ class ActivityPost extends Component {
     console.log(item);
   }
 
-  
+  async save() {
+    const {setItem} = this.state;
+
+    await fetch(`http://localhost:8080/activityPost/${this.props.match.params.clubId}/${setItem.name}/${setItem.startDate}/${setItem.endDate}/${setItem.privacyId}/${setItem.detail}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }})
+      .then(data => this.setState({activity:data}))
+      .catch((error) => {
+        console.log("Error"+ error);
+        alert('เกิดข้อผิดพลาด กรุณาตรวจสอบข้อมูลอีกครั้ง');
+    });
+
+    if(this.state.activity != ''){
+      alert('บันทึกสำเร็จ');
+      window.location = '/manage/'+this.props.match.params.clubId;
+    }
+  }
 
     render() {
       const {club} = this.state;
+      const {privacy} = this.state;
       const {setItem} = this.state;
-      
-    console.log(club);
+      const privacyList = privacy.map(status => {
+        return (
+          <MenuItem value={status.privacyId}>{status.status}</MenuItem>
+        )
+      });
+    console.log(setItem);
 
       return <div>
          <AppNavbar/>
@@ -68,14 +99,14 @@ class ActivityPost extends Component {
                     margin="normal"     
                     variant="outlined"
                     onChange={this.handleChange}
-                    name="income"
+                    name="name"
                 /> 
                   <TextField style={{ width: '250px',paddingTop: '1%'}}
                   id="date"
                   label="วันที่" 
                   type="date"
                   onChange={this.handleChange}
-                  name="date"
+                  name="startDate"
                   InputLabelProps={{
                   shrink: true,
                  
@@ -86,7 +117,7 @@ class ActivityPost extends Component {
                   label="ถึงวันที่" 
                   type="date"
                   onChange={this.handleChange}
-                  name="date"
+                  name="endDate"
                   InputLabelProps={{
                   shrink: true,
                  
@@ -95,13 +126,13 @@ class ActivityPost extends Component {
   
                 <InputLabel htmlFor="tag-helper" style={{paddingTop: '2%'}}>ความเป็นส่วนตัว</InputLabel>
                     <Select 
-                      value={this.state.setItem.clubId}
+                      value={this.state.setItem.privacyId}
                       onChange={this.handleChange}
                       style={{ width: '250px' }}
-                      input={<OutlinedInput name="clubId"/>}
+                      input={<OutlinedInput name="privacyId"/>}
                     >
                       <MenuItem value=""><em>None</em></MenuItem>
-                     {/** {nameList} */}
+                      {privacyList}
                     </Select>
                 <TextField style={{ width: '250px',paddingTop: '2%'}}
                       label="รายละเอียด"
@@ -114,7 +145,7 @@ class ActivityPost extends Component {
                       onChange={this.handleChange}
                       name="detail"
                   />
-                  <Button style={{marginLeft:'85px',width: '100px',background: '#000066',color: '#FFFFFF',justifyContent:'center',alignItems:'center'}}>โพสต์</Button>
+                  <Button style={{marginLeft:'85px',width: '100px',background: '#000066',color: '#FFFFFF',justifyContent:'center',alignItems:'center'}} onClick={() => this.save()}>โพสต์</Button>
                   
                 
        

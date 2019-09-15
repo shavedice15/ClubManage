@@ -15,37 +15,31 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles(theme => ({
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  }
-}));
-
 class SaveBudget extends Component {
   emptyItem = {
-    nameId: ''
+    date: '',
+    income: '',
+    pay: '',
+    detail: ''
   };
   
   constructor(props) {
     super(props);
-    this.state = {clubName: [],
+    this.state = {club: [],
                   setItem: this.emptyItem};
     this.handleChange = this.handleChange.bind(this);
     
   }
 
   componentDidMount() {
-    fetch('http://localhost:8080/api/clubs')
+    fetch('http://localhost:8080/findClub/'+this.props.match.params.clubId)
       .then(response => response.json())
-      .then(data => this.setState({clubName: data}));
-
+      .then(data => this.setState({club: data}))
+      .catch((error) => {
+        console.log("Error"+ error);
+      });
   }
+
   handleChange(event) {
     const value = event.target.value;
     const name = event.target.name;
@@ -54,15 +48,51 @@ class SaveBudget extends Component {
     this.setState({setItem: item});
     console.log(item);
   }
-    render() {
-      const {clubName} = this.state;
-      const {setItem} = this.state;
-      const nameList = clubName.map(name => {
-        return (
-          <MenuItem value={name.clubId}>{name.clubName}</MenuItem>
-        )
+
+  async save() {
+    const {setItem} = this.state;
+    const {club} = this.state;
+    if(setItem.income != '' & setItem.pay != ''){
+      alert('โปรดกรอกแค่รายรับ หรือ รายจ่ายเท่านั้น');
+    }else if(setItem.income != '' & setItem.pay == '' & setItem.date != '' & setItem.detail != '') {
+      await fetch(`http://localhost:8080/saveBudget/${club.clubId}/${setItem.date}/${setItem.income}/0/${setItem.detail}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+      }).then(data => console.log(data),
+            alert('บันทึกสำเร็จ'),
+            window.location.reload())
+      .catch((error) => {
+      console.log("Error"+ error);
+      alert('เกิดข้อผิดพลาด กรุณาตรวจสอบข้อมูลอีกครั้ง');
       });
-    console.log(clubName);
+    }else if(setItem.income == '' & setItem.pay != '' & setItem.date != '' & setItem.detail != ''){
+      await fetch(`http://localhost:8080/saveBudget/${club.clubId}/${setItem.date}/0/${setItem.pay}/${setItem.detail}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+      }).then(data => console.log(data),
+            alert('บันทึกสำเร็จ'),
+            window.location.reload())
+      .catch((error) => {
+      console.log("Error"+ error);
+      alert('เกิดข้อผิดพลาด กรุณาตรวจสอบข้อมูลอีกครั้ง');
+      });
+    }else {
+      alert('กรุฯากรอกข้อมูลให้ครบถ้วน');
+    }
+        
+  }
+
+    render() {
+      const {club} = this.state;
+      const {setItem} = this.state;
+      
+    console.log(club);
 
       return <div>
          <AppNavbar/>
@@ -77,7 +107,7 @@ class SaveBudget extends Component {
                   label="วันที่" 
                   type="date"
                   onChange={this.handleChange}
-                  name="startDate"
+                  name="date"
                   InputLabelProps={{
                   shrink: true,
                  
@@ -89,7 +119,7 @@ class SaveBudget extends Component {
                     margin="normal"     
                     variant="outlined"
                     onChange={this.handleChange}
-                    name="budget"
+                    name="income"
                    
                 />
                 <TextField  style={{ width: '250px',paddingTop: '2%'}}
@@ -97,9 +127,21 @@ class SaveBudget extends Component {
                     margin="normal"     
                     variant="outlined"
                     onChange={this.handleChange}
-                    name="budget"  
-                /> <Button style={{width: '100px',background: '#000066',color: '#FFFFFF',justifyContent:'center',alignItems:'center'}}onClick={() => this.save()}>บันทึก</Button>
-                   <Button style={{width: '110px',background: '#000066',color: '#FFFFFF',justifyContent:'center',alignItems:'center'}}>รายละเอียด</Button>
+                    name="pay"  
+                />
+                <TextField style={{ width: '250px',paddingTop: '2%'}}
+                      label="รายละเอียด"
+                      multiline
+                      rows="5"
+                      defaultValue=' '
+                      value={this.state.setItem.detail}
+                      margin="normal"     
+                      variant="outlined"
+                      onChange={this.handleChange}
+                      name="detail"
+                  />
+                  <Button style={{width: '100px',background: '#000066',color: '#FFFFFF',justifyContent:'center',alignItems:'center'}}onClick={() => this.save()}>บันทึก</Button>
+                  <Button style={{width: '110px',background: '#000066',color: '#FFFFFF',justifyContent:'center',alignItems:'center'}} tag={Link} to={"/ShowDetail/"+this.props.match.params.clubId}>รายละเอียด</Button>
                 
              </form>
             </FormGroup>

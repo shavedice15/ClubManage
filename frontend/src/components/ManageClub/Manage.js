@@ -137,7 +137,7 @@ class Manage extends Component {
               
               <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', paddingTop:'30px'}}>
                   <Button style={bottonStyle} disabled = {this.checkPosition()}
-                          tag={Link} to={"/clubMember/"+club.clubId}>งบการเงิน</Button>
+                          tag={Link} to={"/ShowDetail/"+club.clubId}>งบการเงิน</Button>
                   <Button style={bottonStyle} disabled = {this.checkPosition()}
                           onClick={() => this.save()}>สร้างกิจกรรมใหม่</Button>
               </div>

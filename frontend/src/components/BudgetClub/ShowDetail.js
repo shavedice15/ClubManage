@@ -17,19 +17,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-
-const useStyles = makeStyles(theme => ({
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  }
-}));
-
 class ShowDetail extends Component {
 
   emptyItem = {
@@ -62,18 +49,30 @@ class ShowDetail extends Component {
 
   async find() {
     const {setItem} = this.state;
-    const findBudget = await (
-      await fetch(`http://localhost:8080/findByClubAndDate/${this.props.match.params.clubId}/${setItem.startDate}/${setItem.endDate}`)
-      .catch((error) => {
-        console.log("Error"+ error);
-      })).json();
-    this.setState({budget: findBudget});
+    if(setItem.startDate == '' & setItem.endDate == ''){
+      const findBudget = await (
+        await fetch(`http://localhost:8080/findBudgetsByClub/${this.props.match.params.clubId}`)
+        .catch((error) => {
+          console.log("Error"+ error);
+        })).json();
+      this.setState({budget: findBudget});
+    }else if(setItem.startDate != '' & setItem.endDate != ''){
+      const findBudget = await (
+        await fetch(`http://localhost:8080/findByClubAndDate/${this.props.match.params.clubId}/${setItem.startDate}/${setItem.endDate}`)
+        .catch((error) => {
+          console.log("Error"+ error);
+        })).json();
+      this.setState({budget: findBudget});
+    }else{
+      alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+    }
+    
   }
   
     render() {
       const {budget} = this.state;
       const {club} = this.state;
-    
+      console.log(this.state.setItem)
     const PayList = budget.map(budget => {
         return (
           <tr>
@@ -128,7 +127,7 @@ class ShowDetail extends Component {
                   shrink: true,
                  }}
                 /><Button style={{ background: '#000066',color: '#FFFFFF',width: '15%',margin:'1%' }} onClick={() => this.find()}>ค้นหา</Button>{' '}
-                  <Button style={{ background: '#000066',color: '#FFFFFF',width: '15%' }} >เพิ่ม</Button>{' '}
+                  <Button style={{ background: '#000066',color: '#FFFFFF',width: '15%' }} tag={Link} to={"/SaveBudget/"+this.props.match.params.clubId}>เพิ่ม</Button>{' '}
                
               </FormGroup>
             </div>

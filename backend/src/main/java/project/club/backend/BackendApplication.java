@@ -1,4 +1,5 @@
 package project.club.backend;
+
 import project.club.backend.entity.*;
 import project.club.backend.repository.*;
 import java.util.stream.Stream;
@@ -8,8 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.Date;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 @SpringBootApplication
 public class BackendApplication {
@@ -68,6 +68,7 @@ public class BackendApplication {
 			clubRepository.save(club3);
 
 			//------------------ Member --------------------
+			
 			Member member1 = new Member("B5912345","นางสาวมณี แก้วก้าว","แก้ว","sut","ฝันให้ไกล ไปให้ถึง","0814587589","แนางม่จ้า แก้วก้าว","097654321","Mimi Mumu");
 			memberRepository.save(member1);
 			Username username1 = new Username("test","12345678",member1);
@@ -79,12 +80,12 @@ public class BackendApplication {
 			usernameRepository.save(username2);
 
 			//----------------------- Budget ----------------------
-			Club club = clubRepository.findById(1);
-			Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse("2019-08-12");
+			LocalDate date1 = LocalDate.parse("2018-12-11");
+			Club club = clubRepository.findById(2);
 			Budget  budget1 = new Budget(club,10000,0,date1,"งบประจำภาคการศึกษา");
 			budgetRepository.save(budget1);
 
-			Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse("2019-08-14");
+			LocalDate date2 = LocalDate.parse("2018-12-11");
 			Budget  budget2 = new Budget(club,0,200,date2,"ซื้อขนมกิจกรรม");
 			budgetRepository.save(budget2);
 

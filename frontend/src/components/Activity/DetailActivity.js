@@ -55,12 +55,56 @@ class DetailActivity extends Component {
       return <div>
       <AppNavbar/>
           <Container>
-           <Form onSubmit={this.handleSubmit}>
-           
-           
+           <Form style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
+           <div className="row" style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
+           <FormGroup className="col-md-4 mb-3" style={{width: '1000px'}} >
+           <InputLabel htmlFor="tag-helper">ชื่อกิจกรรม:</InputLabel>
+           <TextField  style={{ width: '250px' }}
+                    value={this.state.setItem.money}
+                    margin="normal"     
+                    variant="outlined"
+                    onChange={this.handleChange}
+                    name="money"
+                />
+            <InputLabel htmlFor="tag-helper">วันที่:</InputLabel>
+           <TextField  style={{ width: '250px' }}
+                    value={this.state.setItem.money}
+                    margin="normal"     
+                    variant="outlined"
+                    onChange={this.handleChange}
+                    name="money"
+                />
 
-           
+         <InputLabel htmlFor="tag-helper">ถึงวันที่:</InputLabel>
+           <TextField  style={{ width: '250px' }}
+                    value={this.state.setItem.money}
+                    margin="normal"     
+                    variant="outlined"
+                    onChange={this.handleChange}
+                    name="money"
+                />
+
+<InputLabel htmlFor="tag-helper">รายละเอียด:</InputLabel>
+           <TextField  style={{ width: '250px'}}
+                    value={this.state.setItem.money}
+                    margin="normal"   
+                    multiline
+                    rows="5" 
+                    variant="outlined"
+                    onChange={this.handleChange}
+                    name="money"
+                   
+                />
+
+                 </FormGroup>
+           </div>
+            
+            
+            
+            
             </Form>
+
+            
           </Container>
       </div>
     }

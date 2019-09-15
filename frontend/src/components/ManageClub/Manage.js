@@ -17,7 +17,8 @@ class Manage extends Component {
     super(props);
     this.state = {club: [],
                   adviser: [],
-                  position: []};
+                  position: [],
+                  activity: []};
   }
 
   componentDidMount() {
@@ -41,6 +42,13 @@ class Manage extends Component {
       .catch((error) => {
         console.log("Error"+ error);
       });
+
+    fetch('http://localhost:8080/activityByClub/'+this.props.match.params.clubId)
+      .then(response => response.json())
+      .then(data => this.setState({activity: data}))
+      .catch((error) => {
+        console.log("Error"+ error);
+    });
     
   }
 
@@ -66,8 +74,27 @@ class Manage extends Component {
     const {club} = this.state;
     const {adviser} = this.state;
     const {memberDetail} = this.state;
+    const {activity} = this.state;
     console.log(club);
     console.log(memberDetail);
+
+    const activityList = activity.map(activity => {
+      return (
+        <tr>
+          <td align="center">{activity.dateStart}</td>
+          <td align="center">{activity.dateEnd}</td>
+          <td align="center">{activity.activityName}</td>
+          <td align="center">{activity.privacy.status}</td>
+          <td align="center">
+            <Button style={{ background: '#000066',width: '40px' }} 
+                tag={Link} to={"/DetailActivity/"+activity.activityId}>
+              ดู
+            </Button>
+          </td>
+        </tr>
+      )
+    });
+
     return (
       <div>
         <AppNavbar/>
@@ -139,7 +166,7 @@ class Manage extends Component {
                   <Button style={bottonStyle} disabled = {this.checkPosition()}
                           tag={Link} to={"/ShowDetail/"+club.clubId}>งบการเงิน</Button>
                   <Button style={bottonStyle} disabled = {this.checkPosition()}
-                          onClick={() => this.save()}>สร้างกิจกรรมใหม่</Button>
+                          tag={Link} to={"/ActivityPost/"+club.clubId}>สร้างกิจกรรมใหม่</Button>
               </div>
               
             </div>
@@ -149,21 +176,14 @@ class Manage extends Component {
                 <thead>
                 <tr align="center">
                   <th width="20%">วันที่เริ่ม</th>
+                  <th width="20%">วันที่สิ้นสุด</th>
                   <th width="20%" >ชื่อกิจกรรม</th>
+                  <th width="20%" >ความเป็นส่วนตัว</th>
                   <th width="10%">รายละเอียด</th>
                 </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td align="center">2/02/2562</td>
-                    <td align="center">ประกวดดนตรีสากล</td>
-                    <td align="center"><Button style={{ background: '#000066',width: '45%' }} tag={Link} to={"/ClubInfo"} block>ดู</Button></td>
-                  </tr>
-                  <tr>
-                    <td align="center">1/02/2562</td>
-                    <td align="center">เข้าค่ายดนตรี</td>
-                    <td align="center"><Button style={{ background: '#000066' ,width: '45%' }} tag={Link} to={"/ClubInfo"}>ดู</Button></td>
-                  </tr>
+                  {activityList}
                 </tbody>
             </Table>
         </Container>

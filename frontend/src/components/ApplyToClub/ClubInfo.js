@@ -16,9 +16,9 @@ const useStyles = makeStyles(theme => ({
 class ClubInfo extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      club: [],
-      isDisabled: false
+    this.state = {club: [],
+                  activity: [],
+                  isDisabled: false
     };
   }
 
@@ -36,11 +36,36 @@ class ClubInfo extends Component {
       .catch((error) => {
         console.log("Error"+ error);
     });
+
+    fetch('http://localhost:8080/activityAllUser/'+this.props.match.params.clubId)
+      .then(response => response.json())
+      .then(data => this.setState({activity: data}))
+      .catch((error) => {
+        console.log("Error"+ error);
+    });
   }
 
   render() {
     const {club} = this.state;
+    const {activity} = this.state;
     console.log(club);
+
+    const activityList = activity.map(activity => {
+      return (
+        <tr>
+          <td align="center">{activity.dateStart}</td>
+          <td align="center">{activity.dateEnd}</td>
+          <td align="center">{activity.activityName}</td>
+          <td align="center">
+            <Button style={{ background: '#000066',width: '40px' }} 
+                tag={Link} to={"/DetailActivity/"+activity.activityId}>
+              ดู
+            </Button>
+          </td>
+        </tr>
+      )
+    });
+
     return (
       <div>
         <AppNavbar/>
@@ -126,22 +151,14 @@ class ClubInfo extends Component {
             <Table className="mt-4" >
                 <thead>
                 <tr align="center">
-                  <th width="20%">วันที่เริ่ม</th>
+                <th width="20%">วันที่เริ่ม</th>
+                  <th width="20%">วันที่สิ้นสุด</th>
                   <th width="20%" >ชื่อกิจกรรม</th>
                   <th width="10%">รายละเอียด</th>
                 </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td align="center">2/02/2562</td>
-                    <td align="center">ประกวดดนตรีสากล</td>
-                    <td align="center"><Button style={{ background: '#000066',width: '45%' }} tag={Link} to={"/ClubInfo"} block>ดู</Button></td>
-                  </tr>
-                  <tr>
-                    <td align="center">1/02/2562</td>
-                    <td align="center">เข้าค่ายดนตรี</td>
-                    <td align="center"><Button style={{ background: '#000066' ,width: '45%' }} tag={Link} to={"/ClubInfo"}>ดู</Button></td>
-                  </tr>
+                  {activityList}
                 </tbody>
             </Table>
           </form>

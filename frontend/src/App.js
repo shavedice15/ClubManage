@@ -21,6 +21,9 @@ import AcceptMember from './components/ManageClub/AcceptMember';
 import ClubEdit from './register/ClubEdit';
 import ShareBudget from './components/BudgetClub/ShareBudget';
 import SaveBudget from './components/BudgetClub/SaveBudget';
+import ActivityPost from './components/Activity/ActivityPost';
+import ShowActivity from './components/Activity/ShowActivity';
+import DetailActivity from './components/Activity/DetailActivity';
 
 class App extends Component {
   render() {
@@ -48,6 +51,9 @@ class App extends Component {
           <Route path='/clubs/:id' exact={true} component={ClubEdit}/>
           <Route path='/ShareBudget' exact={true} component={ShareBudget}/>
           <Route path='/SaveBudget/:clubId' exact={true} component={SaveBudget}/>
+          <Route path='/ActivityPost' exact={true} component={ActivityPost}/>
+          <Route path='/ShowActivity' exact={true} component={ShowActivity}/>
+          <Route path='/DetailActivity' exact={true} component={DetailActivity}/>
         </Switch>
       </Router>
     )

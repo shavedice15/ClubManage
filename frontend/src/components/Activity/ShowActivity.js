@@ -69,8 +69,6 @@ class ShowActivity extends Component {
                 <th width="20%">กิจกรรม</th>
                 <th width="20%">วันที่</th>
                 <th width="20%" >ถึงวันที่</th>
-                <th width="10%">เวลา</th>
-                <th width="10%">ถึงเวลา</th>
                 <th width="10%"> รายละเอียด</th>
               </tr>
               </thead>

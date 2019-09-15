@@ -92,33 +92,7 @@ class ActivityPost extends Component {
                  
                  }}
                 /> 
-              
-                <form >
-                <TextField style={{width: '250px'}}
-                     id="time"
-                    label="เวลา"
-                    type="time"
-                    defaultValue="07:30"
-                    InputLabelProps={{
-                    shrink: true,
-                 }}
-                 inputProps={{
-                     step: 300, // 5 min
-                     }}
-                />
-                 <TextField style={{width: '250px'}}
-                     id="time"
-                    label="ถึงเวลา"
-                    type="time"
-                    defaultValue="07:30"
-                    InputLabelProps={{
-                    shrink: true,
-                 }}
-                 inputProps={{
-                     step: 300, // 5 min
-                     }}
-                 />
-                </form>
+  
                 <InputLabel htmlFor="tag-helper" style={{paddingTop: '2%'}}>ความเป็นส่วนตัว</InputLabel>
                     <Select 
                       value={this.state.setItem.clubId}

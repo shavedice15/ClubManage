@@ -1,12 +1,12 @@
 package project.club.backend.entity;
+
 import lombok.*;
 
-import java.util.Date;
-
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -14,7 +14,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @ToString
 @EqualsAndHashCode
 //@Table(name="Incomes")
-
 
 public class Budget {
 	@Id
@@ -27,17 +26,18 @@ public class Budget {
     @JoinColumn(name = "Club_ID", insertable = true)
 	private Club club;
 
-    private @NonNull int income;
+	private @NonNull int income;
+	
 	private @NonNull int pay;
 
-	@Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-	private @NonNull Date date;
+	@JsonFormat(pattern="dd-MM-yyyy")
+	private @NonNull LocalDate date;
+
 	private @NonNull String detail;
 
 	public Budget(){}
 
-	public Budget (Club club, int income, int pay, Date date, String detail){
+	public Budget (Club club, int income, int pay, LocalDate date, String detail){
 		this.club = club;
 		this.income = income;
 		this.pay = pay;
@@ -68,11 +68,11 @@ public class Budget {
         this.pay = pay;
 	}
 	
-	public Date getdate(){
+	public LocalDate getdate(){
 		return date ;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
         this.date = date;
 	}
 

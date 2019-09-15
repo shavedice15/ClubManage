@@ -15,4 +15,6 @@ public interface BudgetRepository extends JpaRepository <Budget,Long> {
 
     Collection<Budget> findByClub(Club club);
 
+    @Query(value = "SELECT t FROM Budget t WHERE t.date BETWEEN :startDate AND :endDate")
+    Collection<Budget> findByDate(@Param("startDate")Date startDate, @Param("endDate")Date endDate);
 }

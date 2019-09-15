@@ -15,21 +15,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AppNavBarOrganization from '../../AppNavBarOrganization';
-const useStyles = makeStyles(theme => ({
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  }
-}));
 
 class ShareBudget extends Component {
   emptyItem = {
-    nameId: ''
+    clubId: '',
+    date: '',
+    money: ''
   };
   
   constructor(props) {
@@ -44,16 +35,34 @@ class ShareBudget extends Component {
     fetch('http://localhost:8080/api/clubs')
       .then(response => response.json())
       .then(data => this.setState({clubName: data}));
-
   }
+
   handleChange(event) {
     const value = event.target.value;
     const name = event.target.name;
     const item = {...this.state.setItem};
     item[name] = value;
     this.setState({setItem: item});
-    console.log(item);
   }
+
+  async save() {
+    const {setItem} = this.state;
+
+    await fetch(`http://localhost:8080/shareMoney/${setItem.clubId}/${setItem.date}/${setItem.money}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then(data => console.log(data),
+            alert('บันทึกสำเร็จ'),
+            window.location.reload())
+      .catch((error) => {
+      console.log("Error"+ error);
+      alert('เกิดข้อผิดพลาด กรุณาตรวจสอบข้อมูลอีกครั้ง');
+    });
+  }
+
     render() {
       const {clubName} = this.state;
       const {setItem} = this.state;
@@ -62,7 +71,7 @@ class ShareBudget extends Component {
           <MenuItem value={name.clubId}>{name.clubName}</MenuItem>
         )
       });
-    console.log(clubName);
+    console.log(setItem);
 
       return <div>
          <AppNavBarOrganization/>
@@ -74,10 +83,10 @@ class ShareBudget extends Component {
             <FormGroup className="col-md-4 mb-3" >
                   <InputLabel htmlFor="tag-helper">ชมรม</InputLabel>
                     <Select 
-                      value={this.state.setItem.nameId}
+                      value={this.state.setItem.clubId}
                       onChange={this.handleChange}
                       style={{ width: '250px' }}
-                      input={<OutlinedInput name="nameId"/>}
+                      input={<OutlinedInput name="clubId"/>}
                     >
                       <MenuItem value=""><em>None</em></MenuItem>
                       {nameList}
@@ -89,11 +98,11 @@ class ShareBudget extends Component {
               </FormGroup>
             </div> 
                   <TextField style={{ width: '250px',paddingTop: '1%' }}
-                  id="date"
                   label="วันที่"
                   type="date"
+                  value={this.state.setItem.date}
                   onChange={this.handleChange}
-                  name="startDate"
+                  name="date"
                   InputLabelProps={{
                   shrink: true,
                   
@@ -102,11 +111,13 @@ class ShareBudget extends Component {
                 <form >
                 <TextField  style={{ width: '250px',paddingTop: '2%' }}
                     label="งบประมาณ(บาท)"
+                    value={this.state.setItem.money}
                     margin="normal"     
                     variant="outlined"
                     onChange={this.handleChange}
-                    name="budget"
-                /><FormGroup  className="col-md-5 mb-3" >
+                    name="money"
+                />
+                <FormGroup  className="col-md-5 mb-3" >
                      <Button style={{marginLeft:50,background: '#FFB6C1',color: '#000066',justifyContent:'center',alignItems:'center'}}onClick={() => this.save()}>บันทึก</Button>
                </FormGroup> 
              </form>

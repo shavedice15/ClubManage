@@ -39,4 +39,31 @@ class BudgetController {
         Club club = clubRepository.findById(clubId);
         return budgetRepository.findByClubAndDate(club, dateStart, dateEnd);
     }
+
+    @GetMapping("/findByDate/{startDate}/{endDate}")
+    public Collection<Budget> findByDate(@PathVariable String startDate,
+                                        @PathVariable String endDate) throws ParseException{
+        Date dateStart = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
+        Date dateEnd = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+        return budgetRepository.findByDate(dateStart, dateEnd);
+    }
+
+    @PostMapping("/shareMoney/{clubId}/{date}/{money}")
+    public Budget ShareMoney(@PathVariable long clubId,@PathVariable String date,
+                                        @PathVariable int money) throws ParseException{
+        Date dateStart = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        Club club = clubRepository.findById(clubId);
+        Budget budget = new Budget(club,money,0,dateStart,"งบประจำเทอม");
+        return budgetRepository.save(budget);
+    }
+
+    @PostMapping("/saveBudget/{clubId}/{date}/{income}/{pay}/{detail}")
+    public Budget saveBudget(@PathVariable long clubId,@PathVariable String date,
+                                        @PathVariable int income,@PathVariable int pay,
+                                        @PathVariable String detail) throws ParseException{
+        Date dateStart = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        Club club = clubRepository.findById(clubId);
+        Budget budget = new Budget(club,income,pay,dateStart,detail);
+        return budgetRepository.save(budget);
+    }
 }

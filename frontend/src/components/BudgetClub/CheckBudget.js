@@ -17,19 +17,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 
-
-const useStyles = makeStyles(theme => ({
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  }
-}));
-
 class CheckBudget extends Component {
   emptyItem = {
     nameId: '',
@@ -40,6 +27,7 @@ class CheckBudget extends Component {
   constructor(props) {
     super(props);
     this.state = {clubName: [],
+                  budget: [],
                   setItem: this.emptyItem};
     this.handleChange = this.handleChange.bind(this);
     
@@ -50,12 +38,12 @@ class CheckBudget extends Component {
       .then(response => response.json())
       .then(data => this.setState({clubName: data}));
 
-      fetch('http://localhost:8080/findBudgetsByClub/'+this.props.match.params.clubId)
+    fetch('http://localhost:8080/Budgets')
       .then(response => response.json())
       .then(data => this.setState({budget: data}));
 
-
   }
+
   handleChange(event) {
     const value = event.target.value;
     const name = event.target.name;
@@ -63,6 +51,41 @@ class CheckBudget extends Component {
     item[name] = value;
     this.setState({setItem: item});
     console.log(item);
+  }
+
+  async find() {
+    const {setItem} = this.state;
+    if((setItem.nameId==''|| setItem.nameId==' ') & setItem.startDate=='' & setItem.endDate==''){
+      const findBudget = await (
+        await fetch(`http://localhost:8080/Budgets`)
+        .catch((error) => {
+          console.log("Error"+ error);
+        })).json();
+        this.setState({budget: findBudget});
+    }else if ((setItem.nameId != '' || setItem.nameId != ' ') & setItem.startDate == '' & setItem.endDate == ''){
+      const findBudget = await (
+        await fetch(`http://localhost:8080/findBudgetsByClub/${setItem.nameId}`)
+        .catch((error) => {
+          console.log("Error"+ error);
+        })).json();
+        this.setState({budget: findBudget});
+    }else if ((setItem.nameId=='' || setItem.nameId==' ') & setItem.startDate!='' & setItem.endDate!=''){
+      const findBudget = await (
+        await fetch(`http://localhost:8080/findByDate/${setItem.startDate}/${setItem.endDate}`)
+        .catch((error) => {
+          console.log("Error"+ error);
+        })).json();
+        this.setState({budget: findBudget});
+    }else if ((setItem.nameId!='' || setItem.nameId!=' ') & setItem.startDate!='' & setItem.endDate!=''){
+      const findBudget = await (
+      await fetch(`http://localhost:8080/findByClubAndDate/${setItem.nameId}/${setItem.startDate}/${setItem.endDate}`)
+      .catch((error) => {
+        console.log("Error"+ error);
+      })).json();
+      this.setState({budget: findBudget});
+    
+    }
+    
   }
 
     render() {
@@ -77,6 +100,18 @@ class CheckBudget extends Component {
       });
     console.log(clubName);
 
+    const PayList = budget.map(budget => {
+      return (
+        <tr>
+          <td align="center">{budget.club.clubName}</td>{/*.ดูตามชื่อตัวแปรหลังบ้าน */}
+          <td align="center">{budget.date}</td>{/*.ดูตามชื่อตัวแปรหลังบ้าน */}
+          <td align="center">{budget.income}</td>
+          <td align="center">{budget.pay}</td>
+          <td align="center">{budget.detail}</td>
+        </tr>
+      )
+    });
+
       return <div>
       <AppNavBarOrganization/>
           <Container>
@@ -90,21 +125,21 @@ class CheckBudget extends Component {
                       style={{ width: '250px',  textAlign: 'center',margin:'1%'}}
                       input={<OutlinedInput name="nameId"/>}
                     >
-                      <MenuItem value=""><em>None</em></MenuItem>
+                      <MenuItem value=" "><em>ทั้งหมด</em></MenuItem>
                       {nameList}
                     </Select>
                    
-                    <TextField style={{margin:'1%'}}
-                  id="date"
-                  label="วันที่"
-                  type="date"
-                  onChange={this.handleChange}
-                  name="startDate"
-                  InputLabelProps={{
-                  shrink: true,
+                  <TextField style={{margin:'1%'}}
+                    id="date"
+                    label="วันที่"
+                    type="date"
+                    onChange={this.handleChange}
+                    name="startDate"
+                    InputLabelProps={{
+                    shrink: true,
                  }}
                 />
-              <TextField  style={{margin:'1%'}}
+                <TextField  style={{margin:'1%'}}
                   id="date"
                   label="ถึงวันที่"
                   type="date"
@@ -114,7 +149,7 @@ class CheckBudget extends Component {
                   shrink: true,
                  }}
                 />  
-                <Button style={{ background: '#FFB6C1',color: '#000066',width: '100px' }} tag={Link} to={"/ShowDetail/"+setItem.nameId}>ค้นหา</Button>
+                <Button style={{ background: '#FFB6C1',color: '#000066',width: '100px' }} onClick={() => this.find()}>ค้นหา</Button>
             </FormGroup>
             
            </div>
@@ -122,6 +157,7 @@ class CheckBudget extends Component {
            <Table className="mt-4" >
               <thead>
               <tr style={{ background: '#FFB6C1',color: '#000066' }} align="center">
+                <th width="20%">ชมรม</th>
                 <th width="20%">วันที่</th>
                 <th width="20%" >รายรับ</th>
                 <th width="10%">รายจ่าย</th>
@@ -130,7 +166,7 @@ class CheckBudget extends Component {
               </tr>
               </thead>
               <tbody>
-              {/**   {PayList}*/}
+                {PayList}
               </tbody>
             </Table>
            </div>

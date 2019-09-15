@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import PersonIcon from '@material-ui/icons/Person';
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import CategoryIcon from '@material-ui/icons/Category';
-import YoutubeSearchedForIcon from '@material-ui/icons/YoutubeSearchedFor';
+import PaymentIcon from '@material-ui/icons/Payment';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
@@ -151,21 +151,29 @@ export default function PersistentDrawerLeft() {
           <ListItemText primary="เพิ่มองค์การนักศึกษา" />
         </ListItem>
 
-        <Divider />
-
-        <ListItem button component={Link} to="/CheckBudget">
-          <ListItemIcon>
-            <AttachMoneyIcon />
-          </ListItemIcon>
-          <ListItemText primary="งบการเงิน" />
-        </ListItem>
-
         <ListItem button component={Link} to="/Clubs">
           <ListItemIcon>
             <LibraryAddIcon />
           </ListItemIcon>
           <ListItemText primary="ตั้งชมรมใหม่" />
         </ListItem>
+
+        <Divider />
+
+        <ListItem button component={Link} to="/ShareBudget">
+          <ListItemIcon>
+            <AttachMoneyIcon />
+          </ListItemIcon>
+          <ListItemText primary="ลงงบประจำเทอม" />
+        </ListItem>
+
+        <ListItem button component={Link} to="/CheckBudget">
+          <ListItemIcon>
+            <PaymentIcon />
+          </ListItemIcon>
+          <ListItemText primary="ดูงบการเงิน" />
+        </ListItem>
+
         
         <Divider />
 

@@ -45,22 +45,35 @@ class BudgetController {
         return budgetRepository.findByDate(dateStart, dateEnd);
     }
 
-    @PostMapping("/shareMoney/{clubId}/{date}/{money}")
+    @PostMapping("/shareMoney/{clubId}/{date}/{money}/{note}")
     public Budget ShareMoney(@PathVariable long clubId,@PathVariable String date,
-                                        @PathVariable int money) throws ParseException{
+                                        @PathVariable int money,@PathVariable String note) throws ParseException{
         LocalDate dateStart = LocalDate.parse(date);
         Club club = clubRepository.findById(clubId);
-        Budget budget = new Budget(club,money,0,dateStart,"งบประจำเทอม");
+        Budget budget = new Budget(club,money,0,dateStart,"งบประจำเทอม",note);
         return budgetRepository.save(budget);
     }
 
-    @PostMapping("/saveBudget/{clubId}/{date}/{income}/{pay}/{detail}")
+    @PostMapping("/saveBudget/{clubId}/{date}/{income}/{pay}/{detail}/{note}")
     public Budget saveBudget(@PathVariable long clubId,@PathVariable String date,
                                         @PathVariable int income,@PathVariable int pay,
-                                        @PathVariable String detail) throws ParseException{
+                                        @PathVariable String detail,@PathVariable String note,
+                                        @RequestBody String url) throws ParseException{
         LocalDate dateStart = LocalDate.parse(date);
         Club club = clubRepository.findById(clubId);
-        Budget budget = new Budget(club,income,pay,dateStart,detail);
+
+        String URL = url.replace("\"","");
+        Budget budget = new Budget(club,income,pay,dateStart,detail,note,URL);
+        return budgetRepository.save(budget);
+    }
+
+    @PostMapping("/saveBudgetNotUrl/{clubId}/{date}/{income}/{pay}/{detail}/{note}")
+    public Budget saveBudgetNotUrl(@PathVariable long clubId,@PathVariable String date,
+                                        @PathVariable int income,@PathVariable int pay,
+                                        @PathVariable String detail,@PathVariable String note) throws ParseException{
+        LocalDate dateStart = LocalDate.parse(date);
+        Club club = clubRepository.findById(clubId);
+        Budget budget = new Budget(club,income,pay,dateStart,detail,note);
         return budgetRepository.save(budget);
     }
 }

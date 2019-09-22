@@ -83,11 +83,11 @@ public class BackendApplication {
 			//----------------------- Budget ----------------------
 			LocalDate date1 = LocalDate.parse("2018-12-11");
 			Club club = clubRepository.findById(2);
-			Budget  budget1 = new Budget(club,10000,0,date1,"งบประจำภาคการศึกษา");
+			Budget  budget1 = new Budget(club,10000,0,date1,"งบประจำภาคการศึกษา","");
 			budgetRepository.save(budget1);
 
 			LocalDate date2 = LocalDate.parse("2018-12-11");
-			Budget  budget2 = new Budget(club,0,200,date2,"ซื้อขนมกิจกรรม");
+			Budget  budget2 = new Budget(club,0,200,date2,"ซื้อขนมกิจกรรม","");
 			budgetRepository.save(budget2);
 
 			//-------------------- MemberClub -------------------

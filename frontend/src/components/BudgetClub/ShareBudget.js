@@ -20,7 +20,8 @@ class ShareBudget extends Component {
   emptyItem = {
     clubId: '',
     date: '',
-    money: ''
+    money: '',
+    note: ''
   };
   
   constructor(props) {
@@ -47,20 +48,24 @@ class ShareBudget extends Component {
 
   async save() {
     const {setItem} = this.state;
-
-    await fetch(`http://localhost:8080/shareMoney/${setItem.clubId}/${setItem.date}/${setItem.money}`, {
+    if(setItem.date != '' & setItem.money != '' & setItem.note != ''){
+      await fetch(`http://localhost:8080/shareMoney/${setItem.clubId}/${setItem.date}/${setItem.money}/${setItem.note}`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
-    }).then(data => console.log(data),
-            alert('บันทึกสำเร็จ'),
-            window.location.reload())
-      .catch((error) => {
-      console.log("Error"+ error);
-      alert('เกิดข้อผิดพลาด กรุณาตรวจสอบข้อมูลอีกครั้ง');
-    });
+      }).then(data => console.log(data),
+              alert('บันทึกสำเร็จ'),
+              window.location.reload())
+        .catch((error) => {
+        console.log("Error"+ error);
+        alert('เกิดข้อผิดพลาด กรุณาตรวจสอบข้อมูลอีกครั้ง');
+      });
+    }else {
+      alert('กรุณากรอกข้อมูลให้ครบ');
+    }
+    
   }
 
     render() {
@@ -117,6 +122,19 @@ class ShareBudget extends Component {
                     onChange={this.handleChange}
                     name="money"
                 />
+
+                <TextField style={{ width: '250px',paddingTop: '2%'}}
+                    label="หมายเหตุ"
+                    multiline
+                    rows="5"
+                    defaultValue=' '
+                    value={this.state.setItem.note}
+                    margin="normal"     
+                    variant="outlined"
+                    onChange={this.handleChange}
+                    name="note"
+                />
+
                 <FormGroup  className="col-md-5 mb-3" >
                      <Button style={{marginLeft:50,background: '#FFB6C1',color: '#000066',justifyContent:'center',alignItems:'center'}}onClick={() => this.save()}>บันทึก</Button>
                </FormGroup> 

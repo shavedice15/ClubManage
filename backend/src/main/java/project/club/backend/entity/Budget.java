@@ -35,14 +35,29 @@ public class Budget {
 
 	private @NonNull String detail;
 
+	private @NonNull String url;
+
+	private @NonNull String note;
+
 	public Budget(){}
 
-	public Budget (Club club, int income, int pay, LocalDate date, String detail){
+	public Budget (Club club, int income, int pay, LocalDate date, String detail,String note, String url){
 		this.club = club;
 		this.income = income;
 		this.pay = pay;
 		this.date = date;
 		this.detail = detail;
+		this.note = note;
+		this.url = url;
+	}
+	
+	public Budget (Club club, int income, int pay, LocalDate date, String detail, String note){
+		this.club = club;
+		this.income = income;
+		this.pay = pay;
+		this.date = date;
+		this.detail = detail;
+		this.note = note;
     }
 	
 	public Long getBudgetId(){
@@ -85,9 +100,23 @@ public class Budget {
 	}
 
 	public Club getClub() {
-		return this.club;
+		return club;
 	}
 	public void setClub(Club club) {
 		this.club = club;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
 	}
 }

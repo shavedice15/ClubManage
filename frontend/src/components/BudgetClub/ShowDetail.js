@@ -80,6 +80,8 @@ class ShowDetail extends Component {
             <td align="center">{budget.income}</td>
             <td align="center">{budget.pay}</td>
             <td align="center">{budget.detail}</td>
+            <td align="center"><a target="_blank" href={budget.url}>คลิกเพื่อดู</a></td>
+            <td align="center">{budget.note}</td>
           </tr>
         )
       });
@@ -140,6 +142,7 @@ class ShowDetail extends Component {
                 <th width="10%">รายจ่าย</th>
                 <th width="10%">รายละเอียด</th>
                 <th width="10%">หลักฐาน</th>
+                <th width="10%">หมายเหตุ</th>
               </tr>
               </thead>
               <tbody>

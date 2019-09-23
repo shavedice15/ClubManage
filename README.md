@@ -13,3 +13,4 @@ or
 - npm i react-select
 - npm install date-fns @types/date-fns
 - npm install --save availity-reactstrap-validation react react-dom
+- npm install --save react-apexcharts apexcharts

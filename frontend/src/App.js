@@ -24,7 +24,11 @@ import SaveBudget from './components/BudgetClub/SaveBudget';
 import ActivityPost from './components/Activity/ActivityPost';
 import ShowActivity from './components/Activity/ShowActivity';
 import DetailActivity from './components/Activity/DetailActivity';
-
+import EditData from './register/EditData';
+import EditPassword from './register/EditPassword';
+import EditProfile from './components/BudgetClub/EditProfile';
+import InputOrgani from './components/BudgetClub/InputOrgani';
+import TableOrgani from './components/BudgetClub/TableOrgani';
 class App extends Component {
   render() {
     return(
@@ -54,6 +58,11 @@ class App extends Component {
           <Route path='/ActivityPost/:clubId' exact={true} component={ActivityPost}/>
           <Route path='/ShowActivity' exact={true} component={ShowActivity}/>
           <Route path='/DetailActivity/:activityId' exact={true} component={DetailActivity}/>
+          <Route path='/EditData' exact={true} component={EditData}/>
+          <Route path='/EditPassword' exact={true} component={EditPassword}/>
+          <Route path='/EditProfile' exact={true} component={EditProfile}/>
+          <Route path='/InputOrgani' exact={true} component={InputOrgani}/>
+          <Route path='/TableOrgani' exact={true} component={TableOrgani}/>
         </Switch>
       </Router>
     )

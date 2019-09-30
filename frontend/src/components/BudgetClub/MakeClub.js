@@ -17,11 +17,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-class TableOrgani extends Component {
+class MakeClub extends Component {
 
   emptyItem = {
-   startDate: '',
-   endDate: ''
+   
   };
   
   constructor(props) {
@@ -76,10 +75,9 @@ class TableOrgani extends Component {
     const PayList = budget.map(budget => {
         return (
           <tr>
-            <td align="center">{}</td>{/*.ดูตามชื่อตัวแปรหลังบ้าน */}
-            <td align="center">{}</td>
-            <td align="center">{}</td>
-            <td align="center">{}</td>
+            <td align="center">{budget.date}</td>{/*.ดูตามชื่อตัวแปรหลังบ้าน */}
+            <td align="center"><Button style={{ background: '#FFB6C1', color:'#000066' }}>ข้อมูล</Button></td>
+            <td align="center"><Button style={{ background: '#FFB6C1', color:'#000066' }}>ตกลง</Button></td>
             <td align="center"><Button style={{ background: '#FFB6C1', color:'#000066' }}>ลบ</Button></td>
             
           </tr>
@@ -91,46 +89,27 @@ class TableOrgani extends Component {
       return <div>
           <AppNavBarOrganization/>
           <Container>
-            <div className="row">
-            <FormGroup className="col-md-5 mb-3">
-              </FormGroup>
-            </div>
-            <div className="row">
-            <FormGroup className="col-md-5 mb-3">
-              </FormGroup>
-            </div> 
+           
           <Form onSubmit={this.handleSubmit}>
-            
+            <div className="row" style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
+            </div>
             </Form>
             <Table className="mt-4" >
               <thead>
               <tr style={{ background: '#FFB6C1',color: '#000066' }} align="center">
-                <th width="20%">ชื่อ-สกุล</th>
-                <th width="20%" >เบอร์</th>
-                <th width="10%">เกรด</th>
-                <th width="10%">ตำแหน่ง</th>
+                <th width="20%">ชื่อชมรม</th>
+                <th width="20%" >ข้อมูล</th>
+                <th width="10%">ตกลง</th>
                 <th width="10%">ลบ</th>
-               
+                
               </tr>
               </thead>
               <tbody>
-                {PayList}
+                
               </tbody>
             </Table>
-            <div className="row">
-            <FormGroup className="col-md-5 mb-3">
-              </FormGroup>
-            </div>
-            <div className="row">
-            <FormGroup className="col-md-5 mb-3">
-              </FormGroup>
-            </div>  
-            <FormGroup style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
-                            <Button style={{marginLeft:40,background: '#FFB6C1',color: '#000066'}} type="submit">เพิ่ม</Button>
-                            
-                        </FormGroup>
           </Container>
       </div>
     }
   }
-  export default TableOrgani;
+  export default MakeClub;

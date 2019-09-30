@@ -29,6 +29,8 @@ import EditPassword from './register/EditPassword';
 import EditProfile from './components/BudgetClub/EditProfile';
 import InputOrgani from './components/BudgetClub/InputOrgani';
 import TableOrgani from './components/BudgetClub/TableOrgani';
+import OrganizeInput from './components/BudgetClub/OrganizeInput';
+import MakeClub from './components/BudgetClub/MakeClub';
 class App extends Component {
   render() {
     return(
@@ -63,6 +65,8 @@ class App extends Component {
           <Route path='/EditProfile' exact={true} component={EditProfile}/>
           <Route path='/InputOrgani' exact={true} component={InputOrgani}/>
           <Route path='/TableOrgani' exact={true} component={TableOrgani}/>
+          <Route path='/OrganizeInput' exact={true} component={OrganizeInput}/>
+          <Route path='/MakeClub' exact={true} component={MakeClub}/>
         </Switch>
       </Router>
     )

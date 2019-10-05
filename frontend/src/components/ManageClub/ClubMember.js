@@ -440,6 +440,7 @@ class ClubMember extends Component {
                 <h3 align="center">{club.clubName}</h3>
               </div>
           </form>
+          <p>สมาชิกของ ชมรม มีทั้งหมด {this.state.member.length} คน</p>
           <Table className="mt-4" >
                 <thead>
                 <tr align="center">

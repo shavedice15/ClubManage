@@ -17,6 +17,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
+import Chart from "react-apexcharts";
 class ShowDetail extends Component {
 
   emptyItem = {
@@ -28,6 +29,20 @@ class ShowDetail extends Component {
     super(props);
     this.state = {budget: [],
                   club: [],
+                  options: {
+                    labels: ['รายรับ', 'รายจ่าย'],
+                    responsive: [{
+                      breakpoint: 480,
+                      options: {
+                        chart: {
+                          width: 200
+                        },
+                        legend: {
+                          position: 'bottom'
+                        }
+                      }
+                    }]
+                  },
                   setItem: this.emptyItem};
     this.handleChange = this.handleChange.bind(this);
     
@@ -87,7 +102,14 @@ class ShowDetail extends Component {
       });
       {/*<td align="center">{club.typeClubเอนติตี้.typeClubข้างใน}</td> */}
       console.log(budget);
-
+      var income = 0
+      var pay = 0
+        this.state.budget.map(x => {
+          income += x.income;
+          pay += x.pay
+          
+           
+        })
       return <div>
           <AppNavbar/>
           <Container>
@@ -134,6 +156,7 @@ class ShowDetail extends Component {
               </FormGroup>
             </div>
             </Form>
+            <Chart options={this.state.options} series={[income, pay]} type="pie" width="380" />
             <Table className="mt-4" >
               <thead>
               <tr style={{ background: '#000066',color: '#FFFFFF' }} align="center">

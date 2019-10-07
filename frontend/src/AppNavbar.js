@@ -16,6 +16,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from "react-router-dom";
+import { Button } from 'reactstrap';
 
 import PersonIcon from '@material-ui/icons/Person';
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
@@ -23,8 +24,6 @@ import CategoryIcon from '@material-ui/icons/Category';
 import YoutubeSearchedForIcon from '@material-ui/icons/YoutubeSearchedFor';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-
-import {auth} from 'firebase';
 
 const drawerWidth = 240;
 
@@ -97,10 +96,6 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   }
 
-  function sighout() {
-    auth.singOut()
-  }
-
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -124,6 +119,7 @@ export default function PersistentDrawerLeft() {
           <Typography variant="h6" noWrap>
             Club Management System (นักศึกษาทั่วไป)
           </Typography>
+
         </Toolbar>
       </AppBar>
       <Drawer
@@ -181,7 +177,7 @@ export default function PersistentDrawerLeft() {
         
         <Divider />
 
-        <ListItem button onClick={sighout}>
+        <ListItem button component={Link} to="/wait">
           <ListItemIcon>
             <ExitToAppIcon />
           </ListItemIcon>

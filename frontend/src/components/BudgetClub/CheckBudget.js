@@ -17,6 +17,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 
+import Chart from "react-apexcharts";
 class CheckBudget extends Component {
   emptyItem = {
     nameId: '',
@@ -28,6 +29,21 @@ class CheckBudget extends Component {
     super(props);
     this.state = {clubName: [],
                   budget: [],
+                  options: {
+                    labels: ['รายรับ', 'รายจ่าย'],
+                    responsive: [{
+                      breakpoint: 480,
+                      options: {
+                        chart: {
+                          width: 200
+                        },
+                        legend: {
+                          position: 'bottom'
+                        }
+                      }
+                    }]
+                  },
+                  memberclub:[],
                   setItem: this.emptyItem};
     this.handleChange = this.handleChange.bind(this);
     
@@ -55,6 +71,13 @@ class CheckBudget extends Component {
 
   async find() {
     const {setItem} = this.state;
+    if(setItem.nameId != ''){
+      fetch(`http://localhost:8080/memberClub/${setItem.nameId}`)
+      .then(response => response.json())
+      .then(data => this.setState({ memberclub: data }));
+  
+    }
+
     if((setItem.nameId==''|| setItem.nameId==' ') & setItem.startDate=='' & setItem.endDate==''){
       const findBudget = await (
         await fetch(`http://localhost:8080/Budgets`)
@@ -114,6 +137,14 @@ class CheckBudget extends Component {
       )
     });
 
+    var income = 0
+    var pay = 0
+    this.state.budget.map(x => {
+      income += x.income;
+      pay += x.pay
+      
+       
+    })
       return <div>
       <AppNavBarOrganization/>
           <Container>
@@ -155,6 +186,8 @@ class CheckBudget extends Component {
             </FormGroup>
             
            </div>
+           <Chart options={this.state.options} series={[income, pay]} type="pie" width="380" />
+           <p>สมาชิกของ ชมรม มีทั้งหมด {this.state.memberclub.length} คน</p>
            <div>
            <Table className="mt-4" >
               <thead>

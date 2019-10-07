@@ -32,6 +32,7 @@ import TableOrgani from './components/ProfileOrganize/TableOrgani';
 import OrganizeInput from './components/ProfileOrganize/OrganizeInput';
 import MakeClub from './components/ManageClub/MakeClub';
 import wait from './components/Login/wait';
+import Test from './Test'
 class App extends Component {
   render() {
     return(
@@ -69,6 +70,7 @@ class App extends Component {
           <Route path='/OrganizeInput' exact={true} component={OrganizeInput}/>
           <Route path='/MakeClub' exact={true} component={MakeClub}/>
           <Route path='/wait' exact={true} component={wait}/>
+          <Route path='/test' exact={true} component={Test}/>
         </Switch>
       </Router>
     )

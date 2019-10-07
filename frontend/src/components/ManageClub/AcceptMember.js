@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import AppNavbar from '../../AppNavbar';
-import { Link } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label, Table } from 'reactstrap';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FilledInput from '@material-ui/core/FilledInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import { Button, Container, FormGroup, Table } from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
 import Modal from '@material-ui/core/Modal';
 import Divider from '@material-ui/core/Divider';

@@ -12,6 +12,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import {auth} from '../../firebase';
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -24,16 +25,30 @@ class MyClub extends Component {
   constructor(props) {
     super(props);
     this.state = {club: [],
+                  currentUser: null,
                   memberClub: []};
   }
 
   componentDidMount() {
-    fetch('http://localhost:8080/myClub/test'/*+this.props.match.params.clubId*/)
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        fetch('http://localhost:8080/myClub/'+user.email)
+          .then(response => response.json())
+          .then(data => this.setState({club: data}))
+          .catch((error) => {
+            console.log("Error"+ error);
+        });
+      }else{
+        window.location = '/login';
+      }
+    })
+/*
+    fetch('http://localhost:8080/myClub/'+this.state.currentUser)
       .then(response => response.json())
       .then(data => this.setState({club: data}))
       .catch((error) => {
         console.log("Error"+ error);
-      });
+      });*/
   }
 
   async detail(status,clubId) {

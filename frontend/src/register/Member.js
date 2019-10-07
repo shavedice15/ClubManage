@@ -13,7 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
+import {auth} from '../firebase';
 const useStyles = makeStyles(theme => ({
     container: {
         display: 'flex',
@@ -35,8 +35,6 @@ export default class Member extends Component {
         majorId: '',
         branchId: '',
 
-
-
         studentid: '',
         name: '',
         nickname: '',
@@ -50,7 +48,10 @@ export default class Member extends Component {
         changwatname: '',
         branch: '',
         major: '',
-        aumphoename: ''
+        aumphoename: '',
+
+        email: '',
+        password: ''
     };
 
 
@@ -166,20 +167,32 @@ export default class Member extends Component {
             Address.match(/^\w*\s\w*\.\w*/) != null
         ) {
             console.log('yes')
-            await fetch(`http://localhost:8080/api/memberx/${setItem.changwatId}/${setItem.aumphoeId}/${setItem.majorId}/${setItem.branchId}`, {
+            await fetch(`http://localhost:8080/api/memberx/${setItem.changwatId}/${setItem.aumphoeId}/${setItem.majorId}/${setItem.branchId}/${setItem.email}/${setItem.password}`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(setItem),
-            });
+            }).then(data => {
+                    auth.createUserWithEmailAndPassword(setItem.email, setItem.password).then(() => {
+                        console.log(data)
+                        window.location = '/login'
+                    }, (error) => {
+                        console.log(error.message)
+                    });
+                    
+                }).catch((error) => {
+                    console.log("Error"+ error);
+                    alert('เกิดข้อผิดพลาด กรุณาตรวจสอบข้อมูลอีกครั้ง');
+                });
+
         }
         else {
             alert('กรอกข้อมูลให้ครบ และถูกต้อง')
         }
 
-        this.props.history.push('/shows');
+        //this.props.history.push('/shows');
     }
 
 
@@ -215,8 +228,18 @@ export default class Member extends Component {
 
         return (
             <div>
-                <AppNavbar />
-                <Container style={{ paddingTop: '0px' }}>
+                <AppBar
+                position="fixed"
+                style={{ background: '#000066' }}
+            >
+                <Toolbar>
+                    <Typography variant="h6" style={{ width: '90%'}} noWrap>
+                        Club Management System
+                    </Typography>
+                </Toolbar>
+                </AppBar>
+
+                <Container style={{ paddingTop: '30px' }}>
 
                     <Form onSubmit={this.handleSubmit}>
                         <from>
@@ -461,6 +484,35 @@ export default class Member extends Component {
                                             onChange={this.handleChange}
                                             autoComplete="facebook1" placeholder="facebook" />
                                     </FormGroup> */}
+                                </div>
+                            </fieldset>
+
+                            <fieldset className='my-fieldset'>
+                            <legend className='legend' >E-mail:</legend>
+                                <div className="row" className='a'>
+                                
+                                     <AvForm className="col-md-8 mb-3" >
+                                        <AvField name="email" label="E-mail" type="text" errorMessage="Invalid name" 
+                                     validate={{
+                                             required: { value: true },
+                                         pattern: { value: '^[0-9]' }
+                                     }}
+                                        value={setItem.email}
+                                        onChange={this.handleChange}
+                                        />
+                                    </AvForm>
+                                    
+                                    <AvForm className="col-md-8 mb-3" >
+                                        <AvField name="password" label="password" type="text" errorMessage="Invalid name" 
+                                        validate={{
+                                            required: { value: true },
+                                            pattern: { value: '^[0-9]' }
+                                        }}
+                                        value={setItem.password}
+                                        onChange={this.handleChange}
+                                        />
+                                    </AvForm>
+                                   
                                 </div>
                             </fieldset>
                         </form>

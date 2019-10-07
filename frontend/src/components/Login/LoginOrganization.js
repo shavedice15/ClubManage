@@ -11,51 +11,56 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import { authenticationService } from './AuthenticationService';
+import {auth} from '../../firebase';
 
 class LoginOrganization extends Component {
-    emptyItem = {
-        username: '',
-        password: ''
-      };
-
     constructor(props) {
         super(props);
-        this.state = {  user: this.emptyItem,
-                        getUser: [],
+        this.state = {  email: '',
+                        password: '',
+                        currentUser: null,
+                        message: '',
                         showPassword: false };
         this.handleChange = this.handleChange.bind(this);
         this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
         this.handleMouseDownPassword = this.handleMouseDownPassword.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
-    login(){
-      const {user} = this.state;
-      const {getUser} = this.state;
-      authenticationService.login(user.username, user.password)
-      .then(
-        user => {
-          const { from } = this.props.location.state || { from: { pathname: "/" } };
-          this.props.history.push(from);
-          this.setState({getUser: user});
-        }/*,
-        error => {
-          setSubmitting(false);
-          setStatus(error);
-        }*/
-      );
-      if(getUser){
-        window.location = '/CheckBudget';
-      }
+    onSubmit = e => {
+      e.preventDefault()
+  
+      const { email, password } = this.state
+
+      fetch('http://localhost:8080/organize/'+email)
+        .then(response => response.json())
+        .then(data => {
+          auth
+          .signInWithEmailAndPassword(email, password)
+          .then(response => {
+            this.setState({
+              currentUser: response.user.email
+            })
+            window.location = '/ProfileOrganize';
+          })
+          .catch(error => {
+            alert(error.message)
+            this.setState({
+              message: error.message
+            })
+          })
+        })
+        .catch(error => {
+          alert('ไม่พบ e-mail นี้')
+        });
     }
 
-    handleChange(event) {
-        const value = event.target.value;
-        const name = event.target.name;
-        const item = {...this.state.user};
-        item[name] = value;
-        this.setState({user: item});
-        console.log(this.state.user);
+    handleChange = e => {
+      const { name, value } = e.target
+  
+      this.setState({
+        [name]: value
+      })
     }
 
     handleClickShowPassword() {
@@ -69,7 +74,7 @@ class LoginOrganization extends Component {
     };
 
     render() {
-        const {user} = this.state;
+      console.log(this.state.currentUser)
         const {showPassword} = this.state;
         return (
           <div>
@@ -90,11 +95,11 @@ class LoginOrganization extends Component {
             <Container>
               <form style={{display: 'flex',  justifyContent:'center', alignItems:'center', paddingTop: '15%'}}>
                 <TextField
-                    label="Username"
+                    label="E-mail"
                     margin="normal"     
                     variant="outlined"
                     onChange={this.handleChange}
-                    name="username"
+                    name="email"
                     style={{ width: '250px' }}
                 />
               </form>
@@ -125,7 +130,7 @@ class LoginOrganization extends Component {
               </form>
               <form style={{display: 'flex',  justifyContent:'center', alignItems:'center', paddingTop:'15px'}}>
               <FormGroup>
-                  <Button style={{ background: '#FFB6C1', color:'#000066' }} onClick={() => this.login()}>Login</Button>
+                  <Button style={{ background: '#FFB6C1', color:'#000066' }} onClick={this.onSubmit}>Login</Button>
               </FormGroup>
               <FormGroup style={{width: '10px'}} ></FormGroup>
               </form>

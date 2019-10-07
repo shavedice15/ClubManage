@@ -42,7 +42,7 @@ class FindClub extends Component {
         console.log("Error"+ error);
       });
 
-    fetch('http://localhost:8080/api/clubs')
+    fetch('http://localhost:8080/clubConfirm')
       .then(response => response.json())
       .then(data => this.setState({club: data}))
       .catch((error) => {
@@ -86,7 +86,7 @@ class FindClub extends Component {
     }
     else if (setItem.nameClub == '' & setItem.typeId == '') {
       const findClub = await (
-        await fetch(`http://localhost:8080/api/clubs`)
+        await fetch(`http://localhost:8080/clubConfirm`)
         .catch((error) => {
           console.log("Error"+ error);
         })).json();

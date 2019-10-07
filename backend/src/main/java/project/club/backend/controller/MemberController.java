@@ -26,6 +26,7 @@ class MemberController {
     private BranchRepository branchRepository;
     private ChangwatRepository changwatRepository;
     private AumphoeRepository aumphoeRepository;
+    private UsernameRepository usernameRepository;
 
     //private RegisterClubRepository registerClubRepository;
 
@@ -92,9 +93,11 @@ class MemberController {
     }
     
 
-    @PostMapping("/memberx/{changwatId}/{aumphoeId}/{majorId}/{branchId}")
+    @PostMapping("/memberx/{changwatId}/{aumphoeId}/{majorId}/{branchId}/{username}/{password}")
     Member createMember(@Valid @RequestBody Member member,@PathVariable int changwatId,
-    @PathVariable int aumphoeId,@PathVariable int majorId,@PathVariable int branchId) throws URISyntaxException {
+        @PathVariable int aumphoeId,@PathVariable int majorId,@PathVariable int branchId,
+        @PathVariable String username,@PathVariable String password) throws URISyntaxException {
+
         Changwat ch = changwatRepository.findById(changwatId);
         Aumphoe am = aumphoeRepository.findById(aumphoeId);
         Major ma = majorRepository.findById(majorId);
@@ -110,6 +113,9 @@ class MemberController {
         member.setBranch(br.getBranch());
         log.info("Request to create member: {}", member);
         Member result = memberRepository.save(member);
+
+        Username user = new Username(username,password,result);
+        usernameRepository.save(user);
         return result;
     }
 
@@ -131,11 +137,16 @@ class MemberController {
 
     @PutMapping("/memberx/{changwatId}/{aumphoeId}/{majorId}/{branchId}")
     Member updateMember(@Valid @RequestBody Member member,@PathVariable int changwatId,
-    @PathVariable int aumphoeId,@PathVariable int majorId,@PathVariable int branchId) {
+        @PathVariable int aumphoeId,@PathVariable int majorId,@PathVariable int branchId) {
         Changwat ch = changwatRepository.findById(changwatId);
         Aumphoe am = aumphoeRepository.findById(aumphoeId);
         Major ma = majorRepository.findById(majorId);
         Branch br =branchRepository.findById(branchId);
+        
+        member.setChangwatid(ch);
+        member.setAumphoeid(am);
+        member.setMajorid(ma);
+        member.setBranchid(br);
 
         member.setChangwatname(ch.getChangwat());
         member.setAumphoename(am.getAumphoe());

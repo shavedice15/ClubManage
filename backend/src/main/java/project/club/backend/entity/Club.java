@@ -38,25 +38,27 @@ public class Club {
 	private TypeClub typeClub;
 	private String typeClubname;
 
-	
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = ClubStatus.class)
+	@JoinColumn(name = "ClubStatus_ID", insertable = true)
+	private ClubStatus clubStatus;
+
 	@OneToOne(fetch = FetchType.EAGER, targetEntity = Major.class)
 	@JoinColumn(name = "Major_ID", insertable = true)
 	private Major majorid;
 	private String major;
 
-
-
 	public Club() {
 	}
 
 	public Club(String clubName, String groupFB, String pageFB, String invitation, Adviser adviser,
-			TypeClub typeClub) {
+			TypeClub typeClub, ClubStatus clubStatus) {
 		this.clubName = clubName;
 		this.groupFB = groupFB;
 		this.pageFB = pageFB;
 		this.invitation = invitation;
 		this.adviser = adviser;
 		this.typeClub = typeClub;
+		this.clubStatus = clubStatus;
 	}
 
 	public Long getClubId() {
@@ -155,4 +157,11 @@ public class Club {
 	public void setAdvisername(String name){this.advisername = name;}
 	public String getAdvisername(){return advisername;}
 //---------------------------------------------------------------------------
+	public ClubStatus getClubStatus() {
+		return clubStatus;
+	}
+
+	public void setClubStatus(ClubStatus clubStatus) {
+		this.clubStatus = clubStatus;
+	}
 }

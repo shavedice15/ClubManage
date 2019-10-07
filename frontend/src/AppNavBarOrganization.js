@@ -177,7 +177,7 @@ export default function PersistentDrawerLeft() {
         
         <Divider />
 
-        <ListItem button component={Link} to="/loginOrganization">
+        <ListItem button component={Link} to="/wait">
           <ListItemIcon>
             <ExitToAppIcon />
           </ListItemIcon>

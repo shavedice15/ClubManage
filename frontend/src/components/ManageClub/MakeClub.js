@@ -10,7 +10,6 @@ class MakeClub extends Component {
     super(props);
     this.state = {club: [],
                   currentUser: null};
-    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {//ดึงข้อมูล

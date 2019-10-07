@@ -17,14 +17,21 @@ public class Adviser {
     private @NonNull String name;
     private @NonNull String tel;
     private @NonNull String email;
-
+    private @NonNull String affiliates;
     public Adviser(){}
-    public Adviser (String name, String tel, String email){
+    public Adviser (String name, String tel, String email,String affiliates){
         this.name = name;
         this.tel = tel;
         this.email = email;
+        this.affiliates = affiliates;
     }
 
+    public void setAffiliates(String affiliates){
+        this.affiliates = affiliates;
+    }
+
+    public String getAffiliates(){return this.affiliates; }
+    
     public long getId(){
         return id;
     }

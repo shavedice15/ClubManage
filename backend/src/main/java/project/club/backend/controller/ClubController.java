@@ -23,16 +23,16 @@ class ClubController {
     private MajorRepository majorRepository;
     private TypeClubRepository typeClubRepository;
     private AdviserRepository adviserRepository;
-
+    private ClubStatusRepository clubStatusRepository;
 
     
    ClubController(ClubRepository clubRepository,TypeClubRepository typeClubRepository,AdviserRepository adviserRepository,
-   MajorRepository majorRepository){
+   MajorRepository majorRepository , ClubStatusRepository clubStatusRepository){
         this.clubRepository = clubRepository;
         this.typeClubRepository = typeClubRepository;
         this.adviserRepository = adviserRepository;
         this.majorRepository = majorRepository;
-
+        this.clubStatusRepository = clubStatusRepository;
     }
 
     @GetMapping("/clubs")
@@ -50,6 +50,11 @@ class ClubController {
     @GetMapping("/advisers")
     Collection<Adviser> advisers() {
         return adviserRepository.findAll();
+    }
+
+    @GetMapping("/advisers/{id}")
+    Adviser advisersID(@PathVariable long id) {
+        return adviserRepository.findById(id);
     }
 
 //--------------------------------------------------------------------------------
@@ -101,7 +106,7 @@ class ClubController {
         club.setMajor(ma.getMajor());
         club.setTypeClubname(ty.getTypeClub());
         club.setAdvisername(ad.getName());
-        
+        club.setClubStatus(clubStatusRepository.findById(1L));
         log.info("Request to create member: {}", club);
         Club result = clubRepository.save(club);
         return result;

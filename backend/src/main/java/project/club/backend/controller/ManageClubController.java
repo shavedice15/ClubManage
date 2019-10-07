@@ -54,6 +54,14 @@ class ManageClubController {
         return memberClub;
     }
 
+    @GetMapping("/myClubs/{id}/{position}") //ชมรมที่ฉันอยู่ทั้งหมด
+    MemberClub getClubID(@PathVariable long id,@PathVariable long position) {
+         Club club = clubRepository.findById(id);
+         Position position2 = positionRepository.findById(position);
+         MemberClub memberClub = memberClubRepository.findByClubAndPosition(club , position2);
+         return memberClub;
+     }
+
     @GetMapping("/username/{username}/{password}") //login
     public Username getUser(@PathVariable String username, @PathVariable String password) {
         Username user = usernameRepository.findByUsernameAndPassword(username,password);

@@ -39,7 +39,7 @@ public class Member {
     private @NonNull String nameparent;
     private @NonNull String tellparent;
     private @NonNull String facebook;
-
+    private String grad;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Major.class)
     @JoinColumn(name = "Major_ID", insertable = true)
@@ -71,7 +71,7 @@ public class Member {
 
     public Member(String studentid, String name, String nickname, String address, String motto,
                     String tell, String nameparent, String tellparent,
-                        String facebook) {
+                        String facebook, String grad) {
         this.studentid = studentid;
         this.name = name;
         this.nickname = nickname;
@@ -81,8 +81,10 @@ public class Member {
         this.nameparent = nameparent;
         this.tellparent = tellparent;
         this.facebook = facebook;
+        this.grad = grad;
     }
-
+	public void setGrad(String grad){this.grad=grad;}
+	public String getGrad(){return grad;}
     public void setID(Long id){
         this.id = id;
     }

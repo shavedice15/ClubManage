@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import AppNavbar from '../../AppNavbar';
-import { Link } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label, Table } from 'reactstrap';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FilledInput from '@material-ui/core/FilledInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import { Button, Container, FormGroup } from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import {auth} from '../../firebase';
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -29,11 +22,26 @@ class RegisClub extends Component {
   constructor(props) {
     super(props);
     this.state = {club: [],
+                  currentUser:null,
+                  member: [],
                   setItem: this.emptyItem};
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          currentUser: user.email
+        })
+        fetch('http://localhost:8080/username/'+user.email)
+          .then(response => response.json())
+          .then(data => this.setState({ member: data.member }));
+      }else{
+        window.location = '/login';
+      }
+    })
+
     fetch('http://localhost:8080/findClub/'+this.props.match.params.clubId)
       .then(response => response.json())
       .then(data => this.setState({club: data}))
@@ -51,9 +59,9 @@ class RegisClub extends Component {
   }
 
   async save() {
-    const {setItem} = this.state;
+    const {setItem, member} = this.state;
     const club = await (
-      await fetch('http://localhost:8080/regisToClub/1/'+setItem.clubId+'/'+setItem.reason, {
+      await fetch('http://localhost:8080/regisToClub/'+member.id+'/'+setItem.clubId+'/'+setItem.reason, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

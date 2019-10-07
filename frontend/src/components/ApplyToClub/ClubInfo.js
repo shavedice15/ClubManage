@@ -5,6 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label, Table } from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import {auth} from '../../firebase';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -18,21 +19,32 @@ class ClubInfo extends Component {
     super(props);
     this.state = {club: [],
                   activity: [],
+                  currentUser:null,
                   isDisabled: false
     };
   }
 
   componentDidMount() {
+    
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          currentUser: user.email
+        })
+        fetch('http://localhost:8080/findMyClub/'+this.props.match.params.clubId+'/'+user.email)
+          .then(response => response.json())
+          .then(data => this.setState({isDisabled: true}))
+          .catch((error) => {
+            console.log("Error"+ error);
+        });
+      }else{
+        window.location = '/login';
+      }
+    })
+
     fetch('http://localhost:8080/findClub/'+this.props.match.params.clubId)
       .then(response => response.json())
       .then(data => this.setState({club: data}))
-      .catch((error) => {
-        console.log("Error"+ error);
-    });
-    
-    fetch('http://localhost:8080/findMyClub/'+this.props.match.params.clubId+'/test')
-      .then(response => response.json())
-      .then(data => this.setState({isDisabled: true}))
       .catch((error) => {
         console.log("Error"+ error);
     });

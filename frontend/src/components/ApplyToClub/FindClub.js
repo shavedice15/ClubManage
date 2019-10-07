@@ -6,10 +6,10 @@ import { Button, Container, Form, FormGroup, Table } from 'reactstrap';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import {auth} from '../../firebase';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -29,12 +29,23 @@ class FindClub extends Component {
     super(props);
     this.state = {typeClub: [],
                   club: [],
+                  currentUser:null,
                   setItem: this.emptyItem};
     this.handleChange = this.handleChange.bind(this);
     
   }
 
   componentDidMount() {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          currentUser: user.email
+        })
+      }else{
+        window.location = '/login';
+      }
+    })
+
     fetch('http://localhost:8080/typeClub')
       .then(response => response.json())
       .then(data => this.setState({typeClub: data}))

@@ -42,13 +42,6 @@ class MyClub extends Component {
         window.location = '/login';
       }
     })
-/*
-    fetch('http://localhost:8080/myClub/'+this.state.currentUser)
-      .then(response => response.json())
-      .then(data => this.setState({club: data}))
-      .catch((error) => {
-        console.log("Error"+ error);
-      });*/
   }
 
   async detail(status,clubId) {

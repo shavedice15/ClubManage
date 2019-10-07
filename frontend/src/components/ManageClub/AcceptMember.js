@@ -5,6 +5,7 @@ import { Button, Container, FormGroup, Table } from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
 import Modal from '@material-ui/core/Modal';
 import Divider from '@material-ui/core/Divider';
+import {auth} from '../../firebase';
 
 class ClubMember extends Component {
 
@@ -13,12 +14,23 @@ class ClubMember extends Component {
     this.state = {club: [],
                   member: [],
                   viewMemberDetail:[],
-                  openMemberDetail: false,};
+                  openMemberDetail: false,
+                  currentUser:null};
     this.handleChange = this.handleChange.bind(this);
     this.handleCloseMemberDetail = this.handleCloseMemberDetail.bind(this);
   }
 
   componentDidMount() {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          currentUser: user.email
+        })
+      }else{
+        window.location = '/login';
+      }
+    })
+
     fetch('http://localhost:8080/findClub/'+this.props.match.params.clubId)
       .then(response => response.json())
       .then(data => this.setState({club: data}))
@@ -52,6 +64,15 @@ class ClubMember extends Component {
   }
 
   async save(memberClubId) {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          currentUser: user.email
+        })
+        window.location = '/ProfileMember';
+      }
+    })
+
     await fetch(`http://localhost:8080/acceptMember/${memberClubId}`, {
       method: 'PUT',
       headers: {

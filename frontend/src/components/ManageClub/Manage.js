@@ -2,39 +2,43 @@ import React, { Component } from 'react';
 import '../../App.css';
 import AppNavbar from '../../AppNavbar';
 import { Link } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label, Table } from 'reactstrap';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FilledInput from '@material-ui/core/FilledInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import { Button, Container, Table } from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
-import Test from '../../Test.js';
+import {auth} from '../../firebase';
+
 class Manage extends Component {
   constructor(props) {
     super(props);
     this.state = {club: [],
                   adviser: [],
                   position: [],
-                  activity: []};
+                  activity: [],
+                  currentUser:null};
   }
 
   componentDidMount() {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          currentUser: user.email
+        })
+        fetch('http://localhost:8080/findMyClub/'+this.props.match.params.clubId+'/'+user.email)
+          .then(response => response.json())
+          .then(data => this.setState({position: data.position}))
+          .catch((error) => {
+            console.log("Error"+ error);
+        });
+      }else{
+        window.location = '/login';
+      }
+    })
+
     fetch('http://localhost:8080/findClub/'+this.props.match.params.clubId)
       .then(response => response.json())
       .then(data => this.setState({club: data}))
       .catch((error) => {
         console.log("Error"+ error);
       });
-    
-      fetch('http://localhost:8080/findMyClub/'+this.props.match.params.clubId+'/test')
-      .then(response => response.json())
-      .then(data => this.setState({position: data.position}))
-      .catch((error) => {
-        console.log("Error"+ error);
-    });
 
     fetch('http://localhost:8080/findClub/'+this.props.match.params.clubId)
       .then(response => response.json())
@@ -70,14 +74,14 @@ class Manage extends Component {
       marginRight: '10px',
       frontSize:'5px'
     };
-    var id = this.props.match.params.clubId;
+
     const {club} = this.state;
     const {adviser} = this.state;
     const {memberDetail} = this.state;
     const {activity} = this.state;
     console.log(club);
     console.log(memberDetail);
-    const {position} = this.state;
+
     const activityList = activity.map(activity => {
       return (
         <tr>
@@ -167,7 +171,6 @@ class Manage extends Component {
                           tag={Link} to={"/ShowDetail/"+club.clubId}>งบการเงิน</Button>
                   <Button style={bottonStyle} disabled = {this.checkPosition()}
                           tag={Link} to={"/ActivityPost/"+club.clubId}>สร้างกิจกรรมใหม่</Button>
-                   <Test position={position.position}  id={id}/>
               </div>
               
             </div>

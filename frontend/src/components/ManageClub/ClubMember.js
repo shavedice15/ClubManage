@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import '../../App.css';
-import { Button, Container, Form, FormGroup, Input, Label, Table } from 'reactstrap';
-import FilledInput from '@material-ui/core/FilledInput';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
+import { Button, Container, FormGroup, Table } from 'reactstrap';
 import InputLabel from '@material-ui/core/InputLabel';
-import { Link } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Select from '@material-ui/core/Select';
@@ -13,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import AppNavbar from '../../AppNavbar';
 import Modal from '@material-ui/core/Modal';
 import Divider from '@material-ui/core/Divider';
+import {auth} from '../../firebase';
 
 class ClubMember extends Component {
   emptyItem = {
@@ -25,6 +22,7 @@ class ClubMember extends Component {
                   member: [],
                   position: [],
                   myPosition: [],
+                  currentUser:null,
                   viewMemberDetail:[],
                   openMemberDetail: false,
                   openEditPosition: false,
@@ -35,6 +33,17 @@ class ClubMember extends Component {
   }
 
   componentDidMount() {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          currentUser: user.email
+        })
+      }else{
+        window.location = '/login';
+      }
+    })
+
+
     fetch('http://localhost:8080/findClub/'+this.props.match.params.clubId)
       .then(response => response.json())
       .then(data => this.setState({club: data}))
@@ -56,12 +65,7 @@ class ClubMember extends Component {
         console.log("Error"+ error);
     });
 
-    fetch('http://localhost:8080/findMyClub/'+this.props.match.params.clubId+'/test')
-      .then(response => response.json())
-      .then(data => this.setState({myPosition: data.position}))
-      .catch((error) => {
-        console.log("Error"+ error);
-    });
+    
   }
 
   checkPosition() {
@@ -440,7 +444,6 @@ class ClubMember extends Component {
                 <h3 align="center">{club.clubName}</h3>
               </div>
           </form>
-          <p>สมาชิกของ ชมรม มีทั้งหมด {this.state.member.length} คน</p>
           <Table className="mt-4" >
                 <thead>
                 <tr align="center">

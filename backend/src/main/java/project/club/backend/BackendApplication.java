@@ -24,7 +24,9 @@ public class BackendApplication {
 							TypeClubRepository typeClubRepository, AdviserRepository adviserRepository,
 							MemberRepository memberRepository, UsernameRepository usernameRepository,
 							BudgetRepository budgetRepository, MemberClubRepository memberClubRepository,
-							PrivacyRepository privacyRepository, ActivityRepository activityRepository){
+							PrivacyRepository privacyRepository, ActivityRepository activityRepository,
+							OrganizeRepository organizeRepository, OrPositionRepository orPositionRepository,
+							ClubStatusRepository clubStatusRepository){
 		return args -> {
 			Stream.of("admin","member").forEach(rank -> {
 				Rank newRank = new Rank(rank);
@@ -54,6 +56,13 @@ public class BackendApplication {
 				TypeClub newTypeClub = new TypeClub(TypeClub);
 				typeClubRepository.save(newTypeClub);
 			});
+
+			//------------- ClubStatus -------------
+			Stream.of("รอการจัดตั้ง","จัดตั้งแล้ว").forEach(status -> {
+				ClubStatus clubStatus = new ClubStatus(status);
+				clubStatusRepository.save(clubStatus);
+			});
+
 			//------------ Adviser -------------------------
 			Adviser adviser1 = new Adviser("sdfs sfsdf","0879658412","sdf@dda.com");
 			adviserRepository.save(adviser1);
@@ -61,18 +70,17 @@ public class BackendApplication {
 			adviserRepository.save(adviser2);
 
 			//------------- Club ----------------------------
-			Club club1 = new Club("ชมรมดนตรีสากล","กลุ่มดนตรีสากล","ดนตรีสากล","มาเล่นดนตรีกันเถอะ!",adviser1,typeClubRepository.findById(1));
+			Club club1 = new Club("ชมรมดนตรีสากล","กลุ่มดนตรีสากล","ดนตรีสากล","มาเล่นดนตรีกันเถอะ!",adviser1,typeClubRepository.findById(1),clubStatusRepository.findById(2));
 			clubRepository.save(club1);
-			Club club2 = new Club("ชมรมสมาธิ","กลุ่มชมรมนั่งสมาธิ","ชมรมนั่งสมาธิ","มานั่งสมาธิกันเถอะ!",adviser2,typeClubRepository.findById(2));
+			Club club2 = new Club("ชมรมสมาธิ","กลุ่มชมรมนั่งสมาธิ","ชมรมนั่งสมาธิ","มานั่งสมาธิกันเถอะ!",adviser2,typeClubRepository.findById(2),clubStatusRepository.findById(2));
 			clubRepository.save(club2);
-			Club club3 = new Club("ชมรมเทนนิส","กลุ่มตีเทนนิส","ชมรมเทนนิส","มาตีเทนนิสกันเถอะ!",adviser2,typeClubRepository.findById(3));
+			Club club3 = new Club("ชมรมเทนนิส","กลุ่มตีเทนนิส","ชมรมเทนนิส","มาตีเทนนิสกันเถอะ!",adviser2,typeClubRepository.findById(3),clubStatusRepository.findById(2));
 			clubRepository.save(club3);
 
 			//------------------ Member --------------------
-			
 			Member member1 = new Member("B5912345","นางสาวมณี แก้วก้าว","แก้ว","sut","ฝันให้ไกล ไปให้ถึง","0814587589","แนางม่จ้า แก้วก้าว","097654321","Mimi Mumu");
 			memberRepository.save(member1);
-			Username username1 = new Username("test","12345678",member1);
+			Username username1 = new Username("test@example.com","123456789",member1);
 			usernameRepository.save(username1);
 
 			Member member2 = new Member("B599765","นางสาวตะวัน ยามเช้า","พลอย","sut","อิอิ","0865412306","นางมิมิ ยามเช้า","0985632140","tawan fgh" );
@@ -124,6 +132,27 @@ public class BackendApplication {
 			LocalDate dateEnd2 = LocalDate.parse("2018-12-11");
 			Activity activity2 = new Activity(club1,privacy2,"name2",dateStart2,dateEnd2,"detail2");
 			activityRepository.save(activity2);
+
+			//---------------- OrPosition --------------
+			Stream.of("นายกองค์การบริหาร","อุปนายกองค์การบริหาร คนที่หนึ่ง","อุปนายกองค์การบริหาร คนที่สอง",
+						"เหรัญญิกองค์การบริหาร","เลขานุการองค์การบริหาร","เลขานุการนายกองค์การบริหาร",
+						"เลขานุการอุปนายกองค์การบริหาร คนที่หนึ่ง","เลขานุการอุปนายกองค์การบริหาร คนที่สอง",
+						"ประธานคณะอนุกรรมการวิชาการ","อนุกรรมการวิชาการ","ประธานคณะอนุกรรมการประสานงาน",
+						"อนุกรรมการประสานงาน","ประธานคณะอนุกรรมการกีฬา","ประธานคณะอนุกรรมการประชาสัมพันธ์",
+						"อนุกรรมการประชาสัมพันธ์","ประธานคณะอนุกรรมการนักศึกษาสัมพันธ์","อนุกรรมการนักศึกษาสัมพันธ์",
+						"ประธานคณะอนุกรรมการศิลปวัฒนธรรม","อนุกรรมการศิลปวัฒนธรรม","ประธานคณะอนุกรรมการพัสดุ",
+						"ประธานคณะอนุกรรมการบำเพ็ญประโยชน์","อนุกรรมการบำเพ็ญประโยชน์",
+						"ประธานคณะอนุกรรมการตรวจสอบและประกันคุณภาพ").forEach(position -> {
+				OrPosition orPosition = new OrPosition(position);
+				orPositionRepository.save(orPosition);
+			});
+
+			//---------------- Organize -----------
+			OrPosition orPosition1 = orPositionRepository.findById(1);
+			Organize organize = new Organize("admin@test.com","123456789","name name","0845236987",3.00f,orPosition1);
+			organizeRepository.save(organize);
+
+			
 		};
 	}
 }

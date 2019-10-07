@@ -1,4 +1,5 @@
-import React from 'react';
+//import React from 'react';
+import React, { Component } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -22,6 +23,8 @@ import CategoryIcon from '@material-ui/icons/Category';
 import YoutubeSearchedForIcon from '@material-ui/icons/YoutubeSearchedFor';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+
+import {auth} from 'firebase';
 
 const drawerWidth = 240;
 
@@ -94,6 +97,10 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   }
 
+  function sighout() {
+    auth.singOut()
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -135,7 +142,7 @@ export default function PersistentDrawerLeft() {
         </div>
         <Divider />
         
-        <ListItem button component={Link} to="/apply">
+        <ListItem button component={Link} to="/ProfileMember">
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>
@@ -174,7 +181,7 @@ export default function PersistentDrawerLeft() {
         
         <Divider />
 
-        <ListItem button component={Link} to="/login">
+        <ListItem button onClick={sighout}>
           <ListItemIcon>
             <ExitToAppIcon />
           </ListItemIcon>
@@ -191,3 +198,4 @@ export default function PersistentDrawerLeft() {
     </div>
   );
 }
+

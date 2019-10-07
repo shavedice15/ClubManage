@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import org.springframework.http.ResponseEntity;
 import javax.validation.Valid;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -18,11 +19,32 @@ class ManageClubController {
     @Autowired private PositionRepository positionRepository;
     @Autowired private TypeClubRepository typeClubRepository;
     @Autowired private AdviserRepository adviserRepository;
+    @Autowired private OrganizeRepository organizeRepository;
+    @Autowired private OrPositionRepository orPositionRepository;
+    @Autowired private ClubStatusRepository clubStatusRepository;
 
     @GetMapping("/username/{username}")
     public Username getUsername(@PathVariable String username) {
         Username user = usernameRepository.findByUsername(username);
         return user;
+    }
+
+    @GetMapping("/organize/{username}")
+    public Organize getOrganize(@PathVariable String username) {
+        Organize user = organizeRepository.findByUsername(username);
+        return user;
+    }
+
+    @GetMapping("/orPositions")
+    Collection<OrPosition> getOrPositions() {
+        return orPositionRepository.findAll().stream()
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/organizes")
+    Collection<Organize> getOrganize() {
+        return organizeRepository.findAll().stream()
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/myClub/{username}") //ชมรมที่ฉันอยู่ทั้งหมด
@@ -86,7 +108,7 @@ class ManageClubController {
         return memberClubRepository.save(result);
     }
 
-    @PutMapping("/updateClub/{clubId}/{clubName}/{pageFB}/{groupFB}/{invitation}/{typeId}/{adviserId}")
+    @PutMapping("/updateClub/{clubId}/{clubName}/{pageFB}/{groupFB}/{invitation}/{typeId}/{adviserId}") //แก้ไขข้อมูลชมรม
     public Club updateClub(@PathVariable long clubId,@PathVariable String clubName,
                     @PathVariable String pageFB,@PathVariable String groupFB,
                     @PathVariable String invitation,@PathVariable long typeId,
@@ -101,5 +123,51 @@ class ManageClubController {
         findClub.setTypeClub(type);
         findClub.setAdviser(adviser);
         return clubRepository.save(findClub);
+    }
+
+    @PutMapping("/updateTelOr/{username}/{tel}") //แก้ไขเบอร์องค์การบริหารอย่างเดียว
+    public Organize updateTelOr(@PathVariable String username, @PathVariable String tel) {
+        Organize organize = organizeRepository.findByUsername(username);
+        organize.setTell(tel);
+        return organizeRepository.save(organize);
+    }
+
+    @PutMapping("/updateTelAndPasswordOr/{username}/{tel}/{password}") //แก้ไขเบอร์และpasswordองค์การบริหาร
+    public Organize updateTelAndPasswordOr(@PathVariable String username, @PathVariable String tel,
+                                            @PathVariable String password) {
+        Organize organize = organizeRepository.findByUsername(username);
+        organize.setTell(tel);
+        organize.setPassword(password);
+        return organizeRepository.save(organize);
+    }
+
+    @DeleteMapping("/deleteOrganize/{id}") //ลบองค์การบริหาร
+    public ResponseEntity<?> deleteOrganize(@PathVariable long id) {
+        organizeRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/addOrganize/{username}/{password}/{name}/{tel}/{grade}/{positionId}") //เพิ่มองค์การ
+    public Organize addOrganize(@PathVariable String username,@PathVariable String password,
+                                    @PathVariable String name,@PathVariable String tel,
+                                    @PathVariable float grade,@PathVariable long positionId) {
+                                      
+        OrPosition position = orPositionRepository.findById(positionId);
+        Organize organize = new Organize(username,password,name,tel,grade,position);  
+        return organizeRepository.save(organize);
+    }
+
+    @DeleteMapping("/deleteClub/{id}") //ลบชมรม
+    public ResponseEntity<?> deleteClub(@PathVariable Long id) {
+        clubRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/acceptClub/{clubId}") //ยอมรับจัดตั้งชมรม
+    public Club acceptClub(@PathVariable long clubId) {
+        ClubStatus status = clubStatusRepository.findById(2);
+        Club club = clubRepository.findById(clubId);
+        club.setClubStatus(status);
+        return clubRepository.save(club);
     }
 }

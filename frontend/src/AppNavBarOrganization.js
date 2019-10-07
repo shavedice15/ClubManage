@@ -137,21 +137,21 @@ export default function PersistentDrawerLeft() {
         </div>
         <Divider />
         
-        <ListItem button component={Link} to="/apply">
+        <ListItem button component={Link} to="/ProfileOrganize">
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>
           <ListItemText primary="Profile" />
         </ListItem>
         
-        <ListItem button component={Link} to="/myClub">
+        <ListItem button component={Link} to="/TableOrgani">
           <ListItemIcon>
             <PersonAddIcon />
           </ListItemIcon>
           <ListItemText primary="เพิ่มองค์การนักศึกษา" />
         </ListItem>
 
-        <ListItem button component={Link} to="/Clubs">
+        <ListItem button component={Link} to="/MakeClub">
           <ListItemIcon>
             <LibraryAddIcon />
           </ListItemIcon>

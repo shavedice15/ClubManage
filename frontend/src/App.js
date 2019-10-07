@@ -24,17 +24,17 @@ import SaveBudget from './components/BudgetClub/SaveBudget';
 import ActivityPost from './components/Activity/ActivityPost';
 import ShowActivity from './components/Activity/ShowActivity';
 import DetailActivity from './components/Activity/DetailActivity';
-import EditData from './register/EditData';
-import EditPassword from './register/EditPassword';
-import EditProfile from './components/BudgetClub/EditProfile';
-import InputOrgani from './components/BudgetClub/InputOrgani';
-import TableOrgani from './components/BudgetClub/TableOrgani';
-import OrganizeInput from './components/BudgetClub/OrganizeInput';
-import MakeClub from './components/BudgetClub/MakeClub';
+import ProfileMember from './components/ProfileMember/ProfileMember';
+import EditProfileMember from './components/ProfileMember/EditProfileMember';
+import ProfileOrganize from './components/ProfileOrganize/ProfileOrganize';
+import EditProfileOrganize from './components/ProfileOrganize/EditProfileOrganize';
+import TableOrgani from './components/ProfileOrganize/TableOrgani';
+import OrganizeInput from './components/ProfileOrganize/OrganizeInput';
+import MakeClub from './components/ManageClub/MakeClub';
 class App extends Component {
   render() {
     return(
-      <Router>Club
+      <Router>
         <Switch>
           <Route path='/' exact={true} component={Login}/>
           <Route path='/FindClub' exact={true} component={FindClub}/>
@@ -60,10 +60,10 @@ class App extends Component {
           <Route path='/ActivityPost/:clubId' exact={true} component={ActivityPost}/>
           <Route path='/ShowActivity' exact={true} component={ShowActivity}/>
           <Route path='/DetailActivity/:activityId' exact={true} component={DetailActivity}/>
-          <Route path='/EditData' exact={true} component={EditData}/>
-          <Route path='/EditPassword' exact={true} component={EditPassword}/>
-          <Route path='/EditProfile' exact={true} component={EditProfile}/>
-          <Route path='/InputOrgani' exact={true} component={InputOrgani}/>
+          <Route path='/ProfileMember' exact={true} component={ProfileMember}/>
+          <Route path='/EditProfileMember' exact={true} component={EditProfileMember}/>
+          <Route path='/ProfileOrganize' exact={true} component={ProfileOrganize}/>
+          <Route path='/EditProfileOrganize' exact={true} component={EditProfileOrganize}/>
           <Route path='/TableOrgani' exact={true} component={TableOrgani}/>
           <Route path='/OrganizeInput' exact={true} component={OrganizeInput}/>
           <Route path='/MakeClub' exact={true} component={MakeClub}/>

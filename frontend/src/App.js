@@ -25,14 +25,11 @@ import ActivityPost from './components/Activity/ActivityPost';
 import ShowActivity from './components/Activity/ShowActivity';
 import DetailActivity from './components/Activity/DetailActivity';
 import ProfileMember from './components/ProfileMember/ProfileMember';
-import EditProfileMember from './components/ProfileMember/EditProfileMember';
 import ProfileOrganize from './components/ProfileOrganize/ProfileOrganize';
-import EditProfileOrganize from './components/ProfileOrganize/EditProfileOrganize';
 import TableOrgani from './components/ProfileOrganize/TableOrgani';
 import OrganizeInput from './components/ProfileOrganize/OrganizeInput';
 import MakeClub from './components/ManageClub/MakeClub';
 import wait from './components/Login/wait';
-import Test from './Test'
 class App extends Component {
   render() {
     return(
@@ -63,14 +60,11 @@ class App extends Component {
           <Route path='/ShowActivity' exact={true} component={ShowActivity}/>
           <Route path='/DetailActivity/:activityId' exact={true} component={DetailActivity}/>
           <Route path='/ProfileMember' exact={true} component={ProfileMember}/>
-          <Route path='/EditProfileMember' exact={true} component={EditProfileMember}/>
           <Route path='/ProfileOrganize' exact={true} component={ProfileOrganize}/>
-          <Route path='/EditProfileOrganize' exact={true} component={EditProfileOrganize}/>
           <Route path='/TableOrgani' exact={true} component={TableOrgani}/>
           <Route path='/OrganizeInput' exact={true} component={OrganizeInput}/>
           <Route path='/MakeClub' exact={true} component={MakeClub}/>
           <Route path='/wait' exact={true} component={wait}/>
-          <Route path='/test' exact={true} component={Test}/>
         </Switch>
       </Router>
     )

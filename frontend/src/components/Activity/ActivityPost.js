@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import AppNavbar from '../../AppNavbar';
-import { Link } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Button, Container, Form, FormGroup } from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
 import 'date-fns';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import {auth} from '../../firebase';
 
 class ActivityPost extends Component {
   emptyItem = {
@@ -24,12 +24,23 @@ class ActivityPost extends Component {
     this.state = {club: [],
                   privacy: [],
                   activity: [],
+                  currentUser:null,
                   setItem: this.emptyItem};
     this.handleChange = this.handleChange.bind(this);
     
   }
 
   componentDidMount() {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          currentUser: user.email
+        })
+      }else{
+        window.location = '/login';
+      }
+    })
+
     fetch('http://localhost:8080/findClub/'+this.props.match.params.clubId)
       .then(response => response.json())
       .then(data => this.setState({club: data}))

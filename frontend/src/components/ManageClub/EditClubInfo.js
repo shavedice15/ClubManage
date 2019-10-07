@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import AppNavbar from '../../AppNavbar';
-import { Link } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label, Table } from 'reactstrap';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FilledInput from '@material-ui/core/FilledInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
+import {auth} from '../../firebase';
 
 class EditClubInfo extends Component {
   emptyItem = {
@@ -29,11 +26,22 @@ class EditClubInfo extends Component {
                   getAdviser: [],
                   typeClubs: [],
                   advisers: [],
+                  currentUser:null,
                   setItem: this.emptyItem};
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          currentUser: user.email
+        })
+      }else{
+        window.location = '/login';
+      }
+    })
+
     fetch('http://localhost:8080/findClub/'+this.props.match.params.clubId)
       .then(response => response.json())
       .then(data => this.setState({club: data}))

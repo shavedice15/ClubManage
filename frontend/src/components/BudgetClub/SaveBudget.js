@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import '../../App.css';
 import AppNavbar from '../../AppNavbar';
 import { Link } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Button, Container, Form, FormGroup } from 'reactstrap';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import 'date-fns';
 import {storage} from '../../firebase';
+import {auth} from '../../firebase';
 
 class SaveBudget extends Component {
   emptyItem = {
@@ -23,6 +24,7 @@ class SaveBudget extends Component {
                   image: [],
                   url: '',
                   progress: 0,
+                  currentUser:null,
                   setItem: this.emptyItem};
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeImage = this.handleChangeImage.bind(this);
@@ -31,6 +33,16 @@ class SaveBudget extends Component {
   }
 
   componentDidMount() {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          currentUser: user.email
+        })
+      }else{
+        window.location = '/loginOrganization';
+      }
+    })
+
     fetch('http://localhost:8080/findClub/'+this.props.match.params.clubId)
       .then(response => response.json())
       .then(data => this.setState({club: data}))

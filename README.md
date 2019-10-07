@@ -15,3 +15,4 @@ or
 - npm install --save availity-reactstrap-validation react react-dom
 - npm install --save react-apexcharts apexcharts
 - npm install --save firebase
+- npm install pdfmake  --save

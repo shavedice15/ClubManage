@@ -49,7 +49,7 @@ export default class Member extends Component {
         branch: '',
         major: '',
         aumphoename: '',
-
+        grad:'',
         email: '',
         password: ''
     };
@@ -133,7 +133,7 @@ export default class Member extends Component {
         const Tellparent = setItem.tellparent
         const Motto = setItem.motto
         const Facebook = setItem.facebook
-
+        const Password = String(setItem.password);
 
         console.log(Motto.match(/^[A-Za-z]{1,20}$/))
         console.log(Facebook.match(/^[A-Za-z]{1,20}$/))
@@ -145,7 +145,7 @@ export default class Member extends Component {
         console.log(Studentid.match(/^B[0-9]{7}$/))
         console.log(Address.match(/^\w*\s\w*\.\w*/))
 
-
+        console.log(Password.match(/^[0-9A-Za-z]{6,8}$/))
 
 
         if (Tell.match(/^[0-9]{10}$/) != null
@@ -167,7 +167,7 @@ export default class Member extends Component {
             Address.match(/^\w*\s\w*\.\w*/) != null
         ) {
             console.log('yes')
-            await fetch(`http://localhost:8080/api/memberx/${setItem.changwatId}/${setItem.aumphoeId}/${setItem.majorId}/${setItem.branchId}/${setItem.email}/${setItem.password}`, {
+            await fetch(`http://localhost:8080/api/memberx/${setItem.changwatId}/${setItem.aumphoeId}/${setItem.majorId}/${setItem.branchId}/${setItem.email}/${Password}`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -274,6 +274,17 @@ export default class Member extends Component {
                                             pattern: { value: /^[A-Za-z]{1,20}$/ }
                                         }}
                                         value={setItem.nickname || ''}
+                                        onChange={this.handleChange}
+                                        />
+                                    </AvForm>
+
+                                    <AvForm className="col-md-3 mb-3" className="a">
+                                        <AvField name="grad" label="เกรด" type="text" errorMessage="Invalid grad" 
+                                        validate={{
+                                            required: { value: true },
+                                            pattern: { value: /^[0-9]+\.[0-9]{2}$/ }
+                                        }}
+                                        value={setItem.grad || ''}
                                         onChange={this.handleChange}
                                         />
                                     </AvForm>
@@ -495,7 +506,7 @@ export default class Member extends Component {
                                         <AvField name="email" label="E-mail" type="text" errorMessage="Invalid name" 
                                      validate={{
                                              required: { value: true },
-                                         pattern: { value: '^[0-9]' }
+                                         pattern: { value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/ }
                                      }}
                                         value={setItem.email}
                                         onChange={this.handleChange}
@@ -503,10 +514,10 @@ export default class Member extends Component {
                                     </AvForm>
                                     
                                     <AvForm className="col-md-8 mb-3" >
-                                        <AvField name="password" label="password" type="text" errorMessage="Invalid name" 
+                                        <AvField name="password" label="password" type="text" errorMessage="Invalid password 6-8 charactor" 
                                         validate={{
                                             required: { value: true },
-                                            pattern: { value: '^[0-9]' }
+                                            pattern: { value: /^[0-9A-Za-z]{6,10}$/ }
                                         }}
                                         value={setItem.password}
                                         onChange={this.handleChange}

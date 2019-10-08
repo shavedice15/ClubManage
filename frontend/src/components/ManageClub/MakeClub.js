@@ -68,7 +68,7 @@ class MakeClub extends Component {
     const ClubList = club.map(club => {
         return (
           <tr>
-            <td align="center">{club.name}</td>
+            <td align="center">{club.clubName}</td>
             <td align="center"><Button style={{ background: '#FFB6C1', color:'#000066' }} 
                   onClick={() => this.save(club.clubId)}>ตกลง</Button></td>
             <td align="center"><Button style={{ background: '#FFB6C1', color:'#000066' }} 

@@ -16,6 +16,7 @@ firebase.initializeApp(config);
 
 const storage = firebase.storage();
 const auth = firebase.auth();
+//const logout = firebase.auth.sighout();
 
 export {
     storage, auth, firebase as default

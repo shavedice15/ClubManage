@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Button, Container, Table } from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
 import {auth} from '../../firebase';
-
+import Test from '../../Test.js';
 class Manage extends Component {
   constructor(props) {
     super(props);
@@ -74,14 +74,14 @@ class Manage extends Component {
       marginRight: '10px',
       frontSize:'5px'
     };
-
+    var id = this.props.match.params.clubId;
     const {club} = this.state;
     const {adviser} = this.state;
     const {memberDetail} = this.state;
     const {activity} = this.state;
     console.log(club);
     console.log(memberDetail);
-
+    const {position} = this.state;
     const activityList = activity.map(activity => {
       return (
         <tr>
@@ -171,6 +171,7 @@ class Manage extends Component {
                           tag={Link} to={"/ShowDetail/"+club.clubId}>งบการเงิน</Button>
                   <Button style={bottonStyle} disabled = {this.checkPosition()}
                           tag={Link} to={"/ActivityPost/"+club.clubId}>สร้างกิจกรรมใหม่</Button>
+                          <Test position={position.position}  id={id}/>
               </div>
               
             </div>

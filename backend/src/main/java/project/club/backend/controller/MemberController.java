@@ -31,13 +31,17 @@ class MemberController {
     //private RegisterClubRepository registerClubRepository;
 
     public MemberController(MemberRepository memberRepository,MajorRepository majorRepository,
-                BranchRepository branchRepository, ChangwatRepository changwatRepository,AumphoeRepository aumphoeRepository 
+                BranchRepository branchRepository, ChangwatRepository changwatRepository,AumphoeRepository aumphoeRepository,
+                UsernameRepository usernameRepository
+
                 /*RegisterClubRepository registerClubRepository*/ ) {
         this.memberRepository  = memberRepository;
         this.majorRepository = majorRepository;
         this.branchRepository = branchRepository;
         this.changwatRepository = changwatRepository;
         this.aumphoeRepository = aumphoeRepository;
+        this.usernameRepository = usernameRepository;
+
         //this.registerClubRepository = registerClubRepository;
         
     }

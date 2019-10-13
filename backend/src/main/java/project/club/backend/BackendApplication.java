@@ -58,7 +58,7 @@ public class BackendApplication {
 			});
 
 			//------------- ClubStatus -------------
-			Stream.of("รอการจัดตั้ง","จัดตั้งแล้ว").forEach(status -> {
+			Stream.of("รอเอกสาร","จัดตั้งแล้ว","กำลังตรวจสอบเอกสาร","รอการพิจารณาจัดตั้ง", "การจัดตั้งไม่ผ่าน").forEach(status -> {
 				ClubStatus clubStatus = new ClubStatus(status);
 				clubStatusRepository.save(clubStatus);
 			});

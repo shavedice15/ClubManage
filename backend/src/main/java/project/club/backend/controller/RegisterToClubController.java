@@ -31,7 +31,8 @@ class RegisterToClubController {
 
     @GetMapping("/clubNoConfirm")
     Collection<Club> clubNoConfirm() {
-        return clubRepository.findByClubStatus(clubStatusRepository.findById(1));
+        return clubRepository.findClubNotAccept();
+        //return clubRepository.findByClubStatus(clubStatusRepository.findById(1));
     }
 
     @GetMapping("/position")

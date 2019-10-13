@@ -11,6 +11,7 @@ import Select from '@material-ui/core/Select';
 import Table from '@material-ui/core/Table';
 import Chart from "react-apexcharts";
 import {auth} from '../../firebase';
+import Modal from '@material-ui/core/Modal';
 
 class CheckBudget extends Component {
   emptyItem = {
@@ -23,6 +24,8 @@ class CheckBudget extends Component {
     super(props);
     this.state = {clubName: [],
                   budget: [],
+                  openBudgetDetail: false,
+                  viewBudgetDetail: [],
                   options: {
                     labels: ['รายรับ', 'รายจ่าย'],
                     responsive: [{
@@ -41,7 +44,7 @@ class CheckBudget extends Component {
                   currentUser:null,
                   setItem: this.emptyItem};
     this.handleChange = this.handleChange.bind(this);
-    
+    this.handleCloseBudgetDetail = this.handleCloseBudgetDetail.bind(this);
   }
 
   componentDidMount() {
@@ -72,6 +75,15 @@ class CheckBudget extends Component {
     item[name] = value;
     this.setState({setItem: item});
     console.log(item);
+  }
+
+  handleOpenBudgetDetail(budget) {
+    this.setState({openBudgetDetail: true});
+    this.setState({viewBudgetDetail: budget});
+  }
+
+  handleCloseBudgetDetail(){
+    this.setState({openBudgetDetail: false});
   }
 
   async find() {
@@ -117,7 +129,29 @@ class CheckBudget extends Component {
   }
 
     render() {
-      const {clubName} = this.state;
+      const paperStyle = {
+        position: 'absolute',
+        maxWidth: '70%',
+        maxHeight: '80%',
+        background: '#FFFFFF',
+        border: '2px solid #000',
+        padding: '10px',
+        overflow:'scroll',
+      };
+      const modalStyle = {
+        position: 'absolute',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: '10%'
+      };
+      const textStyle = {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      };
+
+      const {clubName,openBudgetDetail,viewBudgetDetail} = this.state;
       const {setItem} = this.state;
       const {budget} = this.state;
       const {club} = this.state;
@@ -138,6 +172,95 @@ class CheckBudget extends Component {
           <td align="center">{budget.detail}</td>
           <td align="center"><a target="_blank" href={budget.url}>คลิกเพื่อดู</a></td>
           <td align="center">{budget.note}</td>
+          <td align="center">
+              <Button style={{ background: '#000066',maxWidth: '300px' }} onClick={() => this.handleOpenBudgetDetail(budget)}>
+                รายละเอียดทั้งหมด
+              </Button>
+            </td>
+            <Modal
+              open={openBudgetDetail}
+              onClose={this.handleCloseBudgetDetail}
+              style={modalStyle}
+            >
+              <div style={paperStyle}>
+                <div className="row" style={textStyle}>
+                  <FormGroup className="col-md-3 mb-3">
+                    <TextField
+                        label="วันที่"
+                        defaultValue=" "
+                        value = {viewBudgetDetail.date}
+                        margin="normal"
+                        InputProps={{
+                          readOnly: true,
+                        }}          
+                        variant="outlined"
+                      />
+                  </FormGroup>
+                  <FormGroup className="col-md-3 mb-3">
+                    <TextField
+                      label="รายรับ"
+                      defaultValue=" "
+                      value={viewBudgetDetail.income}
+                      margin="normal"
+                      InputProps={{
+                        readOnly: true,
+                      }}          
+                      variant="outlined"
+                    />
+                  </FormGroup>
+                  <FormGroup className="col-md-3 mb-3">
+                    <TextField
+                      label="รายจ่าย"
+                      defaultValue=" "
+                      value={viewBudgetDetail.pay}
+                      margin="normal"
+                      InputProps={{
+                        readOnly: true,
+                      }}          
+                      variant="outlined"
+                    />
+                  </FormGroup>
+                </div>
+
+                <div className="row" style={textStyle}>
+                  <FormGroup className="col-md-4 mb-3">
+                    <TextField
+                        label="รายละเอียด"
+                        multiline
+                        rows="7"
+                        defaultValue=" "
+                        value = {viewBudgetDetail.detail}
+                        margin="normal"
+                        InputProps={{
+                          readOnly: true,
+                        }}          
+                        variant="outlined"
+                      />
+                  </FormGroup>
+                  <FormGroup className="col-md-4 mb-3">
+                    <TextField
+                      label="หมายเหตุ"
+                      multiline
+                      rows="7"
+                      defaultValue=" "
+                      value={viewBudgetDetail.note || " "}
+                      margin="normal"
+                      InputProps={{
+                        readOnly: true,
+                      }}          
+                      variant="outlined"
+                    />
+                  </FormGroup>
+                </div>
+
+                <div className="row" style={textStyle}>
+                  <FormGroup>
+                  <img src={viewBudgetDetail.url || 'http://via.placeholder.com/500x400'} alt="Uploaded images" height="400" width="500"/>
+                  </FormGroup>
+                </div>
+
+              </div>
+            </Modal>
         </tr>
       )
     });
@@ -198,12 +321,13 @@ class CheckBudget extends Component {
               <thead>
               <tr style={{ background: '#FFB6C1',color: '#000066' }} align="center">
                 <th width="20%">ชมรม</th>
-                <th width="20%">วันที่</th>
-                <th width="20%" >รายรับ</th>
-                <th width="10%">รายจ่าย</th>
-                <th width="10%">รายละเอียด</th>
-                <th width="10%">หลักฐาน</th>
-                <th width="10%">หมายเหตุ</th>
+                <th width="10%">วันที่</th>
+                <th width="5%">รายรับ</th>
+                <th width="5%">รายจ่าย</th>
+                <th width="20%">รายละเอียด</th>
+                <th width="5%">หลักฐาน</th>
+                <th width="15%">หมายเหตุ</th>
+                <th width="10%"> </th>
               </tr>
               </thead>
               <tbody>

@@ -17,13 +17,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from "react-router-dom";
 
 import PersonIcon from '@material-ui/icons/Person';
-import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
-import CategoryIcon from '@material-ui/icons/Category';
 import PaymentIcon from '@material-ui/icons/Payment';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 
 const drawerWidth = 240;
 
@@ -174,7 +174,20 @@ export default function PersistentDrawerLeft() {
           <ListItemText primary="ดูงบการเงิน" />
         </ListItem>
 
-        
+        <Divider />
+        <ListItem button component={Link} to="/savenews">
+          <ListItemIcon>
+            <PostAddIcon />
+          </ListItemIcon>
+          <ListItemText primary="เพิ่มนัดหมาย" />
+        </ListItem>
+
+        <ListItem button component={Link} to="/postnews">
+          <ListItemIcon>
+            <ScheduleIcon />
+          </ListItemIcon>
+          <ListItemText primary="การนัดหมาย" />
+        </ListItem>
         <Divider />
 
         <ListItem button component={Link} to="/wait">

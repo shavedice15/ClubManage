@@ -24,6 +24,8 @@ import CategoryIcon from '@material-ui/icons/Category';
 import YoutubeSearchedForIcon from '@material-ui/icons/YoutubeSearchedFor';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const drawerWidth = 240;
 
@@ -116,10 +118,10 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" style={{ width: '90%' }} noWrap>
             Club Management System (นักศึกษาทั่วไป)
           </Typography>
-
+          <NotificationsIcon />
         </Toolbar>
       </AppBar>
       <Drawer
@@ -173,6 +175,13 @@ export default function PersistentDrawerLeft() {
             <AddCircleOutlineIcon />
           </ListItemIcon>
           <ListItemText primary="จัดตั้งชมรมใหม่" />
+        </ListItem>
+
+        <ListItem button component={Link} to="/postnewsstudent">
+          <ListItemIcon>
+            <ScheduleIcon />
+          </ListItemIcon>
+          <ListItemText primary="การนัดหมาย" />
         </ListItem>
         
         <Divider />

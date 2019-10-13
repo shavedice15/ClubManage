@@ -20,6 +20,9 @@ public interface ClubRepository extends JpaRepository <Club,Long> {
                                                 @Param("type")TypeClub type,
                                                 @Param("clubStatus") ClubStatus clubStatus);
     
+    @Query(value = "SELECT c FROM Club c WHERE c.clubStatus != 2")
+    Collection<Club> findClubNotAccept();
+
     Collection<Club> findByClubStatus(ClubStatus clubStatus);
 
     Club findById(long id);

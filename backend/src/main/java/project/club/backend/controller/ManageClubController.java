@@ -47,6 +47,12 @@ class ManageClubController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/clubStatus")
+    Collection<ClubStatus> getClubStatus() {
+        return clubStatusRepository.findAll().stream()
+                .collect(Collectors.toList());
+    }
+
     @GetMapping("/myClub/{username}") //ชมรมที่ฉันอยู่ทั้งหมด
     Collection<MemberClub> getUsernameClub(@PathVariable String username) {
         Username user = usernameRepository.findByUsername(username);
@@ -176,6 +182,30 @@ class ManageClubController {
         ClubStatus status = clubStatusRepository.findById(2);
         Club club = clubRepository.findById(clubId);
         club.setClubStatus(status);
+        return clubRepository.save(club);
+    }
+
+    @PutMapping("/setStatus/{clubId}/{statusId}/{note}") //แก้ไขสถานะจัดตั้งชมรม+ใส่หมายเหตุ
+    public Club setStatus(@PathVariable long clubId,@PathVariable long statusId,@PathVariable String note) {
+        ClubStatus status = clubStatusRepository.findById(statusId);
+        Club club = clubRepository.findById(clubId);
+        club.setClubStatus(status);
+        club.setNote(note);
+        return clubRepository.save(club);
+    }
+
+    @PutMapping("/setStatusOnly/{clubId}/{statusId}") //แก้ไขสถานะจัดตั้งชมรม
+    public Club setStatusOnly(@PathVariable long clubId,@PathVariable long statusId) {
+        ClubStatus status = clubStatusRepository.findById(statusId);
+        Club club = clubRepository.findById(clubId);
+        club.setClubStatus(status);
+        return clubRepository.save(club);
+    }
+
+    @PutMapping("/setNotClub/{clubId}/{note}") ////แก้ไชหมายเหตุจัดตั้งชมรม
+    public Club setNotClub(@PathVariable long clubId,@PathVariable String note) {
+        Club club = clubRepository.findById(clubId);
+        club.setNote(note);
         return clubRepository.save(club);
     }
 }

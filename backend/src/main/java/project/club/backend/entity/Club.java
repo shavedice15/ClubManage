@@ -22,6 +22,7 @@ public class Club {
 	private String tell;
 	private String objective;
 	private String activites;
+	private String note;
 
 	private @NonNull String pageFB;
 
@@ -99,6 +100,14 @@ public class Club {
 
 	public void setInvitation(String invitation) {
 		this.invitation = invitation;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 	public Adviser getAdviser() {

@@ -63,6 +63,8 @@ class MyClub extends Component {
             <td align="center">{club.club.clubName}</td>
             <td align="center">{club.position.position}</td>
             <td align="center">{club.memberStatus.status}</td>
+            <td align="center">{club.club.clubStatus.status}</td>
+            <td align="center">{club.club.note}</td>
             <td align="center">
               <Button style={{ background: '#000066',width: '40px' }} 
                   onClick={() => this.detail(club.memberStatus.status,club.club.clubId)}>
@@ -85,8 +87,10 @@ class MyClub extends Component {
                 <thead>
                 <tr align="center">
                     <th width="20%">ชื่อชมรม</th>
-                    <th width="20%" >ตำแหน่ง</th>
-                    <th width="20%" >สถานะสมาชิก</th>
+                    <th width="10%" >ตำแหน่ง</th>
+                    <th width="10%" >สถานะสมาชิก</th>
+                    <th width="20%" >สถานะชมรม</th>
+                    <th width="20%" >หมายเหตุ</th>
                     <th width="10%">รายละเอียด</th>
                 </tr>
                 </thead>

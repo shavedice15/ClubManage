@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import 'date-fns';
 import Table from '@material-ui/core/Table';
 import Chart from "react-apexcharts";
+import Modal from '@material-ui/core/Modal';
 import {auth} from '../../firebase';
 
 class ShowDetail extends Component {
@@ -18,7 +19,9 @@ class ShowDetail extends Component {
   
   constructor(props) {
     super(props);
-    this.state = {budget: [],
+    this.state = {openBudgetDetail: false,
+                  viewBudgetDetail: [],
+                  budget: [],
                   club: [],
                   options: {
                     labels: ['รายรับ', 'รายจ่าย'],
@@ -37,7 +40,7 @@ class ShowDetail extends Component {
                   currentUser:null,
                   setItem: this.emptyItem};
     this.handleChange = this.handleChange.bind(this);
-    
+    this.handleCloseBudgetDetail = this.handleCloseBudgetDetail.bind(this);
   }
   componentDidMount() {//ดึงข้อมูล
     auth.onAuthStateChanged(user => {
@@ -64,6 +67,15 @@ class ShowDetail extends Component {
     console.log(item);
   }
 
+  handleOpenBudgetDetail(budget) {
+    this.setState({openBudgetDetail: true});
+    this.setState({viewBudgetDetail: budget});
+  }
+
+  handleCloseBudgetDetail(){
+    this.setState({openBudgetDetail: false});
+  }
+
   async find() {
     const {setItem} = this.state;
     if(setItem.startDate == '' & setItem.endDate == ''){
@@ -87,9 +99,31 @@ class ShowDetail extends Component {
   }
   
     render() {
-      const {budget} = this.state;
-      const {club} = this.state;
+      const paperStyle = {
+        position: 'absolute',
+        maxWidth: '70%',
+        maxHeight: '80%',
+        background: '#FFFFFF',
+        border: '2px solid #000',
+        padding: '10px',
+        overflow:'scroll',
+      };
+      const modalStyle = {
+        position: 'absolute',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: '10%'
+      };
+      const textStyle = {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      };
+
+      const {budget,openBudgetDetail,viewBudgetDetail} = this.state;
       console.log(this.state.setItem)
+
     const PayList = budget.map(budget => {
         return (
           <tr>
@@ -99,10 +133,99 @@ class ShowDetail extends Component {
             <td align="center">{budget.detail}</td>
             <td align="center"><a target="_blank" href={budget.url}>คลิกเพื่อดู</a></td>
             <td align="center">{budget.note}</td>
+            <td align="center">
+              <Button style={{ background: '#000066',maxWidth: '300px' }} onClick={() => this.handleOpenBudgetDetail(budget)}>
+                รายละเอียดทั้งหมด
+              </Button>
+            </td>
+            <Modal
+              open={openBudgetDetail}
+              onClose={this.handleCloseBudgetDetail}
+              style={modalStyle}
+            >
+              <div style={paperStyle}>
+                <div className="row" style={textStyle}>
+                  <FormGroup className="col-md-3 mb-3">
+                    <TextField
+                        label="วันที่"
+                        defaultValue=" "
+                        value = {viewBudgetDetail.date}
+                        margin="normal"
+                        InputProps={{
+                          readOnly: true,
+                        }}          
+                        variant="outlined"
+                      />
+                  </FormGroup>
+                  <FormGroup className="col-md-3 mb-3">
+                    <TextField
+                      label="รายรับ"
+                      defaultValue=" "
+                      value={viewBudgetDetail.income}
+                      margin="normal"
+                      InputProps={{
+                        readOnly: true,
+                      }}          
+                      variant="outlined"
+                    />
+                  </FormGroup>
+                  <FormGroup className="col-md-3 mb-3">
+                    <TextField
+                      label="รายจ่าย"
+                      defaultValue=" "
+                      value={viewBudgetDetail.pay}
+                      margin="normal"
+                      InputProps={{
+                        readOnly: true,
+                      }}          
+                      variant="outlined"
+                    />
+                  </FormGroup>
+                </div>
+
+                <div className="row" style={textStyle}>
+                  <FormGroup className="col-md-4 mb-3">
+                    <TextField
+                        label="รายละเอียด"
+                        multiline
+                        rows="7"
+                        defaultValue=" "
+                        value = {viewBudgetDetail.detail}
+                        margin="normal"
+                        InputProps={{
+                          readOnly: true,
+                        }}          
+                        variant="outlined"
+                      />
+                  </FormGroup>
+                  <FormGroup className="col-md-4 mb-3">
+                    <TextField
+                      label="หมายเหตุ"
+                      multiline
+                      rows="7"
+                      defaultValue=" "
+                      value={viewBudgetDetail.note || " "}
+                      margin="normal"
+                      InputProps={{
+                        readOnly: true,
+                      }}          
+                      variant="outlined"
+                    />
+                  </FormGroup>
+                </div>
+
+                <div className="row" style={textStyle}>
+                  <FormGroup>
+                  <img src={viewBudgetDetail.url || 'http://via.placeholder.com/500x400'} alt="Uploaded images" height="400" width="500"/>
+                  </FormGroup>
+                </div>
+
+              </div>
+            </Modal>
           </tr>
         )
       });
-      {/*<td align="center">{club.typeClubเอนติตี้.typeClubข้างใน}</td> */}
+      
       console.log(budget);
       var income = 0
       var pay = 0
@@ -162,12 +285,13 @@ class ShowDetail extends Component {
             <Table className="mt-4" >
               <thead>
               <tr style={{ background: '#000066',color: '#FFFFFF' }} align="center">
-                <th width="20%">วันที่</th>
-                <th width="20%" >รายรับ</th>
+                <th width="10%">วันที่</th>
+                <th width="10%" >รายรับ</th>
                 <th width="10%">รายจ่าย</th>
-                <th width="10%">รายละเอียด</th>
-                <th width="10%">หลักฐาน</th>
-                <th width="10%">หมายเหตุ</th>
+                <th width="20%">รายละเอียด</th>
+                <th width="5%">หลักฐาน</th>
+                <th width="20%">หมายเหตุ</th>
+                <th width="10%"> </th>
               </tr>
               </thead>
               <tbody>

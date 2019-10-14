@@ -316,7 +316,8 @@ export default class MemberEdit extends Component {
                                                 id="date"
 
                                                 type="date"
-                                                defaultValue="2017-05-24"
+                                                defaultValue=""
+                                                value={setItem.birthday || ''}
                                                 className={useStyles.textField}
                                                 InputLabelProps={{
                                                     shrink: true,

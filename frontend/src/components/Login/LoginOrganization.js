@@ -27,6 +27,17 @@ class LoginOrganization extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    componentDidMount() {
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          this.setState({
+            currentUser: user.email
+          })
+          window.location = '/ProfileOrganize';
+        }
+      })
+    }
+
     onSubmit = e => {
       e.preventDefault()
   

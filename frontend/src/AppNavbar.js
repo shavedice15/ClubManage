@@ -121,7 +121,7 @@ export default function PersistentDrawerLeft() {
           <Typography variant="h6" style={{ width: '90%' }} noWrap>
             Club Management System (นักศึกษาทั่วไป)
           </Typography>
-          <NotificationsIcon />
+          {/*<NotificationsIcon />*/}
         </Toolbar>
       </AppBar>
       <Drawer

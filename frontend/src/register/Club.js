@@ -122,13 +122,13 @@ export default class Club extends Component {
         console.log(Studentid.match(/^B[0-9]{7}$/))
 
 
-        if (//Studentid.match(/^B[0-9]{7}$/) != null && 
-    //Studentname.match(/\w*\s\w*/) != null &&
-     //       Grad.match(/^[0-9]+\.[0-9]{2}$/) != null && 
-       //     Tell.match(/^[0-9]{10}$/)  != null && 
-         //   Clubname.match(/^[A-Za-z]{1,20}$/) != null && 
-           // Objective.match(/^[ก-๙]{1,20}$/) != null && 
-            /*Activities.match(/^[ก-๙]{1,20}$/)  != null*/ true) {
+        if (Studentid.match(/^B[0-9]{7}$/) != null && 
+            Studentname.match(/\w*\s\w*/) != null &&
+            Grad.match(/^[0-9]+\.[0-9]{2}$/) != null && 
+            Tell.match(/^[0-9]{10}$/)  != null && 
+            Clubname.match(/^[A-Za-z]{1,20}$/) != null && 
+            Objective.match(/^[ก-๙]{1,20}$/) != null && 
+            Activities.match(/^[ก-๙]{1,20}$/)  != null) {
 
             console.log('yes')
             await fetch(`http://localhost:8080/api/newClub/${setItem.majorId}/${setItem.typeId}/${setItem.adviserId}/${profile.id}`, {

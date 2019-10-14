@@ -24,15 +24,23 @@ class ClubController {
     private TypeClubRepository typeClubRepository;
     private AdviserRepository adviserRepository;
     private ClubStatusRepository clubStatusRepository;
+    private MemberRepository memberRepository;
+    private MemberClubRepository memberClubRepository;
+    private PositionRepository positionRepository;
+    private MemberStatusRepository memberStatusRepository;
 
-    
    ClubController(ClubRepository clubRepository,TypeClubRepository typeClubRepository,AdviserRepository adviserRepository,
-   MajorRepository majorRepository , ClubStatusRepository clubStatusRepository){
+   MajorRepository majorRepository , ClubStatusRepository clubStatusRepository, MemberRepository memberRepository,
+   MemberClubRepository memberClubRepository, PositionRepository positionRepository,MemberStatusRepository memberStatusRepository){
         this.clubRepository = clubRepository;
         this.typeClubRepository = typeClubRepository;
         this.adviserRepository = adviserRepository;
         this.majorRepository = majorRepository;
         this.clubStatusRepository = clubStatusRepository;
+        this.memberRepository = memberRepository;
+        this.memberClubRepository = memberClubRepository;
+        this.positionRepository = positionRepository;
+        this.memberStatusRepository = memberStatusRepository;
     }
 
     @GetMapping("/clubs")
@@ -59,10 +67,12 @@ class ClubController {
 
 //--------------------------------------------------------------------------------
 
-@PostMapping("/clubx/{majorId}/{typeId}/{adviserId}")
+@PostMapping("/newClub/{majorId}/{typeId}/{adviserId}/{memberId}")
     Club createClub(@Valid @RequestBody Club club,@PathVariable int majorId,
-    @PathVariable int typeId,@PathVariable int adviserId) throws URISyntaxException {
-        
+    @PathVariable int typeId,@PathVariable int adviserId,@PathVariable long memberId) throws URISyntaxException {
+        Member member = memberRepository.findById(memberId);
+        Position position = positionRepository.findById(1);
+        MemberStatus status = memberStatusRepository.findById(2);
         Major ma = majorRepository.findById(majorId);
         TypeClub ty = typeClubRepository.findById(typeId);
         Adviser ad = adviserRepository.findById(adviserId);
@@ -73,9 +83,13 @@ class ClubController {
         club.setMajor(ma.getMajor());
         club.setTypeClubname(ty.getTypeClub());
         club.setAdvisername(ad.getName());
-        
+        club.setClubStatus(clubStatusRepository.findById(1L));
         log.info("Request to create member: {}", club);
         Club result = clubRepository.save(club);
+
+        MemberClub memberClub = new MemberClub("",position,status,club,member);
+        memberClubRepository.save(memberClub);
+
         return result;
     }
 

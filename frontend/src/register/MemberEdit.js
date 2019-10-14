@@ -163,13 +163,20 @@ export default class MemberEdit extends Component {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(setItem),
+            }).then(response => response.json()
+            ).then(data => {
+                    console.log(data)
+                    window.location = '/ProfileMember';
+            }).catch((error) => {
+              console.log("Error"+ error);
+              alert('เกิดข้อผิดพลาด กรุณาตรวจสอบข้อมูลอีกครั้ง');
             });
         }
         else {
             alert('กรอกข้อมูลให้ครบ และถูกต้อง')
         }
 
-        this.props.history.push('/shows');
+        //this.props.history.push('/shows');
     }
 
 

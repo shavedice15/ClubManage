@@ -16,7 +16,7 @@ import org.hibernate.annotations.FetchMode;
 import java.util.Collection;
 
 @Data
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
@@ -40,6 +40,7 @@ public class Member {
     private @NonNull String tellparent;
     private @NonNull String facebook;
     private String grad;
+    private String classmember;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Major.class)
     @JoinColumn(name = "Major_ID", insertable = true)
@@ -71,7 +72,7 @@ public class Member {
 
     public Member(String studentid, String name, String nickname, String address, String motto,
                     String tell, String nameparent, String tellparent,
-                        String facebook, String grad) {
+                        String facebook, String grad, String classmember) {
         this.studentid = studentid;
         this.name = name;
         this.nickname = nickname;
@@ -82,9 +83,15 @@ public class Member {
         this.tellparent = tellparent;
         this.facebook = facebook;
         this.grad = grad;
+        this.classmember = classmember;
     }
 	public void setGrad(String grad){this.grad=grad;}
-	public String getGrad(){return grad;}
+    public String getGrad(){return grad;}
+    
+    public void setClassmember(String classmember){this.classmember=classmember;}
+    public String getClassmember(){return classmember;}
+    
+    
     public void setID(Long id){
         this.id = id;
     }

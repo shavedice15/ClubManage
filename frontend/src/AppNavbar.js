@@ -17,6 +17,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from "react-router-dom";
 import { Button } from 'reactstrap';
+import Badge from '@material-ui/core/Badge';
+import Notification from './Notification';
+import {auth} from './firebase';
 
 import PersonIcon from '@material-ui/icons/Person';
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
@@ -121,7 +124,7 @@ export default function PersistentDrawerLeft() {
           <Typography variant="h6" style={{ width: '90%' }} noWrap>
             Club Management System (นักศึกษาทั่วไป)
           </Typography>
-          {/*<NotificationsIcon />*/}
+          <Notification/>
         </Toolbar>
       </AppBar>
       <Drawer

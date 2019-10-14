@@ -12,7 +12,7 @@ public class Username {
     @Id
     private String username;
     private String password;
-
+    private int read;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Member_ID", referencedColumnName = "id")
     private Member member;
@@ -44,5 +44,12 @@ public class Username {
     }
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    public int getRead() {
+        return this.read;
+    }
+    public void setRead(int read) {
+        this.read = read;
     }
 }

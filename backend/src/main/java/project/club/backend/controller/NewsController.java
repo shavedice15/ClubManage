@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:3000")
 class NewsController {
     @Autowired private NewsRepository newsRepository;
+    @Autowired private UsernameRepository usernameRepository;
 
     @GetMapping("/allNews")
     Collection<News> getAllNews() {
@@ -37,5 +38,12 @@ class NewsController {
     public ResponseEntity<?> deleteNews(@PathVariable Long id) {
         newsRepository.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/editRead/{username}/{read}") //แก้ไขpostที่อ่าน
+    public Username editRead(@PathVariable String username,@PathVariable int read) {
+        Username user = usernameRepository.findByUsername(username);
+        user.setRead(read);
+        return usernameRepository.save(user);
     }
 }

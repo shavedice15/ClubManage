@@ -18,13 +18,39 @@ class PostNews extends Component {
   }
 
   componentDidMount() {
+
     auth.onAuthStateChanged(user => {
       if (user) {
         this.setState({
           currentUser: user.email
         })
+        fetch('http://localhost:8080/username/'+user.email)
+              .then(response => response.json())
+              .then(data => {
+
+                  fetch('http://localhost:8080/allNews')
+                      .then(response => response.json())
+                      .then(data2 => {
+                          if(data2.length - data.read != 0){
+                              fetch(`http://localhost:8080/editRead/${user.email}/${data2.length}`, {
+                                  method: 'PUT',
+                                  headers: {
+                                      'Accept': 'application/json',
+                                      'Content-Type': 'application/json'
+                                  }
+                                  }).then(response => response.json()
+                                  ).then(data => {
+                                          console.log(data)
+                                  }).catch((error) => {
+                                      console.log("Error"+ error);
+                                  });
+                          }
+                  });
+
+              });
+              
       }else{
-        window.location = '/loginOrganization';
+          window.location = '/login';
       }
     })
 
@@ -32,6 +58,7 @@ class PostNews extends Component {
       .then(response => response.json())
       .then(data => this.setState({news: data}));
   }
+
 
   render(){
     const {news} = this.state;

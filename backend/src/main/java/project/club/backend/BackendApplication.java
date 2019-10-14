@@ -78,12 +78,12 @@ public class BackendApplication {
 			clubRepository.save(club3);
 
 			//------------------ Member --------------------
-			Member member1 = new Member("B5912345","นางสาวมณี แก้วก้าว","แก้ว","sut","ฝันให้ไกล ไปให้ถึง","0814587589","แนางม่จ้า แก้วก้าว","097654321","Mimi Mumu","3.40");
+			Member member1 = new Member("B5912345","นางสาวมณี แก้วก้าว","แก้ว","sut","ฝันให้ไกล ไปให้ถึง","0814587589","แนางม่จ้า แก้วก้าว","097654321","Mimi Mumu","3.40","4");
 			memberRepository.save(member1);
 			Username username1 = new Username("test@example.com","123456789",member1);
 			usernameRepository.save(username1);
 
-			Member member2 = new Member("B599765","นางสาวตะวัน ยามเช้า","พลอย","sut","อิอิ","0865412306","นางมิมิ ยามเช้า","0985632140","tawan fgh","3.20" );
+			Member member2 = new Member("B599765","นางสาวตะวัน ยามเช้า","พลอย","sut","อิอิ","0865412306","นางมิมิ ยามเช้า","0985632140","tawan fgh","3.20" ,"2");
 			memberRepository.save(member2);
 			Username username2 = new Username("test2","12345678",member2);
 			usernameRepository.save(username2);

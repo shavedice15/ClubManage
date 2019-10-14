@@ -112,19 +112,50 @@ export default class Test extends Component {
     const {club ,type , member ,major ,summember} = this.state;
     const {adviser} = this.state;
 
+
+    console.log("PDF");
+    console.log(club.clubName);
+    console.log(type.typeClub);
+    console.log(adviser.name);
+    console.log(adviser.affiliates);
+    console.log("------------------")
+    console.log(club.clubName);
+    console.log(type.typeClub);
+    console.log(member.name)
+    console.log(club.clubName);
+    console.log("------------------")
+    console.log(member.name)
+    console.log(member.major)
+    console.log(member.studentid)
+    console.log(member.grad)
+    console.log(club.clubName);
+    console.log(type.typeClub);
+
+    console.log(adviser.name);
+    console.log(adviser.affiliates);
+    console.log(club.objective);
+    console.log(club.activities);
+    console.log("------------------")
+    console.log(club.clubName);
+    console.log(member.name)
+    console.log(adviser.name);
+
       var externalDataRetrievedFromServer = [
     ];
    
   
-  //  table(externalDataRetrievedFromServer, ['ลำดับที่','ชื่อ_นามสกุล','สำนักวิชา','รหัสประจำตัว','เกรดเฉลี่ย']),
+   table(externalDataRetrievedFromServer, ['ลำดับที่','ชื่อ_นามสกุล','สำนักวิชา','รหัสประจำตัว','เกรดเฉลี่ย'])
  
-     var count = 1;
+     var count = 0;
+
      if(true){
        summember.map(x =>{
-        externalDataRetrievedFromServer.push({ลำดับที่: count,ชื่อ_นามสกุล:x.member.name,สำนักวิชา:x.member.major,รหัสประจำตัว:x.member.studentid,เกรดเฉลี่ย:x.member.grad})
+        externalDataRetrievedFromServer.push({ลำดับที่: (count+1),ชื่อ_นามสกุล:x.member.name,สำนักวิชา:x.member.major,รหัสประจำตัว:x.member.studentid,เกรดเฉลี่ย:x.member.grad})
         count++;
       })
    }
+
+
     function buildTableBody(data, columns) {
       var body = [];
   
@@ -148,7 +179,8 @@ export default class Test extends Component {
           table: {
               widths: [50, 150,70,60,50],
               headerRows: 1,
-              body: buildTableBody(data, columns)
+              body: buildTableBody(data, columns),style: 'header',
+           
           },margin: [40,0,10,10]
       };
   }
@@ -190,6 +222,8 @@ export default class Test extends Component {
         { text: `อาจารย์ที่ปรึกษาชมรม ${adviser.name}`, fontSize: 15.5,
         margin: [100, 0, 40, 0], },
         { text: `หน่วยงานสังกัดของอาจารย์ที่ปรึกษาชมรม ${adviser.affiliates}`
+        , fontSize: 15.5 ,margin: [100, 0, 40, 2],},
+        { text: 'เพื่อให้ชมรมสามารถด าเนินกิจกรรมได้ สภานักศึกษา องค์การนักศึกษา จึงใคร่ขออนุมัติ'
         , fontSize: 15.5 ,margin: [100, 0, 40, 0],},
         { text: 'จัดตั้งชมรมและแต่งตั้งอาจารย์ที่ปรึกษาชมรมดังกล่าว ตามรายละเอียดเอกสารการขอจัดตั้งชมรมที่แนบมา'
         , fontSize: 15.5 ,margin: [40, 0, 40, 0],},
@@ -203,12 +237,12 @@ export default class Test extends Component {
         {
          
           table: {
-            widths: [250, 270],
+            widths: [270, 270],
             body: [
                  [{text:[
                 {text: '1. เสนอความเห็น\n', style:'tableheader'},
 								{text: ' เห็นควรอนุมัติ\n', margin: [65, 0, 40, 0],style:'tablefront'},
-                {text: ' ไม่ควรอนุมัติ เพราะ .......................................................................................\n\n',style:'tablefront'},
+                {text: ' ไม่ควรอนุมัติ เพราะ .......................................................................................\n',style:'tablefront'},
                 {text : 'ลงชื่อ .............................................................................\n',alignment: 'center',style:'tablefront'},
                 {text: '(..............................................................................)\n',alignment: 'center',style:'tablefront'},
                 {text: 'หัวหน้างานกิจกรรมนักศึกษา\n',alignment: 'center',style:'tablefront'},
@@ -218,7 +252,7 @@ export default class Test extends Component {
               {text:[
                 {text: '2. เสนอความเห็น\n', style:'tableheader'},
 								{text: ' เห็นควรอนุมัติ\n', margin: [65, 0, 40, 0],style:'tablefront'},
-                {text: ' ไม่ควรอนุมัติ เพราะ ........................................................................................\n\n',style:'tablefront'},
+                {text: ' ไม่ควรอนุมัติ เพราะ ........................................................................................\n',style:'tablefront'},
                 {text : 'ลงชื่อ .............................................................................\n',alignment: 'center',style:'tablefront'},
                 {text: '(..............................................................................)\n',alignment: 'center',style:'tablefront'},
                 {text: 'หัวหน้าส่วนกิจการนักศึกษา\n',alignment: 'center',style:'tablefront'},
@@ -229,7 +263,7 @@ export default class Test extends Component {
               [{text:[
                 {text: '3. เสนอความเห็น\n', style:'tableheader'},
 								{text: ' เห็นควรอนุมัติ\n', margin: [65, 0, 40, 0],style:'tablefront'},
-                {text: ' ไม่ควรอนุมัติ เพราะ ........................................................................................\n\n',style:'tablefront'},
+                {text: ' ไม่ควรอนุมัติ เพราะ ........................................................................................\n',style:'tablefront'},
                 {text : 'ลงชื่อ .............................................................................\n',style:'tablefront',alignment: 'center'},
                 {text: '(..............................................................................)\n',style:'tablefront',alignment: 'center'},
                 {text: 'รองอธิการบดีฝ่ายกิจการนักศึกษาและศิษย์เก่าสัมพันธ\n',style:'tablefront',alignment: 'center'},
@@ -239,7 +273,7 @@ export default class Test extends Component {
               {text:[
                 {text: '4. ผลการพิจารณา\n', style:'tableheader'},
 								{text: ' อนุมัติ\n', margin: [65, 0, 40, 0],style:'tablefront'},
-                {text: ' ไม่อนุมัติ เพราะ ...........................................................................................\n\n',style:'tablefront'},
+                {text: ' ไม่อนุมัติ เพราะ ...........................................................................................\n',style:'tablefront'},
                 {text : 'ลงชื่อ .............................................................................\n',alignment: 'center',style:'tablefront'},
                 {text: '(..............................................................................)\n',alignment: 'center',style:'tablefront'},
                 {text: 'อธิการบดี\n',alignment: 'center',style:'tablefront'},
@@ -276,15 +310,13 @@ export default class Test extends Component {
          fontSize: 15.5 ,margin: [40, 0, 40, 0],},
         { text: '_____________________________________________________________________________'
         , fontSize: 15.5 ,margin: [40, 0, 40, 0], },
-        { text: 'เรียน      ประธานสภานักศึกษา องค์การนักศึกษา        ', fontSize: 15.5 ,margin: [40, 0, 40, 0], },
+        { text: 'เรียน      ประธานสภานักศึกษา องค์การนักศึกษา        ', fontSize: 15.5 ,margin: [40, 0, 40, 5], },
         { text: 'ตามระเบียบมหาวิทยาลัยเทคโนโลยีสุรนารี ว่าด้วยองค์การนักศึกษามหาวิทยาลัย', fontSize: 15.5  ,margin: [100, 0, 40, 0],},
         { text: 'เทคโนโลยีสุรนารี พ.ศ. 2544 หมวดที่ 7 ข้อที่ 75 เรื่องการขอจัดตั้งชมรม ข้าพเจ้าพร้อมคณะประสงค'
         , fontSize: 15.5 ,margin: [40, 0, 40, 0],},
-        { text: `ขออนุมัติจัดตั้งชมรม ${club.clubName} เพื่อส่งเสริมกิจกรรมนักศึกษา`, fontSize: 15.5 ,
+        { text: `ขออนุมัติจัดตั้งชมรม ${club.clubName} เพื่อส่งเสริมกิจกรรมนักศึกษา ด้าน ${type.typeClub} ตามรายละเอียดการขอจัดตั้งชมรมที่แนบมา`, fontSize: 15.5 ,
         margin: [40, 0, 40, 0], },
-        { text: `ด้าน ${type.typeClub} ตามรายละเอียดการขอจัดตั้งชมรมที่แนบมา`, fontSize: 15.5 ,
-        margin: [40, 0, 40, 0], },
-        { text: 'จึงเรียนมาเพื่อโปรดพิจารณาอนุมัติ', fontSize: 15.5, margin: [110, 0, 40, 0],},
+        { text: 'จึงเรียนมาเพื่อโปรดพิจารณาอนุมัติ', fontSize: 15.5, margin: [110, 5, 40, 5],},
         { text: '.................................................................. '
         , fontSize: 15.5 ,margin: [230, 0, 40, 0], },
         { text: `(  ${member.name}  )`
@@ -346,22 +378,22 @@ export default class Test extends Component {
           }, margin: [0,0,10,1000],
         },
 //-------------------------------------------------------------------- PAGE 3 -------------------------------------------------------------------------------------------------
-{	 text: 'แบบการขอจัดตั้งชมรม', fontSize: 15.5 , alignment: 'center'},
-{	 text: `1. ข้าพเจ้า(นาย/นางสาว) ${member.name}`, fontSize: 15.5 , margin: [40, 0, 40, 0],},
-{	 text: `เป็นนักศึกษาสำนักวิชา ${major.major} ชั้นปีที่ ..........รหัสประจำตัว ${member.studentid}`, fontSize: 15.5 ,margin: [40, 0, 40, 0],},
-{	 text: `เกรดเฉลี่ย  ${member.grad} พร้อมกับนักศึกษาผู้ร่วมริเริ่ม มีความประสงค์จะขอจัดตั้งชมรม ${club.clubName}`, fontSize: 15.5 ,margin: [40, 0, 40, 0], },
-{	 text: `เพื่อส่งเสริมกิจกรรมนักศึกษาด้าน ${type.typeClub}`, fontSize: 15.5 , margin: [40, 0, 40, 0], },
-{	 text: '2. รายชื่อนักศึกษาผู้ร่วมริเริ่มก่อตั้งชมรม จำนวน ...... คน มีดังนี้', fontSize: 15.5 , margin: [40, 0, 40, 0],},
+{	 text: 'แบบการขอจัดตั้งชมรม', fontSize: 15.5 , alignment: 'center' , style: 'header'},
+{	 text: `1. ข้าพเจ้า(นาย/นางสาว) ${member.name} เป็นนักศึกษาสำนักวิชา ${member.major} ชั้นปีที่ ${member.classmember} รหัสประจำตัว ${member.studentid} เกรดเฉลี่ย  ${member.grad} พร้อมกับนักศึกษาผู้ร่วมริเริ่ม มีความประสงค์จะขอจัดตั้งชมรม ${club.clubName}`, fontSize: 15.5 , margin: [40, 0, 40, 0],},
+// {	 text: `เป็นนักศึกษาสำนักวิชา ${member.major} ชั้นปีที่ ..........รหัสประจำตัว ${member.studentid}`, fontSize: 15.5 ,margin: [40, 0, 40, 0],},
+// {	 text: `เกรดเฉลี่ย  ${member.grad} พร้อมกับนักศึกษาผู้ร่วมริเริ่ม มีความประสงค์จะขอจัดตั้งชมรม ${club.clubName}`, fontSize: 15.5 ,margin: [40, 0, 40, 0], },
+{	 text: `เพื่อส่งเสริมกิจกรรมนักศึกษาด้าน ${type.typeClub}`, fontSize: 15.5 , margin: [40, 0, 40, 10], },
+{	 text: `2. รายชื่อนักศึกษาผู้ร่วมริเริ่มก่อตั้งชมรม จำนวน ${count} คน มีดังนี้`, fontSize: 15.5 , margin: [40, 0, 40, 0],},
 
 
 table(externalDataRetrievedFromServer, ['ลำดับที่','ชื่อ_นามสกุล','สำนักวิชา','รหัสประจำตัว','เกรดเฉลี่ย']),
 
-{	 text: `3. ข้าพเจ้าและคณะได้เรียนเชิญผู้มีชื่อต่อไปนี้เป็นอาจารย์ที่ปรึกษาชมรม และท่านยินดีเป็นที่ปรึกษา คือ`, fontSize: 15.5 ,margin: [40, 0, 40, 0], },
-{	 text: `ชื่อ-สกุล ${adviser.name} หน่วยงาน  ${adviser.affiliates}`, fontSize: 15.5 ,margin: [40, 0, 40, 0], },
+{	 text: `3. ข้าพเจ้าและคณะได้เรียนเชิญผู้มีชื่อต่อไปนี้เป็นอาจารย์ที่ปรึกษาชมรม และท่านยินดีเป็นที่ปรึกษา คือ`, fontSize: 15.5 ,margin: [40, 10, 40, 0], },
+{	 text: `ชื่อ-สกุล ${adviser.name} หน่วยงาน  ${adviser.affiliates}`, fontSize: 15.5 ,margin: [40, 0, 40, 10], },
 {	 text: '4. วัตถุประสงค์ของการจัดตั้งชมรม ทั้งนี้ได้ปรึกษากับอาจารย์ที่ปรึกษาชมรมแล้ว มีดังนี้', fontSize: 15.5 ,margin: [40, 0, 40, 0], },
-{	 text: `4.1 ${club.objective}`, fontSize: 15.5 ,margin: [40, 0, 40, 0], },
+{	 text: `4.1 ${club.objective}`, fontSize: 15.5 ,margin: [80, 0, 40, 10], },
 {	 text: '5. กิจกรรมหรือโครงการที่คิดว่าจะทำ หลังจากได้รับอนุญาตให้ตั้งชมรมได้ คือ', fontSize: 15.5 ,margin: [40, 0, 40, 0], },
-{	 text: `5.1 ${club.activities}`, fontSize: 15.5 ,margin: [40, 0, 40,500], },
+{	 text: `5.1 ${club.activities}`, fontSize: 15.5 ,margin: [80, 0, 40,500], },
 
 //------------------------------------------------------------------------------------------ PAGE 4 -----------------------------------------------------------------------------------------------------------------
 
@@ -398,10 +430,10 @@ table(externalDataRetrievedFromServer, ['ลำดับที่','ชื่อ
 {	 text: 'มหาวิทยาลัย ที่ผิดกฎระเบียบของมหาวิทยาลัย หรือผิดศีลธรรม หรือผิดกฎหมายของบ้านเมืองโดยเด็ดขาด', fontSize: 15.5 ,margin: [40, 0, 40, 0], },
 {	 text: 'พร้อมกันนี้ได้แนบรายชื่อสมาชิกมาด้วยแล้ว จำนวน ................คน ', fontSize: 15.5 ,margin: [40, 0, 40, 0], },
 {	 text: '...........................................................', fontSize: 15.5 ,margin: [250, 0, 40, 0], },
-{	 text: '(..........................................................)', fontSize: 15.5 ,margin: [250, 0, 40, 0], },
+{	 text: `(  ${member.name} )`, fontSize: 15.5 ,margin: [250, 0, 40, 0], },
 {	 text: 'ผู้ขอจัดตั้งชมรม', fontSize: 15.5 ,margin: [250, 0, 40, 0], },
 
-{	 text: '...........................................................\n(..........................................................)\nอาจารย์ที่ปรึกษาชมรม', fontSize: 15.5 ,margin: [250, 0, 40, 0], },
+{	 text: `...........................................................\n(  ${adviser.name} )\nอาจารย์ที่ปรึกษาชมรม`, fontSize: 15.5 ,margin: [250, 0, 40, 0], },
 
 
  //table(externalDataRetrievedFromServer, ['ลำดับที่','ชื่อ_นามสกุล','สำนักวิชา','รหัสประจำตัว','เกรดเฉลีย'])
@@ -453,8 +485,8 @@ images: {
     };
     var pdf = pdfMake.createPdf(docDefinition);
     pdf.open();
-  }
- // 4RDaRXhpZgAATU0AKgAAAAgABAE7AAIAAAAFAAAISodpAAQAAAABAAAIUJydAAEAAAAKAAAQyOocAAcAAAgMAAAAPgAAAAAc6gAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERFTEwAAAAFkAMAAgAAABQAABCekAQAAgAAABQAABCykpEAAgAAAAM0MQAAkpIAAgAAAAM0MQAA6hwABwAACAwAAAiSAAAAABzqAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAxOToxMDowNyAwOTo1Mjo1MAAyMDE5OjEwOjA3IDA5OjUyOjUwAAAARABFAEwATAAAAP
+   }
+//  // 4RDaRXhpZgAATU0AKgAAAAgABAE7AAIAAAAFAAAISodpAAQAAAABAAAIUJydAAEAAAAKAAAQyOocAAcAAAgMAAAAPgAAAAAc6gAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERFTEwAAAAFkAMAAgAAABQAABCekAQAAgAAABQAABCykpEAAgAAAAM0MQAAkpIAAgAAAAM0MQAA6hwABwAACAwAAAiSAAAAABzqAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAxOToxMDowNyAwOTo1Mjo1MAAyMDE5OjEwOjA3IDA5OjUyOjUwAAAARABFAEwATAAAAP
 
   
  checkPosition() {
@@ -470,13 +502,15 @@ images: {
   render() {
     const {club , type , member , major , summember} = this.state;
     const {adviser} = this.state;
-    console.log(this.props.id)
-    console.log(club , adviser ,type , member ,major ,summember)
+    // console.log(this.props.id)
+    // console.log(club , adviser ,type  ,major ,summember)
 
     summember.map(x =>{
       console.log(x.member)
     })
 
+
+    // console.log("ประธาน" , member)
 
     return (
       <div>

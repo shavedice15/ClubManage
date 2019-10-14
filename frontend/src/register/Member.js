@@ -4,6 +4,7 @@ import AppNavbar from '../AppNavbar';
 import { Button, Container, Form, FormGroup, Input, Label, FormText, FormFeedback } from 'reactstrap';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MenuItem from '@material-ui/core/MenuItem';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -15,16 +16,18 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {auth} from '../firebase';
 const useStyles = makeStyles(theme => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
     },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: 200,
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
     },
-}));
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+  }));
 
 
 export default class Member extends Component {
@@ -51,7 +54,8 @@ export default class Member extends Component {
         aumphoename: '',
         grad:'',
         email: '',
-        password: ''
+        password: '',
+        classmember:''
     };
 
 
@@ -63,6 +67,7 @@ export default class Member extends Component {
             major: [],
             branch: [],
             setItem: this.emptyItem,
+            classmamber:['1','2','3','4'],
 
 
         };
@@ -148,23 +153,25 @@ export default class Member extends Component {
         console.log(Password.match(/^[0-9A-Za-z]{6,8}$/))
 
 
-        if (Tell.match(/^[0-9]{10}$/) != null
-            &&
-            Motto.match(/^[A-Za-z]{1,20}$/) != null
-            &&
-            Facebook.match(/^[A-Za-z]{1,20}$/) != null
-            &&
-            Name.match(/\w*\s\w*/) != null
-            &&
-            Tellparent.match(/^[0-9]{10}$/) != null
-            &&
-            Nameparent.match(/\w*\s\w*/) != null
-            &&
-            Nickname.match(/^[A-Za-z]{1,20}$/) != null
-            &&
-            Studentid.match(/^B[0-9]{7}$/) != null
-            &&
-            Address.match(/^\w*\s\w*\.\w*/) != null
+        if (
+            // Tell.match(/^[0-9]{10}$/) != null
+            // &&
+            // Motto.match(/^[A-Za-z]{1,20}$/) != null
+            // &&
+            // Facebook.match(/^[A-Za-z]{1,20}$/) != null
+            // &&
+            // Name.match(/\w*\s\w*/) != null
+            // &&
+            // Tellparent.match(/^[0-9]{10}$/) != null
+            // &&
+            // Nameparent.match(/\w*\s\w*/) != null
+            // &&
+            // Nickname.match(/^[A-Za-z]{1,20}$/) != null
+            // &&
+            // Studentid.match(/^B[0-9]{7}$/) != null
+            // &&
+            // Address.match(/^\w*\s\w*\.\w*/) != null
+            true
         ) {
             console.log('yes')
             await fetch(`http://localhost:8080/api/memberx/${setItem.changwatId}/${setItem.aumphoeId}/${setItem.majorId}/${setItem.branchId}/${setItem.email}/${Password}`, {
@@ -200,7 +207,7 @@ export default class Member extends Component {
 
     render() {
         console.log(this.state.setItem)
-        const { changwat, aumphoe, major, branch, setItem } = this.state;
+        const { changwat, aumphoe, major, branch, setItem , classmamber } = this.state;
 
         const changwatlist = changwat.map(ch => {
             return (
@@ -224,7 +231,8 @@ export default class Member extends Component {
             )
         });
 
-        console.log(majorlist)
+        
+       
 
         return (
             <div>
@@ -255,6 +263,22 @@ export default class Member extends Component {
                                             onChange={this.handleChange}
                                         />
                                     </AvForm>
+
+                                    <FormGroup className="select">
+                                    <InputLabel htmlFor="tag-helper">ชั้นปี</InputLabel>
+                                    <Select
+                                            value={this.state.setItem.classmember}
+                                            onChange={this.handleChange}
+                                            style={{ width: '10%', textAlign: 'center' }}
+                                            input={<OutlinedInput name="classmember" />}
+                                        >
+                                            <MenuItem value="" ><em>None</em></MenuItem>
+                                            <MenuItem value="1" ><em>1</em></MenuItem>
+                                            <MenuItem value="2" ><em>2</em></MenuItem>
+                                            <MenuItem value="3" ><em>3</em></MenuItem>
+                                            <MenuItem value="4" ><em>4</em></MenuItem>
+                                     </Select>
+                                     </FormGroup>
 
                                     <AvForm className="col-md-3 mb-3" className="a">
                                         <AvField name="name" label="ชื่อ-สกุล" type="text" errorMessage="Invalid name" 
@@ -289,29 +313,13 @@ export default class Member extends Component {
                                         />
                                     </AvForm>
 
-
-                                    
-                                    {/* <FormGroup className="col-md-3 mb-3" className='a'>
-                                        <Label for="student" className='c'>รหัสนักศึกษา</Label>
-                                        <Input type="text" name="studentid" id="studentid" value={setItem.studentid || ''}
-                                            onChange={this.handleChange}
-                                            autoComplete="studentid" placeholder="รหัสนักศึกษา" />
-                                    </FormGroup> */}
-                                    {/* <FormGroup className='a , b'>
-                                        <Label for="name" >ชื่อ-สกุล</Label>
-                                        <Input type="text" name="name" id="name" value={setItem.name || ''}
-                                            onChange={this.handleChange}
-                                            autoComplete="name" placeholder="ชื่อ-สกุล"
-                                        />
-                                    </FormGroup> */}
-                                    {/* <FormGroup className="col-md-3 mb-3" className='a'>
-                                        <Label for="nickname">ชื่อเล่น</Label>
-                                        <Input type="text" name="nickname" id="nickname" value={setItem.nickname || ''}
-                                            onChange={this.handleChange}
-                                            autoComplete="nickname" placeholder="ชื่อเล่น" />
-                                    </FormGroup> */}
+                                  
+                               
+                                 
                                 </div>
                                 <div className="row" >
+                            
+
                                 <AvForm className='a , b'>
                                         <AvField name="address" label="ที่อยู่" type="text" errorMessage="Invalid name" 
                                         validate={{
@@ -363,7 +371,11 @@ export default class Member extends Component {
                                                 onChange={this.handleChange}
                                             />
                                         </form>
+
+                                        
                                     </FormGroup>
+
+                                 
                                 </div>
                             </fieldset>
                         </from>

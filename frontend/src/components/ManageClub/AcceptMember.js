@@ -64,15 +64,7 @@ class ClubMember extends Component {
   }
 
   async save(memberClubId) {
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        this.setState({
-          currentUser: user.email
-        })
-        window.location = '/ProfileMember';
-      }
-    })
-
+    
     await fetch(`http://localhost:8080/acceptMember/${memberClubId}`, {
       method: 'PUT',
       headers: {
@@ -81,7 +73,7 @@ class ClubMember extends Component {
       }
     }).catch((error) => {
       console.log("Error"+ error);
-      alert('เกิดข้อผิดพลาด กรุณาตรวจสอบข้อมูลอีกครั้ง');
+      //alert('เกิดข้อผิดพลาด กรุณาตรวจสอบข้อมูลอีกครั้ง');
     });
 
     fetch('http://localhost:8080/acceptMemberClub/'+this.props.match.params.clubId)
@@ -101,7 +93,7 @@ class ClubMember extends Component {
       }
     }).catch((error) => {
       console.log("Error"+ error);
-      alert('เกิดข้อผิดพลาด กรุณาตรวจสอบข้อมูลอีกครั้ง');
+      //alert('เกิดข้อผิดพลาด กรุณาตรวจสอบข้อมูลอีกครั้ง');
     });
 
     fetch('http://localhost:8080/acceptMemberClub/'+this.props.match.params.clubId)

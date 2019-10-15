@@ -126,7 +126,7 @@ class OrganizeInput extends Component {
                                         <AvField name="name" label="ชื่อ-นามสกุล" type="text" errorMessage="Invalid name" 
                                         validate={{
                                             required: { value: true },
-                                            pattern: { value: /\w*\s\w*/ }
+                                            //pattern: { value: /\w*\s\w*/ }
                                         }}
                                         value={setItem.name || ''}
                                         onChange={this.handleChange}
@@ -137,7 +137,7 @@ class OrganizeInput extends Component {
                                         <AvField name="tel" label="เบอร์มือถือ" type="text" errorMessage="Invalid name" 
                                      validate={{
                                              required: { value: true },
-                                         pattern: { value: '^[0-9]{10}$' }
+                                         //pattern: { value: '^[0-9]{10}$' }
                                      }}
                                         value={setItem.tel || ''}
                                         onChange={this.handleChange}
@@ -148,7 +148,7 @@ class OrganizeInput extends Component {
                                         <AvField name="grade" label="เกรดเฉลี่ย" type="text" errorMessage="Invalid name" 
                                         validate={{
                                             required: { value: true },
-                                            pattern: { value: /^[A-Za-z]{1,20}$/ }
+                                            //pattern: { value: /^[A-Za-z]{1,20}$/ }
                                         }}
                                         value={setItem.grade || ''}
                                         onChange={this.handleChange}
@@ -172,7 +172,7 @@ class OrganizeInput extends Component {
                                         <AvField name="username" label="E-mail:" type="text" errorMessage="Invalid name" 
                                         validate={{
                                             required: { value: true },
-                                            pattern: { value: /\w*\s\w*/ }
+                                            //pattern: { value: /\w*\s\w*/ }
                                         }}
                                         value={setItem.username || ''}
                                         onChange={this.handleChange}
@@ -183,7 +183,7 @@ class OrganizeInput extends Component {
                                         <AvField name="password" label="รหัสผ่าน" type="text" errorMessage="Invalid name" 
                                      validate={{
                                              required: { value: true },
-                                         pattern: { value: '^[0-9]{10}$' }
+                                         //pattern: { value: '^[0-9]{10}$' }
                                      }}
                                         value={setItem.password || ''}
                                         onChange={this.handleChange}
@@ -194,7 +194,7 @@ class OrganizeInput extends Component {
                                         <AvField name="checkPassword" label="ยืนยันรหัสผ่าน" type="text" errorMessage="Invalid name" 
                                         validate={{
                                             required: { value: true },
-                                            pattern: { value: /^[A-Za-z]{1,20}$/ }
+                                            //pattern: { value: /^[A-Za-z]{1,20}$/ }
                                         }}
                                         value={setItem.checkPassword || ''}
                                         onChange={this.handleChange}

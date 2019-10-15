@@ -85,7 +85,7 @@ public class BackendApplication {
 
 			Member member2 = new Member("B599765","นางสาวตะวัน ยามเช้า","พลอย","sut","อิอิ","0865412306","นางมิมิ ยามเช้า","0985632140","tawan fgh","3.20" ,"2");
 			memberRepository.save(member2);
-			Username username2 = new Username("test2","12345678",member2);
+			Username username2 = new Username("test2@example.com","123456789",member2);
 			usernameRepository.save(username2);
 
 			//----------------------- Budget ----------------------

@@ -16,7 +16,7 @@ import org.hibernate.annotations.FetchMode;
 import java.util.Collection;
 
 @Data
-//@NoArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
